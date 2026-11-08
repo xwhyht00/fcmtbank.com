@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DemoBank | Online Banking</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">Demo<span>Bank</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#security">Security</a>
+  </nav>
+  <button class="login-btn" id="loginBtn">Open Demo Account</button>
+</header>
+
+<main id="home">
+  <section class="hero">
+    <div class="hero-content">
+      <span class="tag">DIGITAL BANKING DEMONSTRATION</span>
+      <h1>Banking made simple. Banking made smarter.</h1>
+      <p>
+        Experience convenient digital banking with a modern,
+        secure and easy-to-use banking interface.
+      </p>
+      <button class="primary-btn" id="startBtn">
+        Explore Online Banking →
+      </button>
+      <p class="notice">Demonstration only. No real banking services.</p>
+    </div>
+    <div class="hero-card">
+      <div class="card-top">DemoBank</div>
+      <p>Available Balance</p>
+      <h2>₦2,450,000.00</h2>
+      <div class="card-bottom">DEMO ACCOUNT</div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <h2>Banking Services</h2>
+    <p>Explore the available demonstration features.</p>
+
+    <div class="service-grid">
+      <div class="service">
+        <span>↗</span>
+        <h3>Transfers</h3>
+        <p>Explore a simulated money transfer interface.</p>
+      </div>
+      <div class="service">
+        <span>◈</span>
+        <h3>Account Balance</h3>
+        <p>View your sample account balance.</p>
+      </div>
+      <div class="service">
+        <span>▤</span>
+        <h3>Transactions</h3>
+        <p>Review sample transaction history.</p>
+      </div>
+      <div class="service">
+        <span>♧</span>
+        <h3>Customer Support</h3>
+        <p>Explore the support section.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dashboard" id="dashboard">
+    <div class="dashboard-header">
+      <div>
+        <span class="tag">DEMO DASHBOARD</span>
+        <h2>Welcome to Online Banking</h2>
+        <p>Your sample banking overview.</p>
+      </div>
+      <button class="logout-btn" id="logoutBtn">Exit Demo</button>
+    </div>
+
+    <div class="balance-card">
+      <p>Total Available Balance</p>
+      <h1 id="balance">₦2,450,000.00</h1>
+      <span>Sample account •••• 4521</span>
+    </div>
+
+    <div class="actions">
+      <button id="transferBtn">↗ Transfer</button>
+      <button id="historyBtn">▤ Transactions</button>
+    </div>
+
+    <div class="transfer-panel" id="transferPanel">
+      <h3>Simulated Transfer</h3>
+      <label>Beneficiary Name</label>
+      <input id="beneficiary" placeholder="Enter sample name">
+      <label>Amount (₦)</label>
+      <input id="amount" type="number" placeholder="Enter amount">
+      <button class="primary-btn" id="submitTransfer">
+        Simulate Transfer
+      </button>
+      <p id="transferMessage"></p>
+    </div>
+
+    <div class="transactions" id="transactions">
+      <h3>Recent Transactions</h3>
+      <div id="transactionList">
+        <div class="transaction">
+          <span>Sample Salary Payment</span>
+          <strong class="positive">+₦500,000</strong>
+        </div>
+        <div class="transaction">
+          <span>Sample Utility Payment</span>
+          <strong class="negative">-₦25,000</strong>
+        </div>
+        <div class="transaction">
+          <span>Sample Shopping</span>
+          <strong class="negative">-₦15,000</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="security" id="security">
+    <h2>Your Security Matters</h2>
+    <p>This demonstration does not connect to a bank, process payments,
+       or transmit or store banking credentials.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="logo">Demo<span>Bank</span></div>
+  <p>© 2026 DemoBank. Educational demonstration only.</p>
+</footer>
+
+<script src="index.js"></script>
+</body>
+</html>
