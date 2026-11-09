@@ -1,0 +1,237 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loans | DBS Bank</title>
+    <link rel="stylesheet" href="loans.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="container nav-container">
+        <a href="index.html" class="logo">DBS <span>BANK</span></a>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">
+            ☰
+        </button>
+
+        <nav class="navigation" id="navigation">
+            <a href="index.html">Home</a>
+            <a href="personal.html">Personal Banking</a>
+            <a href="business.html">Business Banking</a>
+            <a href="cards.html">Cards</a>
+            <a href="loans.html" class="active">Loans</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+            <a href="online-banking.html" class="nav-button">Online Banking</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container hero-content">
+            <div>
+                <p class="eyebrow">DBS BANK LOAN SERVICES</p>
+                <h1>Make Your Plans Possible</h1>
+                <p>
+                    Explore loan options designed to help you manage important
+                    expenses, grow your business, and plan for the future.
+                </p>
+                <a href="#loan-options" class="gold-button">Explore Loan Options</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="intro section">
+        <div class="container">
+            <p class="eyebrow">BORROW WITH CONFIDENCE</p>
+            <h2>Find a Loan That Fits Your Goals</h2>
+            <p class="section-description">
+                Whether you are planning a major purchase or investing in your
+                business, explore the loan categories below.
+            </p>
+        </div>
+    </section>
+
+    <section class="loan-section section" id="loan-options">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">OUR LOAN OPTIONS</p>
+                <h2>Explore Our Loan Categories</h2>
+            </div>
+
+            <div class="loan-grid">
+                <article class="loan-card">
+                    <div class="loan-icon">🏠</div>
+                    <h3>Home Loans</h3>
+                    <p>
+                        Explore financing options for purchasing, building,
+                        or improving a home.
+                    </p>
+                    <a href="contact.html">Learn More →</a>
+                </article>
+
+                <article class="loan-card">
+                    <div class="loan-icon">🚗</div>
+                    <h3>Auto Loans</h3>
+                    <p>
+                        Learn about financing options for purchasing a new
+                        or used vehicle.
+                    </p>
+                    <a href="contact.html">Learn More →</a>
+                </article>
+
+                <article class="loan-card">
+                    <div class="loan-icon">👤</div>
+                    <h3>Personal Loans</h3>
+                    <p>
+                        Explore personal financing for planned expenses
+                        and important life events.
+                    </p>
+                    <a href="contact.html">Learn More →</a>
+                </article>
+
+                <article class="loan-card">
+                    <div class="loan-icon">💼</div>
+                    <h3>Business Loans</h3>
+                    <p>
+                        Discover financing options to support business
+                        operations and expansion.
+                    </p>
+                    <a href="contact.html">Learn More →</a>
+                </article>
+
+                <article class="loan-card">
+                    <div class="loan-icon">🎓</div>
+                    <h3>Education Loans</h3>
+                    <p>
+                        Explore ways to plan for education-related
+                        expenses and opportunities.
+                    </p>
+                    <a href="contact.html">Learn More →</a>
+                </article>
+
+                <article class="loan-card">
+                    <div class="loan-icon">📊</div>
+                    <h3>Investment Financing</h3>
+                    <p>
+                        Learn about financing possibilities for eligible
+                        investment and financial goals.
+                    </p>
+                    <a href="contact.html">Learn More →</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits section">
+        <div class="container benefits-layout">
+            <div>
+                <p class="eyebrow">PLAN AHEAD</p>
+                <h2>Understand Your Loan Before Applying</h2>
+                <p>
+                    A loan is a financial commitment. Review the repayment
+                    period, interest rate, fees, and eligibility requirements
+                    before making a decision.
+                </p>
+                <a href="contact.html" class="gold-button">Contact Our Team</a>
+            </div>
+
+            <div class="benefit-list">
+                <div class="benefit-item">
+                    <span>01</span>
+                    <div>
+                        <h3>Choose Your Loan Type</h3>
+                        <p>Identify the financing category that matches your goal.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <span>02</span>
+                    <div>
+                        <h3>Review the Terms</h3>
+                        <p>Understand rates, fees, repayment periods, and conditions.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <span>03</span>
+                    <div>
+                        <h3>Ask Questions</h3>
+                        <p>Contact the appropriate bank representative for guidance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="calculator-section section">
+        <div class="container calculator-container">
+            <div>
+                <p class="eyebrow">LOAN PLANNING TOOL</p>
+                <h2>Estimate Your Monthly Payment</h2>
+                <p>
+                    Use this simple illustrative calculator to estimate a
+                    monthly repayment. It is not a bank quote or approval.
+                </p>
+            </div>
+
+            <div class="calculator">
+                <label for="loanAmount">Loan amount</label>
+                <input type="number" id="loanAmount" min="1" placeholder="Enter loan amount">
+
+                <label for="interestRate">Annual interest rate (%)</label>
+                <input type="number" id="interestRate" min="0" step="0.01" placeholder="Example: 8">
+
+                <label for="loanYears">Repayment period (years)</label>
+                <input type="number" id="loanYears" min="1" max="40" placeholder="Example: 5">
+
+                <button id="calculateButton" class="gold-button" type="button">
+                    Calculate Payment
+                </button>
+
+                <div class="calculator-result" id="calculatorResult" aria-live="polite">
+                    Your estimated monthly payment will appear here.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Need Help Choosing a Loan?</h2>
+            <p>Contact our team to learn more about available loan options.</p>
+            <a href="contact.html" class="dark-button">Contact Us</a>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container footer-content">
+        <div>
+            <a href="index.html" class="footer-logo">DBS BANK</a>
+            <p>Banking solutions for your financial journey.</p>
+        </div>
+
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="personal.html">Personal Banking</a>
+            <a href="business.html">Business Banking</a>
+            <a href="cards.html">Cards</a>
+            <a href="loans.html">Loans</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </div>
+
+    <div class="copyright">
+        <p>© <span id="currentYear"></span> DBS Bank Website Demo. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="loans.js"></script>
+</body>
+</html>
+```
