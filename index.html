@@ -4,133 +4,231 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DemoBank | Online Banking</title>
+  <meta name="description" content="Online banking, financial services and customer support.">
+  <title>Your Bank | Personal and Business Banking</title>
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-<header class="topbar">
-  <div class="logo">Demo<span>Bank</span></div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#services">Services</a>
-    <a href="#security">Security</a>
+<header class="header">
+  <a href="home" class="logo">DBS <span>BANK</span></a>
+
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+    ☰
+  </button>
+
+  <nav class="navigation" id="navigation">
+    <a href=".htmlhome">Home</a>
+    <a href="personal.html">Personal Banking</a>
+    <a href="business.html">Business Banking</a>
+    <a href="cardshtml">Cards</a>
+    <a href="loans.html">Loans</a>
+    <a href="about.html">About Us</a>
+    <a href="contacthtml">Contact</a>
   </nav>
-  <button class="login-btn" id="loginBtn">Open Demo Account</button>
+
+  <a href="online-banking" class="header-button">Online Banking</a>
 </header>
 
-<main id="home">
-  <section class="hero">
+<main>
+  <section class="hero" id="home">
     <div class="hero-content">
-      <span class="tag">DIGITAL BANKING DEMONSTRATION</span>
-      <h1>Banking made simple. Banking made smarter.</h1>
+      <span class="eyebrow">BANKING FOR YOUR FUTURE</span>
+      <h1>Banking that moves forward with you.</h1>
       <p>
-        Experience convenient digital banking with a modern,
-        secure and easy-to-use banking interface.
+        Discover convenient financial services designed to help
+        individuals, families and businesses manage their money.
       </p>
-      <button class="primary-btn" id="startBtn">
-        Explore Online Banking →
-      </button>
-      <p class="notice">Demonstration only. No real banking services.</p>
+      <div class="hero-buttons">
+        <a href=".personal.html" class="button primary">Explore Services</a>
+        <a href="about.html" class="button secondary">Discover Our Bank</a>
+      </div>
     </div>
-    <div class="hero-card">
-      <div class="card-top">DemoBank</div>
-      <p>Available Balance</p>
-      <h2>₦2,450,000.00</h2>
-      <div class="card-bottom">DEMO ACCOUNT</div>
+    <div class="hero-image">
+      <div class="feature-card">
+        <span>YOUR FINANCIAL FUTURE</span>
+        <h2>Smarter banking. Better possibilities.</h2>
+        <p>Explore banking services designed around your needs.</p>
+      </div>
     </div>
   </section>
 
-  <section class="services" id="services">
-    <h2>Banking Services</h2>
-    <p>Explore the available demonstration features.</p>
+  <section class="quick-services">
+    <a href="personal.html">
+      <span>◈</span>
+      <strong>Personal Banking</strong>
+      <small>Banking for individuals</small>
+    </a>
+    <a href="business.html">
+      <span>▦</span>
+      <strong>Business Banking</strong>
+      <small>Solutions for businesses</small>
+    </a>
+    <a href="cards.html">
+      <span>▣</span>
+      <strong>Bank Cards</strong>
+      <small>Explore card services</small>
+    </a>
+    <a href="loans.html">
+      <span>↗</span>
+      <strong>Loans</strong>
+      <small>Financing solutions</small>
+    </a>
+  </section>
+
+  <section class="section" id="personal">
+    <div class="section-heading">
+      <span class="eyebrow">PERSONAL FINANCE</span>
+      <h2>Personal Banking</h2>
+      <p>Banking services for everyday financial needs.</p>
+    </div>
 
     <div class="service-grid">
-      <div class="service">
-        <span>↗</span>
-        <h3>Transfers</h3>
-        <p>Explore a simulated money transfer interface.</p>
-      </div>
-      <div class="service">
-        <span>◈</span>
-        <h3>Account Balance</h3>
-        <p>View your sample account balance.</p>
-      </div>
-      <div class="service">
-        <span>▤</span>
-        <h3>Transactions</h3>
-        <p>Review sample transaction history.</p>
-      </div>
-      <div class="service">
-        <span>♧</span>
-        <h3>Customer Support</h3>
-        <p>Explore the support section.</p>
+      <article class="service-card">
+        <div class="service-icon">◈</div>
+        <h3>Savings Accounts</h3>
+        <p>Explore savings account options and ways to manage your finances.</p>
+        <a href="contact.html">Learn More →</a>
+      </article>
+
+      <article class="service-card">
+        <div class="service-icon">▤</div>
+        <h3>Current Accounts</h3>
+        <p>Explore everyday banking and account management services.</p>
+        <a href="contact.html">Learn More →</a>
+      </article>
+
+      <article class="service-card">
+        <div class="service-icon">↗</div>
+        <h3>Money Transfers</h3>
+        <p>Learn about available domestic and international transfer services.</p>
+        <a href="contac.htmlt">Learn More →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="business-section" id="business">
+    <div class="business-content">
+      <span class="eyebrow">BUSINESS SOLUTIONS</span>
+      <h2>Supporting businesses at every stage.</h2>
+      <p>
+        Discover business banking services, financial management
+        solutions and banking support for growing companies.
+      </p>
+      <a href="contact.html" class="button primary">Business Enquiries</a>
+    </div>
+  </section>
+
+  <section class="section" id="cards">
+    <div class="section-heading">
+      <span class="eyebrow">PAYMENT SOLUTIONS</span>
+      <h2>Banking Cards</h2>
+      <p>Explore card services and payment solutions.</p>
+    </div>
+
+    <div class="card-grid">
+      <article class="bank-card">
+        <span>BANK CARD SERVICES</span>
+        <h3>Debit Cards</h3>
+        <p>Explore everyday payment card options.</p>
+        <a href="contact.html">Learn More →</a>
+      </article>
+
+      <article class="bank-card alternate">
+        <span>BANK CARD SERVICES</span>
+        <h3>Credit Cards</h3>
+        <p>Learn about available credit card services.</p>
+        <a href="contact.html">Learn More →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="loan-section" id="loans">
+    <div>
+      <span class="eyebrow">FINANCIAL SUPPORT</span>
+      <h2>Financing your next big step.</h2>
+      <p>
+        Explore financing options and learn about loan services
+        available through authorized banking channels.
+      </p>
+      <a href="contact.html" class="button primary">Loan Enquiries</a>
+    </div>
+  </section>
+
+  <section class="online-section" id="online-banking">
+    <div class="online-content">
+      <span class="eyebrow">DIGITAL BANKING</span>
+      <h2>Online Banking</h2>
+      <p>
+        Access online banking services through your bank's
+        authorized and secure banking platform.
+      </p>
+      <div class="access-notice">
+        Secure account access will be connected here through
+        an approved banking system.
       </div>
     </div>
   </section>
 
-  <section class="dashboard" id="dashboard">
-    <div class="dashboard-header">
+  <section class="section about-section" id="about">
+    <div class="section-heading">
+      <span class="eyebrow">WHO WE ARE</span>
+      <h2>About Our Bank</h2>
+      <p>
+        We aim to make financial services more accessible through
+        convenient banking experiences and customer-focused support.
+      </p>
+    </div>
+
+    <div class="about-grid">
       <div>
-        <span class="tag">DEMO DASHBOARD</span>
-        <h2>Welcome to Online Banking</h2>
-        <p>Your sample banking overview.</p>
+        <h3>Our Mission</h3>
+        <p>To provide accessible, reliable and responsible financial services.</p>
       </div>
-      <button class="logout-btn" id="logoutBtn">Exit Demo</button>
-    </div>
-
-    <div class="balance-card">
-      <p>Total Available Balance</p>
-      <h1 id="balance">₦2,450,000.00</h1>
-      <span>Sample account •••• 4521</span>
-    </div>
-
-    <div class="actions">
-      <button id="transferBtn">↗ Transfer</button>
-      <button id="historyBtn">▤ Transactions</button>
-    </div>
-
-    <div class="transfer-panel" id="transferPanel">
-      <h3>Simulated Transfer</h3>
-      <label>Beneficiary Name</label>
-      <input id="beneficiary" placeholder="Enter sample name">
-      <label>Amount (₦)</label>
-      <input id="amount" type="number" placeholder="Enter amount">
-      <button class="primary-btn" id="submitTransfer">
-        Simulate Transfer
-      </button>
-      <p id="transferMessage"></p>
-    </div>
-
-    <div class="transactions" id="transactions">
-      <h3>Recent Transactions</h3>
-      <div id="transactionList">
-        <div class="transaction">
-          <span>Sample Salary Payment</span>
-          <strong class="positive">+₦500,000</strong>
-        </div>
-        <div class="transaction">
-          <span>Sample Utility Payment</span>
-          <strong class="negative">-₦25,000</strong>
-        </div>
-        <div class="transaction">
-          <span>Sample Shopping</span>
-          <strong class="negative">-₦15,000</strong>
-        </div>
+      <div>
+        <h3>Our Vision</h3>
+        <p>To build lasting relationships through excellent banking services.</p>
+      </div>
+      <div>
+        <h3>Our Values</h3>
+        <p>Integrity, transparency, customer service and responsibility.</p>
       </div>
     </div>
   </section>
 
-  <section class="security" id="security">
-    <h2>Your Security Matters</h2>
-    <p>This demonstration does not connect to a bank, process payments,
-       or transmit or store banking credentials.</p>
+  <section class="contact-section" id="contact">
+    <div>
+      <span class="eyebrow">WE ARE HERE TO HELP</span>
+      <h2>How can we help you?</h2>
+      <p>Contact our team for general banking and service enquiries.</p>
+    </div>
+
+    <form id="contactForm">
+      <label for="customerName">Name</label>
+      <input id="customerName" type="text" placeholder="Your name" required>
+Spaces
+      <label for="customerEmail">Email</label>
+      <input id="customerEmail" type="email" placeholder="Your email" required>
+
+      <label for="customerMessage">Message</label>
+      <textarea id="customerMessage" rows="5" placeholder="How can we help?" required></textarea>
+
+      <button type="submit" class="button primary">Send Enquiry</button>
+      <p id="formMessage" aria-live="polite"></p>
+    </form>
   </section>
 </main>
 
-<footer>
-  <div class="logo">Demo<span>Bank</span></div>
-  <p>© 2026 DemoBank. Educational demonstration only.</p>
+<footer class="footer">
+  <a href="#home" class="logo footer-logo">DBS <span>BANK</span></a>
+  <p>Banking website structure.</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="personal.html">Services</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <p class="copyright">© 2009 Banking Website. All rights reserved.</p>
 </footer>
 
 <script src="index.js"></script>
