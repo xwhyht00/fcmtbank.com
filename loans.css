@@ -1,0 +1,494 @@
+```css
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #263247;
+    background: #ffffff;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.header {
+    background: #101d35;
+    padding: 18px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #ffffff;
+    font-size: 27px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: #e8b94e;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.navigation a {
+    color: #ffffff;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.navigation a:hover,
+.navigation a.active {
+    color: #e8b94e;
+}
+
+.navigation .nav-button {
+    background: #e8b94e;
+    color: #101d35;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.navigation .nav-button:hover {
+    background: #ffffff;
+    color: #101d35;
+}
+
+.menu-toggle {
+    display: none;
+    color: #ffffff;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.hero {
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+    background:
+        linear-gradient(90deg, rgba(16, 29, 53, 0.96), rgba(16, 29, 53, 0.65)),
+        url("https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1600&q=85")
+        center/cover no-repeat;
+}
+
+.hero-content {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.eyebrow {
+    color: #bd8e25;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+}
+
+.hero h1 {
+    max-width: 650px;
+    font-size: clamp(38px, 5vw, 58px);
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.hero p:not(.eyebrow) {
+    max-width: 600px;
+    font-size: 17px;
+    margin-bottom: 30px;
+}
+
+.gold-button,
+.dark-button {
+    display: inline-block;
+    border: none;
+    border-radius: 4px;
+    padding: 13px 23px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.gold-button {
+    background: #e8b94e;
+    color: #101d35;
+}
+
+.gold-button:hover {
+    background: #ffffff;
+    color: #101d35;
+}
+
+.dark-button {
+    background: #101d35;
+    color: #ffffff;
+}
+
+.dark-button:hover {
+    background: #263c61;
+}
+
+.section {
+    padding: 80px 0;
+}
+
+.intro {
+    text-align: center;
+}
+
+.intro h2,
+.section-heading h2,
+.benefits h2,
+.calculator-container h2 {
+    color: #101d35;
+    font-size: 34px;
+    line-height: 1.25;
+    margin-bottom: 15px;
+}
+
+.section-description {
+    max-width: 650px;
+    margin: 0 auto;
+    color: #687386;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.loan-section {
+    background: #f5f7fa;
+}
+
+.loan-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.loan-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 7px;
+    border: 1px solid #e6e9ef;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.loan-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(16, 29, 53, 0.10);
+}
+
+.loan-icon {
+    font-size: 38px;
+    margin-bottom: 18px;
+}
+
+.loan-card h3 {
+    color: #101d35;
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.loan-card p {
+    color: #687386;
+    margin-bottom: 20px;
+}
+
+.loan-card a {
+    color: #a87915;
+    font-weight: bold;
+}
+
+.loan-card a:hover {
+    color: #101d35;
+}
+
+.benefits-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.benefits-layout > div:first-child > p:not(.eyebrow) {
+    color: #687386;
+    margin-bottom: 25px;
+}
+
+.benefit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.benefit-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.benefit-item > span {
+    min-width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff3d5;
+    color: #9b711b;
+    font-weight: bold;
+}
+
+.benefit-item h3 {
+    color: #101d35;
+    margin-bottom: 5px;
+}
+
+.benefit-item p {
+    color: #687386;
+}
+
+.calculator-section {
+    background: #f5f7fa;
+}
+
+.calculator-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 60px;
+}
+
+.calculator-container > div:first-child p:not(.eyebrow) {
+    color: #687386;
+}
+
+.calculator {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(16, 29, 53, 0.08);
+}
+
+.calculator label {
+    display: block;
+    color: #101d35;
+    font-weight: bold;
+    margin: 15px 0 7px;
+}
+
+.calculator input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d8dee8;
+    border-radius: 4px;
+    font-size: 15px;
+    outline: none;
+}
+
+.calculator input:focus {
+    border-color: #bd8e25;
+    box-shadow: 0 0 0 3px rgba(232, 185, 78, 0.18);
+}
+
+.calculator .gold-button {
+    width: 100%;
+    margin-top: 22px;
+}
+
+.calculator-result {
+    background: #f5f7fa;
+    border-left: 4px solid #e8b94e;
+    padding: 17px;
+    margin-top: 20px;
+    color: #101d35;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+.cta-section {
+    background: #e8b94e;
+    text-align: center;
+    padding: 65px 20px;
+}
+
+.cta-section h2 {
+    color: #101d35;
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.cta-section p {
+    color: #303d51;
+    margin-bottom: 25px;
+}
+
+.footer {
+    background: #101d35;
+    color: #ffffff;
+    padding-top: 55px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    padding-bottom: 40px;
+}
+
+.footer-logo {
+    color: #e8b94e;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.footer-content p {
+    color: #c5ccda;
+    margin-top: 10px;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-content: flex-start;
+}
+
+.footer-links a {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    color: #e8b94e;
+}
+
+.copyright {
+    text-align: center;
+    padding: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    color: #c5ccda;
+    font-size: 13px;
+}
+
+@media (max-width: 1000px) {
+    .navigation {
+        gap: 12px;
+    }
+
+    .navigation a {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 800px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .navigation {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        background: #101d35;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .navigation.show {
+        display: flex;
+    }
+
+    .navigation a {
+        padding: 12px 5%;
+        font-size: 15px;
+    }
+
+    .navigation .nav-button {
+        margin-top: 8px;
+        text-align: center;
+    }
+
+    .loan-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .benefits-layout,
+    .calculator-container {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 550px) {
+    .hero {
+        min-height: 420px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .section {
+        padding: 60px 0;
+    }
+
+    .intro h2,
+    .section-heading h2,
+    .benefits h2,
+    .calculator-container h2 {
+        font-size: 28px;
+    }
+
+    .loan-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .calculator {
+        padding: 22px;
+    }
+
+    .cta-section h2 {
+        font-size: 27px;
+    }
+}
+```
