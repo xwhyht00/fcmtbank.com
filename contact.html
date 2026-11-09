@@ -1,0 +1,288 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | DBS Bank</title>
+    <link rel="stylesheet" href="contact.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="container nav-container">
+        <a href="index.html" class="logo">DBS <span>BANK</span></a>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">
+            ☰
+        </button>
+
+        <nav class="navigation" id="navigation">
+            <a href="index.html">Home</a>
+            <a href="personal.html">Personal Banking</a>
+            <a href="business.html">Business Banking</a>
+            <a href="cards.html">Cards</a>
+            <a href="loans.html">Loans</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html" class="active">Contact</a>
+            <a href="online-banking.html" class="nav-button">Online Banking</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <p class="eyebrow">WE ARE HERE TO HELP</p>
+            <h1>Contact Us</h1>
+            <p>
+                Have a question or need assistance? Get in touch with our
+                team using the contact information or form below.
+            </p>
+        </div>
+    </section>
+
+    <section class="contact-intro section">
+        <div class="container">
+            <p class="eyebrow">GET IN TOUCH</p>
+            <h2>How Can We Help You?</h2>
+            <p>
+                We welcome your questions, comments, and general enquiries.
+                Choose a contact option or send us a message.
+            </p>
+        </div>
+    </section>
+
+    <section class="contact-details section">
+        <div class="container contact-grid">
+
+            <article class="contact-card">
+                <div class="contact-icon">📞</div>
+                <h3>Call Us</h3>
+                <p>For general enquiries, use our demonstration contact details.</p>
+                <a href="tel:+10000000000">+1 000 000 0000</a>
+            </article>
+
+            <article class="contact-card">
+                <div class="contact-icon">✉️</div>
+                <h3>Email Us</h3>
+                <p>Send us a message for general information and assistance.</p>
+                <a href="mailto:info@example.com">info@example.com</a>
+            </article>
+
+            <article class="contact-card">
+                <div class="contact-icon">📍</div>
+                <h3>Visit Us</h3>
+                <p>Contact us to request information about office locations.</p>
+                <span>Office details to be confirmed</span>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="message-section section">
+        <div class="container message-layout">
+
+            <div class="message-info">
+                <p class="eyebrow">SEND AN ENQUIRY</p>
+                <h2>We Would Like to Hear From You</h2>
+
+                <p>
+                    Complete the form with your contact information and
+                    enquiry. Please do not include account passwords,
+                    card numbers, PINs, or other confidential banking details.
+                </p>
+
+                <div class="info-item">
+                    <span>✓</span>
+                    <div>
+                        <h3>General Questions</h3>
+                        <p>Ask about the information displayed on this website.</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span>✓</span>
+                    <div>
+                        <h3>Service Enquiries</h3>
+                        <p>Send questions about the banking services listed here.</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span>✓</span>
+                    <div>
+                        <h3>Customer Assistance</h3>
+                        <p>Let us know what information you need.</p>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" id="contactForm">
+
+                <h2>Send Us a Message</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input
+                            type="text"
+                            id="firstName"
+                            name="firstName"
+                            placeholder="Enter your first name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input
+                            type="text"
+                            id="lastName"
+                            name="lastName"
+                            placeholder="Enter your last name"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Choose a subject</option>
+                        <option value="General Enquiry">General Enquiry</option>
+                        <option value="Personal Banking">Personal Banking</option>
+                        <option value="Business Banking">Business Banking</option>
+                        <option value="Cards">Cards</option>
+                        <option value="Loans">Loans</option>
+                        <option value="Technical Support">Technical Support</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="6"
+                        placeholder="Write your message here..."
+                        required
+                    ></textarea>
+                </div>
+
+                <p class="form-notice">
+                    Do not submit passwords, PINs, card details, or banking credentials.
+                </p>
+
+                <button type="submit" class="gold-button">
+                    Send Message
+                </button>
+
+                <div id="formMessage" class="form-message" aria-live="polite"></div>
+
+            </form>
+
+        </div>
+    </section>
+
+    <section class="faq-section section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="eyebrow">HELP CENTER</p>
+                <h2>Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-list">
+
+                <details class="faq-item">
+                    <summary>How can I contact customer support?</summary>
+                    <p>
+                        Use the contact information or enquiry form displayed
+                        on this page. The details are demonstration placeholders.
+                    </p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>How can I learn about banking services?</summary>
+                    <p>
+                        Visit the Personal Banking, Business Banking, Cards,
+                        and Loans pages on this website.
+                    </p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Can I apply for a loan through this page?</summary>
+                    <p>
+                        No. This page provides general enquiry information.
+                        It does not process loan applications.
+                    </p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Does this contact form send messages?</summary>
+                    <p>
+                        The current form is a front-end demonstration.
+                        A secure backend or form service must be connected
+                        before messages can be delivered.
+                    </p>
+                </details>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="footer">
+    <div class="container footer-content">
+
+        <div>
+            <a href="index.html" class="footer-logo">DBS BANK</a>
+            <p>Banking solutions for your financial journey.</p>
+        </div>
+
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="personal.html">Personal Banking</a>
+            <a href="business.html">Business Banking</a>
+            <a href="cards.html">Cards</a>
+            <a href="loans.html">Loans</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        <p>© <span id="currentYear"></span> DBS Bank Website Demo. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="contact.js"></script>
+</body>
+</html>
+```
