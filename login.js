@@ -10,16 +10,51 @@ document.addEventListener("DOMContentLoaded", function () {
         message.style.color = success ? "green" : "red";
     }
 
+    function getCustomers() {
+        let customers = JSON.parse(
+            localStorage.getItem("dbsDemoCustomers") || "null"
+        );
+
+        if (Array.isArray(customers)) return customers;
+
+        customers = [];
+
+        const profile = JSON.parse(
+            localStorage.getItem("dbsDemoProfile") || "null"
+        );
+        const credentials = JSON.parse(
+            localStorage.getItem("dbsDemoCredentials") || "null"
+        );
+        const bankData = JSON.parse(
+            localStorage.getItem("dbsDemoData") || "null"
+        );
+
+        if (profile && credentials && bankData) {
+            const accountNumber = bankData.accountNumber || "0123456789";
+
+            customers.push({
+                profile: { ...profile, accountNumber: accountNumber },
+                credentials: credentials,
+                bankData: { ...bankData, accountNumber: accountNumber }
+            });
+
+            localStorage.setItem(
+                "dbsDemoCustomers",
+                JSON.stringify(customers)
+            );
+        }
+
+        return customers;
+    }
+
     async function hashPassword(password, saltHex) {
         const salt = new Uint8Array(
             saltHex.match(/.{1,2}/g).map(byte => parseInt(byte, 16))
         );
 
-        const encoder = new TextEncoder();
-
         const key = await crypto.subtle.importKey(
             "raw",
-            encoder.encode(password),
+            new TextEncoder().encode(password),
             "PBKDF2",
             false,
             ["deriveBits"]
@@ -48,49 +83,42 @@ document.addEventListener("DOMContentLoaded", function () {
         const password = document.getElementById("password").value;
 
         if (!email || !password) {
-            showMessage("Please enter your email and password.");
+            showMessage("Enter your email and password.");
             return;
         }
 
-        if (!window.crypto || !crypto.subtle) {
-            showMessage("Secure login requires the website to run on HTTPS.");
+        if (!crypto.subtle) {
+            showMessage("Please open the website using HTTPS.");
             return;
         }
 
         try {
-            const credentials = JSON.parse(
-                localStorage.getItem("dbsDemoCredentials") || "null"
+            const customers = getCustomers();
+
+            const customer = customers.find(item =>
+                item.profile.email.toLowerCase() === email
             );
 
-            const profile = JSON.parse(
-                localStorage.getItem("dbsDemoProfile") || "null"
-            );
-
-            if (!credentials || !profile) {
-                showMessage("No registered account was found. Please register first.");
+            if (!customer) {
+                showMessage("Account not found. Please register first.");
                 return;
             }
 
-            if (credentials.email !== email || profile.email !== email) {
-                showMessage("Incorrect email or password.");
-                return;
-            }
-
-            const enteredPasswordHash = await hashPassword(
+            const enteredHash = await hashPassword(
                 password,
-                credentials.salt
+                customer.credentials.salt
             );
 
-            if (enteredPasswordHash !== credentials.passwordHash) {
+            if (enteredHash !== customer.credentials.passwordHash) {
                 showMessage("Incorrect email or password.");
                 return;
             }
 
-            localStorage.setItem(
+            sessionStorage.setItem(
                 "dbsDemoSession",
                 JSON.stringify({
-                    email: email,
-                    loggedInAt: new Date().toISOString()
+                    email: customer.profile.email,
+                    accountNumber: customer.profile.accountNumber
                 })
             );
 
