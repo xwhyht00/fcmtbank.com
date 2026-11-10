@@ -1,25 +1,32 @@
 
 document.addEventListener("DOMContentLoaded", function () {
-    function readStorage(key, fallback) {
+
+    function readStorage(storage, key, fallback) {
         try {
-            return JSON.parse(localStorage.getItem(key)) || fallback;
+            const value = storage.getItem(key);
+            return value ? JSON.parse(value) : fallback;
         } catch (error) {
             return fallback;
         }
     }
 
-    const session = readStorage("dbsDemoSession", null);
-    const customers = readStorage("dbsDemoCustomers", []);
+    // IMPORTANT: Login session is stored in sessionStorage.
+    const session = readStorage(sessionStorage, "dbsDemoSession", null);
+
+    // Customer accounts are stored in localStorage.
+    const customers = readStorage(localStorage, "dbsDemoCustomers", []);
 
     if (!session || !Array.isArray(customers)) {
         window.location.replace("login.html");
         return;
     }
 
-    const customer = customers.find(item =>
-        item.profile.email === session.email &&
-        item.profile.accountNumber === session.accountNumber
-    );
+    const customer = customers.find(function (item) {
+        return (
+            item.profile.email === session.email &&
+            item.profile.accountNumber === session.accountNumber
+        );
+    });
 
     if (!customer) {
         sessionStorage.removeItem("dbsDemoSession");
@@ -29,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const profile = customer.profile;
     const bankData = customer.bankData;
+
     const transactions = Array.isArray(bankData.transactions)
         ? bankData.transactions
         : [];
@@ -77,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             row.appendChild(cell);
             recentTransactions.appendChild(row);
+
         } else {
             transactions.slice(0, 5).forEach(function (transaction) {
                 const row = document.createElement("tr");
@@ -101,9 +110,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     ? new Date(transaction.date).toLocaleDateString("en-NG")
                     : "Date unavailable";
 
-                row.append(description, type, amount, date);
+                row.append(
+                    description,
+                    type,
+                    amount,
+                    date
+                );
+
                 recentTransactions.appendChild(row);
             });
         }
     }
+
 });
