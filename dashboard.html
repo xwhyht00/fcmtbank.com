@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBS BANK | Customer Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">DBS<span>BANK</span></a>
+
+        <nav class="main-nav">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="profile.html">Profile</a>
+            <a href="account.html">Account</a>
+            <a href="balance.html">Balance</a>
+            <a href="transfer.html">Transfers</a>
+            <a href="beneficiaries.html">Beneficiaries</a>
+            <a href="transactions.html">Transactions</a>
+            <a href="records.html">Deposit / Withdrawal</a>
+            <a href="logout.html">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <section class="welcome">
+            <div>
+                <p class="eyebrow">CUSTOMER BANKING</p>
+                <h1>Welcome, <span id="customerName">Customer</span></h1>
+                <p>Manage your account and banking activities from one place.</p>
+            </div>
+            <a href="profile.html" class="profile-button">View Profile</a>
+        </section>
+
+        <section class="summary-grid">
+
+            <div class="summary-card">
+                <p>Available Balance</p>
+                <h2 id="accountBalance">₦0.00</h2>
+                <a href="balance.html">View balance</a>
+            </div>
+
+            <div class="summary-card">
+                <p>Account Number</p>
+                <h2 id="accountNumber">0123456789</h2>
+                <a href="account.html">Account details</a>
+            </div>
+
+            <div class="summary-card">
+                <p>Total Transactions</p>
+                <h2 id="transactionCount">0</h2>
+                <a href="transactions.html">View transactions</a>
+            </div>
+
+        </section>
+
+        <section class="services-section">
+            <div class="section-heading">
+                <h2>Banking Services</h2>
+                <p>Choose a service to continue.</p>
+            </div>
+
+            <div class="services-grid">
+                <a href="profile.html" class="service-card">
+                    <span class="service-icon">👤</span>
+                    <h3>My Profile</h3>
+                    <p>View your personal information.</p>
+                </a>
+
+                <a href="account.html" class="service-card">
+                    <span class="service-icon">🏦</span>
+                    <h3>Account Details</h3>
+                    <p>View your account information.</p>
+                </a>
+
+                <a href="balance.html" class="service-card">
+                    <span class="service-icon">💰</span>
+                    <h3>Account Balance</h3>
+                    <p>Check your available balance.</p>
+                </a>
+
+                <a href="transfer.html" class="service-card">
+                    <span class="service-icon">💸</span>
+                    <h3>Money Transfer</h3>
+                    <p>Manage transfer requests.</p>
+                </a>
+
+                <a href="beneficiaries.html" class="service-card">
+                    <span class="service-icon">👥</span>
+                    <h3>Beneficiaries</h3>
+                    <p>Manage saved beneficiaries.</p>
+                </a>
+
+                <a href="transactions.html" class="service-card">
+                    <span class="service-icon">📋</span>
+                    <h3>Transactions</h3>
+                    <p>Review your transaction history.</p>
+                </a>
+
+                <a href="records.html" class="service-card">
+                    <span class="service-icon">📥</span>
+                    <h3>Deposit & Withdrawal</h3>
+                    <p>View deposit and withdrawal records.</p>
+                </a>
+
+                <a href="forgot-password.html" class="service-card">
+                    <span class="service-icon">🔐</span>
+                    <h3>Password Recovery</h3>
+                    <p>Access password recovery.</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="transactions-section">
+            <div class="section-heading">
+                <div>
+                    <h2>Recent Transactions</h2>
+                    <p>Your latest account activity.</p>
+                </div>
+                <a href="transactions.html" class="view-all">View All</a>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentTransactions">
+                        <tr>
+                            <td colspan="4" class="empty-message">No transactions available.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; <span id="currentYear"></span> DBS BANK. All rights reserved.</p>
+    </footer>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
