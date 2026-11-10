@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBS-BANK | Account Details</title>
+    <link rel="stylesheet" href="account.css">
+    <script src="account.js" defer></script>
+</head>
+<body>
+
+<header>
+    <div class="logo">DBS<span>BANK</span></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="profile.html">Profile</a>
+        <a href="balance.html">Balance</a>
+        <a href="transfer.html">Transfers</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="login.html">Logout</a>
+    </nav>
+</header>
+
+<main>
+    <section class="account-container">
+
+        <h1>Account Details</h1>
+        <p>View your personal banking account information.</p>
+
+        <div class="account-card">
+
+            <div class="card-header">
+                <h2>DBS BANK</h2>
+                <span>PERSONAL BANKING</span>
+            </div>
+
+            <div class="account-number">
+                <span>Account Number</span>
+                <h2 id="accountNumber">0123456789</h2>
+            </div>
+
+            <div class="card-footer">
+                <div>
+                    <span>Account Holder</span>
+                    <strong id="accountHolder">Demo Customer</strong>
+                </div>
+
+                <div>
+                    <span>Account Type</span>
+                    <strong>Savings</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="details-section">
+
+            <h2>Account Information</h2>
+
+            <div class="details-grid">
+
+                <div class="detail">
+                    <span>Account Holder Name</span>
+                    <strong id="holderName">Demo Customer</strong>
+                </div>
+
+                <div class="detail">
+                    <span>Account Number</span>
+                    <strong>0123456789</strong>
+                </div>
+
+                <div class="detail">
+                    <span>Account Type</span>
+                    <strong>Personal Savings</strong>
+                </div>
+
+                <div class="detail">
+                    <span>Currency</span>
+                    <strong>NGN - Nigerian Naira</strong>
+                </div>
+
+                <div class="detail">
+                    <span>Account Status</span>
+                    <strong class="status">Demo Account</strong>
+                </div>
+
+                <div class="detail">
+                    <span>Bank Name</span>
+                    <strong>DBS-BANK Demo</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <button id="copyAccount">Copy Account Number</button>
+
+        <p id="message"></p>
+
+    </section>
+</main>
+
+<footer>
+    &copy; 2026 DBS-BANK. All Rights Reserved.
+</footer>
+
+</body>
+</html>
