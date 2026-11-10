@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const loginSection = document.getElementById("loginSection");
     const adminPanel = document.getElementById("adminPanel");
-
     const loginForm = document.getElementById("adminLoginForm");
     const searchForm = document.getElementById("searchForm");
     const depositForm = document.getElementById("depositForm");
@@ -16,11 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const customerDetails = document.getElementById("customerDetails");
     const depositHistory = document.getElementById("depositHistory");
-
-    const accountInput = document.getElementById("accountNumber");
-    const amountInput = document.getElementById("depositAmount");
-    const descriptionInput = document.getElementById("depositDescription");
-    const depositButton = document.getElementById("depositButton");
 
     let selectedAccountNumber = "";
 
@@ -36,6 +30,35 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function getCustomers() {
+        let customers = readStorage("dbsDemoCustomers", null);
+
+        if (Array.isArray(customers)) return customers;
+
+        customers = [];
+
+        const profile = readStorage("dbsDemoProfile", null);
+        const credentials = readStorage("dbsDemoCredentials", null);
+        const bankData = readStorage("dbsDemoData", null);
+
+        if (profile && credentials && bankData) {
+            const accountNumber = bankData.accountNumber || "0123456789";
+
+            customers.push({
+                profile: { ...profile, accountNumber: accountNumber },
+                credentials: credentials,
+                bankData: { ...bankData, accountNumber: accountNumber }
+            });
+
+            localStorage.setItem(
+                "dbsDemoCustomers",
+                JSON.stringify(customers)
+            );
+        }
+
+        return customers;
+    }
+
     function money(amount) {
         return Number(amount || 0).toLocaleString("en-NG", {
             style: "currency",
@@ -43,27 +66,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function showMessage(element, message, success = false) {
-        element.textContent = message;
+    function showMessage(element, text, success = false) {
+        element.textContent = text;
         element.style.color = success ? "#147044" : "#b42318";
-    }
-
-    function getCustomer() {
-        const profile = readStorage("dbsDemoProfile", null);
-        const bankData = readStorage("dbsDemoData", null);
-        const credentials = readStorage("dbsDemoCredentials", null);
-
-        if (!profile || !bankData || !credentials) {
-            return null;
-        }
-
-        return {
-            profile: profile,
-            bankData: bankData,
-            accountNumber: String(
-                bankData.accountNumber || "0123456789"
-            )
-        };
     }
 
     function showCustomer(customer) {
@@ -74,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
             customer.profile.email || "Not available";
 
         document.getElementById("displayAccountNumber").textContent =
-            customer.accountNumber;
+            customer.profile.accountNumber;
 
         document.getElementById("customerBalance").textContent =
             money(customer.bankData.balance);
@@ -84,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function loadDepositHistory() {
         const deposits = readStorage("dbsAdminDeposits", []);
-
         depositHistory.replaceChildren();
 
         if (!Array.isArray(deposits) || deposits.length === 0) {
@@ -100,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        deposits.slice(0, 20).forEach(function (deposit) {
+        deposits.slice(0, 30).forEach(function (deposit) {
             const row = document.createElement("tr");
 
             [
@@ -124,7 +128,6 @@ document.addEventListener("DOMContentLoaded", function () {
         loadDepositHistory();
     }
 
-    // Keep the admin login active for this browser tab.
     if (sessionStorage.getItem("dbsAdminSession") === "active") {
         openAdminPanel();
     }
@@ -143,10 +146,12 @@ document.addEventListener("DOMContentLoaded", function () {
             password === ADMIN_PASSWORD
         ) {
             sessionStorage.setItem("dbsAdminSession", "active");
-            showMessage(loginMessage, "Login successful.", true);
             openAdminPanel();
         } else {
-            showMessage(loginMessage, "Incorrect administrator username or password.");
+            showMessage(
+                loginMessage,
+                "Incorrect administrator username or password."
+            );
         }
     });
 
@@ -156,24 +161,21 @@ document.addEventListener("DOMContentLoaded", function () {
         customerDetails.hidden = true;
         selectedAccountNumber = "";
 
-        const enteredNumber = accountInput.value.trim();
+        const enteredNumber =
+            document.getElementById("accountNumber").value.trim();
 
         if (!enteredNumber) {
             showMessage(searchMessage, "Enter an account number.");
             return;
         }
 
-        const customer = getCustomer();
+        const customers = getCustomers();
+
+        const customer = customers.find(item =>
+            item.profile.accountNumber === enteredNumber
+        );
 
         if (!customer) {
-            showMessage(
-                searchMessage,
-                "No registered customer was found in this browser."
-            );
-            return;
-        }
-
-        if (enteredNumber !== customer.accountNumber) {
             showMessage(
                 searchMessage,
                 "No customer account matches that number."
@@ -181,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        selectedAccountNumber = customer.accountNumber;
+        selectedAccountNumber = enteredNumber;
         showCustomer(customer);
 
         showMessage(searchMessage, "Customer account found.", true);
@@ -196,7 +198,9 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const amount = Number(amountInput.value);
+        const amount = Number(
+            document.getElementById("depositAmount").value
+        );
 
         if (
             !Number.isFinite(amount) ||
@@ -210,49 +214,41 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const customer = getCustomer();
+        const customers = getCustomers();
 
-        if (
-            !customer ||
-            customer.accountNumber !== selectedAccountNumber
-        ) {
-            showMessage(
-                depositMessage,
-                "The customer account could not be verified. Search again."
-            );
+        const customerIndex = customers.findIndex(item =>
+            item.profile.accountNumber === selectedAccountNumber
+        );
+
+        if (customerIndex === -1) {
+            showMessage(depositMessage, "Customer account not found. Search again.");
             customerDetails.hidden = true;
             selectedAccountNumber = "";
             return;
         }
 
-        const bankData = customer.bankData;
-
-        const currentBalance = Number(bankData.balance || 0);
+        const customer = customers[customerIndex];
+        const currentBalance = Number(customer.bankData.balance || 0);
+        const newBalance = currentBalance + amount;
 
         if (
             !Number.isFinite(currentBalance) ||
-            currentBalance < 0
+            currentBalance < 0 ||
+            !Number.isFinite(newBalance)
         ) {
-            showMessage(depositMessage, "The stored account balance is invalid.");
+            showMessage(depositMessage, "The account balance is invalid.");
             return;
         }
 
-        const newBalance = currentBalance + amount;
-
-        if (!Number.isFinite(newBalance)) {
-            showMessage(depositMessage, "The new balance is too large.");
-            return;
-        }
-
-        const now = new Date().toISOString();
+        const date = new Date().toISOString();
 
         const reference = "DBS-TEST-" +
-            Date.now().toString() +
-            "-" +
+            Date.now() + "-" +
             Math.random().toString(36).slice(2, 7).toUpperCase();
 
         const description =
-            descriptionInput.value.trim() || "Admin test deposit";
+            document.getElementById("depositDescription").value.trim() ||
+            "Admin test deposit";
 
         const transaction = {
             reference: reference,
@@ -260,31 +256,29 @@ document.addEventListener("DOMContentLoaded", function () {
             description: description,
             type: "Admin Deposit",
             amount: amount,
-            date: now
+            date: date
         };
 
-        // Update the customer's test balance.
-        bankData.balance = newBalance;
-
-        if (!Array.isArray(bankData.transactions)) {
-            bankData.transactions = [];
+        if (!Array.isArray(customer.bankData.transactions)) {
+            customer.bankData.transactions = [];
         }
 
-        if (!Array.isArray(bankData.records)) {
-            bankData.records = [];
+        if (!Array.isArray(customer.bankData.records)) {
+            customer.bankData.records = [];
         }
 
-        bankData.transactions.unshift(transaction);
-        bankData.records.unshift(transaction);
+        customer.bankData.balance = newBalance;
+        customer.bankData.transactions.unshift(transaction);
+        customer.bankData.records.unshift(transaction);
 
         const deposits = readStorage("dbsAdminDeposits", []);
-
         deposits.unshift(transaction);
 
         try {
+            // Save all customers, including the updated selected account.
             localStorage.setItem(
-                "dbsDemoData",
-                JSON.stringify(bankData)
+                "dbsDemoCustomers",
+                JSON.stringify(customers)
             );
 
             localStorage.setItem(
@@ -292,8 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 JSON.stringify(deposits)
             );
 
-            document.getElementById("customerBalance").textContent =
-                money(newBalance);
+            showCustomer(customer);
 
             showMessage(
                 depositMessage,
@@ -301,14 +294,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 true
             );
 
-            amountInput.value = "";
-            descriptionInput.value = "";
+            document.getElementById("depositAmount").value = "";
+            document.getElementById("depositDescription").value = "";
 
             loadDepositHistory();
 
         } catch (error) {
             console.error(error);
-
             showMessage(
                 depositMessage,
                 "Could not save the deposit. Please try again."
