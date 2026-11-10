@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History | DBS-BANK</title>
+    <link rel="stylesheet" href="transactions.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">DBS<span>BANK</span></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="profile.html">Profile</a>
+        <a href="account.html">Account</a>
+        <a href="balance.html">Balance</a>
+        <a href="transfer.html">Transfers</a>
+        <a href="beneficiaries.html">Beneficiaries</a>
+        <a href="login.html">Logout</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="page-heading">
+        <h1>Transaction History</h1>
+        <p>Review your recorded demo banking transactions.</p>
+    </section>
+
+    <section class="summary-grid">
+        <div class="summary-card">
+            <h3>Total Transactions</h3>
+            <p id="totalTransactions">0</p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Total Deposits</h3>
+            <p id="totalDeposits">₦0.00</p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Total Withdrawals</h3>
+            <p id="totalWithdrawals">₦0.00</p>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="table-heading">
+            <h2>Recent Transactions</h2>
+
+            <button id="refreshBtn" class="refresh-btn" type="button">
+                Refresh
+            </button>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Reference</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="transactionTable">
+                    <tr>
+                        <td colspan="6">Loading transactions...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p id="emptyMessage" class="empty-message" hidden>
+            No transactions have been recorded yet.
+        </p>
+    </section>
+
+    <p class="demo-notice">
+        Demo only: transaction information is stored in this browser.
+        These records do not represent real bank transactions.
+    </p>
+
+</main>
+
+<script src="transactions.js"></script>
+</body>
+</html>
