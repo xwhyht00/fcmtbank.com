@@ -1,20 +1,8 @@
 
-const logoutButton = document.getElementById("logoutBtn");
-const message = document.getElementById("message");
-
-logoutButton.addEventListener("click", function() {
-
-    // Remove only the demo session marker.
-    // Do not delete the saved profile or demo transactions.
+document.addEventListener("DOMContentLoaded", function () {
+    // End the current browser session without deleting the customer profile.
     localStorage.removeItem("dbsDemoSession");
 
-    message.textContent = "Demo session ended. Redirecting to login...";
-
-    logoutButton.disabled = true;
-    logoutButton.textContent = "Logged Out";
-
-    setTimeout(function() {
-        window.location.href = "login.html";
-    }, 1500);
-
+    // Return the customer to the login page.
+    window.location.replace("login.html");
 });
