@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBS-BANK | Create Account</title>
+    <link rel="stylesheet" href="register.css">
+    <script src="register.js" defer></script>
+</head>
+<body>
+
+<header>
+    <div class="logo">DBS<span>BANK</span></div>
+    <a href="login.html">Customer Login</a>
+</header>
+
+<main>
+    <div class="register-container">
+        <h1>Create Your Account</h1>
+        <p>Register for DBS-BANK Online Banking</p>
+
+        <form id="registerForm">
+            <label>Full Name</label>
+            <input type="text" id="fullname" required>
+
+            <label>Email Address</label>
+            <input type="email" id="email" required>
+
+            <label>Phone Number</label>
+            <input type="tel" id="phone" required>
+
+            <label>Create Password</label>
+            <input type="password" id="password" minlength="8" required>
+
+            <label>Confirm Password</label>
+            <input type="password" id="confirmPassword" required>
+
+            <button type="submit">Create Account</button>
+        </form>
+
+        <p id="message"></p>
+
+        <div class="login-link">
+            Already have an account?
+            <a href="login.html">Login Here</a>
+        </div>
+    </div>
+</main>
+
+<footer>
+    &copy; 2026 DBS-BANK. All Rights Reserved.
+</footer>
+
+</body>
+</html>
