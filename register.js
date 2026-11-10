@@ -10,12 +10,60 @@ document.addEventListener("DOMContentLoaded", function () {
         message.style.color = success ? "green" : "red";
     }
 
-    async function hashPassword(password, salt) {
-        const encoder = new TextEncoder();
+    function getCustomers() {
+        let customers = JSON.parse(
+            localStorage.getItem("dbsDemoCustomers") || "null"
+        );
 
+        if (Array.isArray(customers)) return customers;
+
+        customers = [];
+
+        // Preserve a previously registered single customer.
+        const oldProfile = JSON.parse(
+            localStorage.getItem("dbsDemoProfile") || "null"
+        );
+        const oldCredentials = JSON.parse(
+            localStorage.getItem("dbsDemoCredentials") || "null"
+        );
+        const oldData = JSON.parse(
+            localStorage.getItem("dbsDemoData") || "null"
+        );
+
+        if (oldProfile && oldCredentials && oldData) {
+            customers.push({
+                profile: {
+                    ...oldProfile,
+                    accountNumber: oldData.accountNumber || "0123456789"
+                },
+                credentials: oldCredentials,
+                bankData: {
+                    ...oldData,
+                    accountNumber: oldData.accountNumber || "0123456789"
+                }
+            });
+        }
+
+        return customers;
+    }
+
+    function createSalt() {
+        const bytes = crypto.getRandomValues(new Uint8Array(16));
+        return Array.from(bytes)
+            .map(byte => byte.toString(16).padStart(2, "0"))
+            .join("");
+    }
+
+    function hexToBytes(hex) {
+        return new Uint8Array(
+            hex.match(/.{1,2}/g).map(byte => parseInt(byte, 16))
+        );
+    }
+
+    async function hashPassword(password, salt) {
         const key = await crypto.subtle.importKey(
             "raw",
-            encoder.encode(password),
+            new TextEncoder().encode(password),
             "PBKDF2",
             false,
             ["deriveBits"]
@@ -37,22 +85,19 @@ document.addEventListener("DOMContentLoaded", function () {
             .join("");
     }
 
-    function createSalt() {
-        const salt = crypto.getRandomValues(new Uint8Array(16));
+    function createAccountNumber(customers) {
+        let number;
 
-        return Array.from(salt)
-            .map(byte => byte.toString(16).padStart(2, "0"))
-            .join("");
-    }
+        do {
+            const bytes = crypto.getRandomValues(new Uint32Array(1));
+            number = String(1000000000 + (bytes[0] % 9000000000));
+        } while (
+            customers.some(customer =>
+                customer.profile.accountNumber === number
+            )
+        );
 
-    function hexToBytes(hex) {
-        const bytes = new Uint8Array(hex.length / 2);
-
-        for (let i = 0; i < bytes.length; i++) {
-            bytes[i] = parseInt(hex.substring(i * 2, i * 2 + 2), 16);
-        }
-
-        return bytes;
+        return number;
     }
 
     form.addEventListener("submit", async function (event) {
@@ -70,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (password.length < 8) {
-            showMessage("Your password must contain at least 8 characters.");
+            showMessage("Password must contain at least 8 characters.");
             return;
         }
 
@@ -79,88 +124,76 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (!window.crypto || !crypto.subtle) {
-            showMessage("Secure registration requires the website to run on HTTPS.");
+        if (!crypto.subtle) {
+            showMessage("Please open the website using HTTPS.");
             return;
         }
 
         try {
-            const existingProfile = JSON.parse(
-                localStorage.getItem("dbsDemoProfile") || "{}"
+            const customers = getCustomers();
+
+            const alreadyRegistered = customers.some(customer =>
+                customer.profile.email.toLowerCase() === email
             );
 
-            const existingCredentials = JSON.parse(
-                localStorage.getItem("dbsDemoCredentials") || "null"
-            );
-
-            if (
-                existingProfile.email === email &&
-                existingCredentials
-            ) {
-                showMessage("An account with this email already exists. Please log in.");
+            if (alreadyRegistered) {
+                showMessage("This email is already registered. Please log in.");
                 return;
             }
 
+            const accountNumber = createAccountNumber(customers);
             const salt = createSalt();
             const passwordHash = await hashPassword(
                 password,
                 hexToBytes(salt)
             );
 
-            const profile = {
-                name: name,
-                email: email,
-                phone: phone
-            };
-
-            const credentials = {
-                email: email,
-                salt: salt,
-                passwordHash: passwordHash
-            };
-
-            localStorage.setItem(
-                "dbsDemoProfile",
-                JSON.stringify(profile)
-            );
-
-            localStorage.setItem(
-                "dbsDemoCredentials",
-                JSON.stringify(credentials)
-            );
-
-            let bankData = JSON.parse(
-                localStorage.getItem("dbsDemoData") || "null"
-            );
-
-            if (!bankData) {
-                bankData = {
+            const newCustomer = {
+                profile: {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    accountNumber: accountNumber
+                },
+                credentials: {
+                    email: email,
+                    salt: salt,
+                    passwordHash: passwordHash
+                },
+                bankData: {
                     balance: 0,
-                    accountNumber: "0123456789",
+                    accountNumber: accountNumber,
                     beneficiaries: [],
                     transactions: [],
                     records: []
-                };
+                }
+            };
 
-                localStorage.setItem(
-                    "dbsDemoData",
-                    JSON.stringify(bankData)
-                );
-            }
+            customers.push(newCustomer);
 
             localStorage.setItem(
+                "dbsDemoCustomers",
+                JSON.stringify(customers)
+            );
+
+            // Session identifies this particular customer.
+            sessionStorage.setItem(
                 "dbsDemoSession",
                 JSON.stringify({
                     email: email,
-                    loggedInAt: new Date().toISOString()
+                    accountNumber: accountNumber
                 })
             );
 
-            showMessage("Registration successful. Opening your dashboard...", true);
+            showMessage(
+                "Registration successful. Your test account number is " +
+                accountNumber,
+                true
+            );
 
             setTimeout(function () {
                 window.location.href = "dashboard.html";
-            }, 1000);
+            }, 1500);
 
         } catch (error) {
             console.error(error);
