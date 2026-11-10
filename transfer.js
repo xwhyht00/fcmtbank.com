@@ -1,31 +1,53 @@
 
-const STORAGE_KEY = "dbsDemoData";
+// DBS-BANK: Customer Transfer Page
 
-function getData() {
+function readStorage(storage, key, fallback) {
     try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
-            balance: 250000,
-            beneficiaries: [],
-            transactions: []
-        };
+        return JSON.parse(storage.getItem(key)) ?? fallback;
     } catch {
-        return {
-            balance: 250000,
-            beneficiaries: [],
-            transactions: []
-        };
+        return fallback;
     }
-}
-
-function saveData(data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
 function currency(amount) {
     return new Intl.NumberFormat("en-NG", {
         style: "currency",
         currency: "NGN"
-    }).format(amount);
+    }).format(Number(amount) || 0);
+}
+
+// Get the logged-in customer
+function getCurrentCustomer() {
+    const session = readStorage(
+        sessionStorage,
+        "dbsDemoSession",
+        null
+    );
+
+    if (!session) {
+        window.location.href = "login.html";
+        return null;
+    }
+
+    const customers = readStorage(
+        localStorage,
+        "dbsDemoCustomers",
+        []
+    );
+
+    const index = customers.findIndex(customer =>
+        customer.profile &&
+        customer.profile.email === session.email &&
+        customer.profile.accountNumber === session.accountNumber
+    );
+
+    if (index === -1) {
+        sessionStorage.removeItem("dbsDemoSession");
+        window.location.href = "login.html";
+        return null;
+    }
+
+    return { customers, index, customer: customers[index] };
 }
 
 const form = document.getElementById("transferForm");
@@ -36,49 +58,84 @@ const amount = document.getElementById("amount");
 const narration = document.getElementById("narration");
 const confirmation = document.getElementById("confirmation");
 const message = document.getElementById("message");
+const currentBalance = document.getElementById("currentBalance");
 
 let pendingTransfer = null;
 
+function saveCustomers(customers) {
+    localStorage.setItem(
+        "dbsDemoCustomers",
+        JSON.stringify(customers)
+    );
+}
+
 function loadBeneficiaries() {
-    const data = getData();
+    const result = getCurrentCustomer();
+    if (!result) return;
+
+    const data = result.customer.bankData || {};
+    const beneficiaries = data.beneficiaries || [];
 
     beneficiary.innerHTML =
         '<option value="">Select Beneficiary</option>';
 
-    data.beneficiaries.forEach((item, index) => {
+    beneficiaries.forEach((item, index) => {
         const option = document.createElement("option");
         option.value = index;
-        option.textContent = item.name + " - " + item.account;
+        option.textContent =
+            (item.name || "Beneficiary") + " - " +
+            (item.account || item.accountNumber || "");
         beneficiary.appendChild(option);
     });
 
-    document.getElementById("currentBalance").textContent =
-        currency(data.balance ?? 250000);
+    currentBalance.textContent =
+        currency(data.balance ?? 0);
 }
 
 beneficiary.addEventListener("change", function() {
-    const data = getData();
-    const selected = data.beneficiaries[Number(this.value)];
+    const result = getCurrentCustomer();
+    if (!result) return;
+
+    const data = result.customer.bankData || {};
+    const beneficiaries = data.beneficiaries || [];
+    const selected = beneficiaries[Number(this.value)];
 
     if (selected) {
-        accountNumber.value = selected.account;
+        accountNumber.value =
+            selected.account || selected.accountNumber || "";
+
+        if (selected.bank) {
+            bankName.value = selected.bank;
+        }
     }
 });
 
 form.addEventListener("submit", function(event) {
     event.preventDefault();
 
-    const data = getData();
+    const result = getCurrentCustomer();
+    if (!result) return;
+
+    const data = result.customer.bankData || {};
+    const balance = Number(data.balance ?? 0);
     const value = Number(amount.value);
     const account = accountNumber.value.trim();
+
+    message.textContent = "";
 
     if (!account || !Number.isFinite(value) || value <= 0) {
         message.textContent = "Enter valid transfer details.";
         return;
     }
 
-    if (value > Number(data.balance ?? 250000)) {
-        message.textContent = "Insufficient demo balance.";
+    if (account === result.customer.profile.accountNumber) {
+        message.textContent =
+            "You cannot transfer to your own account.";
+        return;
+    }
+
+    if (value > balance) {
+        message.textContent = "Insufficient available balance.";
         return;
     }
 
@@ -93,7 +150,8 @@ form.addEventListener("submit", function(event) {
         `Account: ${pendingTransfer.account} | Bank: ${pendingTransfer.bank} | Amount: ${currency(value)} | Narration: ${pendingTransfer.narration}`;
 
     confirmation.hidden = false;
-    message.textContent = "Review the details before confirming.";
+    message.textContent =
+        "Review the transfer details before confirming.";
 });
 
 document.getElementById("confirmTransfer")
@@ -101,16 +159,21 @@ document.getElementById("confirmTransfer")
 
         if (!pendingTransfer) return;
 
-        const data = getData();
+        const result = getCurrentCustomer();
+        if (!result) return;
 
-        if (pendingTransfer.amount > Number(data.balance ?? 250000)) {
-            message.textContent = "Insufficient demo balance.";
+        const data = result.customer.bankData || {};
+        const balance = Number(data.balance ?? 0);
+
+        if (pendingTransfer.amount > balance) {
+            message.textContent = "Insufficient available balance.";
             confirmation.hidden = true;
             pendingTransfer = null;
             return;
         }
 
-        data.balance -= pendingTransfer.amount;
+        // Deduct from this customer's test balance
+        data.balance = balance - pendingTransfer.amount;
 
         data.transactions = data.transactions || [];
 
@@ -120,20 +183,22 @@ document.getElementById("confirmTransfer")
             detail: "To account " + pendingTransfer.account,
             date: new Date().toLocaleString(),
             narration: pendingTransfer.narration,
-            reference: "DEMO-" + Date.now()
+            reference: "TEST-" + Date.now()
         });
 
-        saveData(data);
+        result.customer.bankData = data;
+        result.customers[result.index] = result.customer;
 
-        document.getElementById("currentBalance").textContent =
-            currency(data.balance);
+        saveCustomers(result.customers);
+
+        currentBalance.textContent = currency(data.balance);
 
         confirmation.hidden = true;
         form.reset();
         pendingTransfer = null;
 
         message.textContent =
-            "Demo transfer recorded successfully. No real money was sent.";
+            "Test transfer recorded successfully. No real money was sent.";
     });
 
 document.getElementById("cancelTransfer")
@@ -142,7 +207,9 @@ document.getElementById("cancelTransfer")
         pendingTransfer = null;
         confirmation.hidden = true;
 
-        message.textContent = "Demo transfer cancelled.";
+        message.textContent = "Transfer cancelled.";
     });
 
 loadBeneficiaries();
+
+window.addEventListener("pageshow", loadBeneficiaries);
