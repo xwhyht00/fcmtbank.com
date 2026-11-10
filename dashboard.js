@@ -1,12 +1,33 @@
 
 document.addEventListener("DOMContentLoaded", function () {
-    const profile = JSON.parse(
-        localStorage.getItem("dbsDemoProfile") || "{}"
-    );
+    function readStorage(key, fallback) {
+        try {
+            return JSON.parse(localStorage.getItem(key)) || fallback;
+        } catch (error) {
+            return fallback;
+        }
+    }
 
-    const bankData = JSON.parse(
-        localStorage.getItem("dbsDemoData") || "{}"
-    );
+    const session = readStorage("dbsDemoSession", null);
+    const profile = readStorage("dbsDemoProfile", {});
+    const credentials = readStorage("dbsDemoCredentials", null);
+
+    // Require a matching browser session before showing the dashboard.
+    if (
+        !session ||
+        !credentials ||
+        !profile.email ||
+        session.email !== profile.email ||
+        session.email !== credentials.email
+    ) {
+        window.location.replace("login.html");
+        return;
+    }
+
+    const bankData = readStorage("dbsDemoData", {});
+    const transactions = Array.isArray(bankData.transactions)
+        ? bankData.transactions
+        : [];
 
     const customerName = document.getElementById("customerName");
     const accountBalance = document.getElementById("accountBalance");
@@ -15,70 +36,78 @@ document.addEventListener("DOMContentLoaded", function () {
     const recentTransactions = document.getElementById("recentTransactions");
     const currentYear = document.getElementById("currentYear");
 
-    const transactions = Array.isArray(bankData.transactions)
-        ? bankData.transactions
-        : [];
-
-    const name = profile.name || "Customer";
-    const balance = Number(bankData.balance || 0);
-    const number = bankData.accountNumber || "0123456789";
-
-    customerName.textContent = name;
-
-    accountBalance.textContent = balance.toLocaleString("en-NG", {
-        style: "currency",
-        currency: "NGN"
-    });
-
-    accountNumber.textContent = number;
-    transactionCount.textContent = transactions.length;
-
-    currentYear.textContent = new Date().getFullYear();
-
-    recentTransactions.innerHTML = "";
-
-    if (transactions.length === 0) {
-        const row = document.createElement("tr");
-        const cell = document.createElement("td");
-
-        cell.colSpan = 4;
-        cell.className = "empty-message";
-        cell.textContent = "No transactions available.";
-
-        row.appendChild(cell);
-        recentTransactions.appendChild(row);
-        return;
+    if (customerName) {
+        customerName.textContent = profile.name || "Customer";
     }
 
-    transactions.slice(0, 5).forEach(function (transaction) {
-        const row = document.createElement("tr");
+    if (accountBalance) {
+        accountBalance.textContent = Number(bankData.balance || 0)
+            .toLocaleString("en-NG", {
+                style: "currency",
+                currency: "NGN"
+            });
+    }
 
-        const descriptionCell = document.createElement("td");
-        const typeCell = document.createElement("td");
-        const amountCell = document.createElement("td");
-        const dateCell = document.createElement("td");
+    if (accountNumber) {
+        accountNumber.textContent = bankData.accountNumber || "0123456789";
+    }
 
-        descriptionCell.textContent =
-            transaction.description || transaction.name || "Account transaction";
+    if (transactionCount) {
+        transactionCount.textContent = transactions.length;
+    }
 
-        typeCell.textContent = transaction.type || "Transaction";
+    if (currentYear) {
+        currentYear.textContent = new Date().getFullYear();
+    }
 
-        const amount = Number(transaction.amount || 0);
+    if (recentTransactions) {
+        recentTransactions.replaceChildren();
 
-        amountCell.textContent = amount.toLocaleString("en-NG", {
-            style: "currency",
-            currency: "NGN"
-        });
+        if (transactions.length === 0) {
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
 
-        dateCell.textContent = transaction.date
-            ? new Date(transaction.date).toLocaleDateString("en-NG")
-            : "Date unavailable";
+            cell.colSpan = 4;
+            cell.className = "empty-message";
+            cell.textContent = "No transactions available.";
 
-        row.appendChild(descriptionCell);
-        row.appendChild(typeCell);
-        row.appendChild(amountCell);
-        row.appendChild(dateCell);
+            row.appendChild(cell);
+            recentTransactions.appendChild(row);
+        } else {
+            transactions.slice(0, 5).forEach(function (transaction) {
+                const row = document.createElement("tr");
 
-        recentTransactions.appendChild(row);
-    });
+                const descriptionCell = document.createElement("td");
+                const typeCell = document.createElement("td");
+                const amountCell = document.createElement("td");
+                const dateCell = document.createElement("td");
+
+                descriptionCell.textContent =
+                    transaction.description ||
+                    transaction.name ||
+                    "Account transaction";
+
+                typeCell.textContent = transaction.type || "Transaction";
+
+                amountCell.textContent = Number(transaction.amount || 0)
+                    .toLocaleString("en-NG", {
+                        style: "currency",
+                        currency: "NGN"
+                    });
+
+                dateCell.textContent = transaction.date
+                    ? new Date(transaction.date).toLocaleDateString("en-NG")
+                    : "Date unavailable";
+
+                row.append(
+                    descriptionCell,
+                    typeCell,
+                    amountCell,
+                    dateCell
+                );
+
+                recentTransactions.appendChild(row);
+            });
+        }
+    }
 });
