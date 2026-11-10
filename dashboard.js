@@ -9,22 +9,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const session = readStorage("dbsDemoSession", null);
-    const profile = readStorage("dbsDemoProfile", {});
-    const credentials = readStorage("dbsDemoCredentials", null);
+    const customers = readStorage("dbsDemoCustomers", []);
 
-    // Require a matching browser session before showing the dashboard.
-    if (
-        !session ||
-        !credentials ||
-        !profile.email ||
-        session.email !== profile.email ||
-        session.email !== credentials.email
-    ) {
+    if (!session || !Array.isArray(customers)) {
         window.location.replace("login.html");
         return;
     }
 
-    const bankData = readStorage("dbsDemoData", {});
+    const customer = customers.find(item =>
+        item.profile.email === session.email &&
+        item.profile.accountNumber === session.accountNumber
+    );
+
+    if (!customer) {
+        sessionStorage.removeItem("dbsDemoSession");
+        window.location.replace("login.html");
+        return;
+    }
+
+    const profile = customer.profile;
+    const bankData = customer.bankData;
     const transactions = Array.isArray(bankData.transactions)
         ? bankData.transactions
         : [];
@@ -49,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (accountNumber) {
-        accountNumber.textContent = bankData.accountNumber || "0123456789";
+        accountNumber.textContent = profile.accountNumber;
     }
 
     if (transactionCount) {
@@ -77,35 +81,27 @@ document.addEventListener("DOMContentLoaded", function () {
             transactions.slice(0, 5).forEach(function (transaction) {
                 const row = document.createElement("tr");
 
-                const descriptionCell = document.createElement("td");
-                const typeCell = document.createElement("td");
-                const amountCell = document.createElement("td");
-                const dateCell = document.createElement("td");
+                const description = document.createElement("td");
+                const type = document.createElement("td");
+                const amount = document.createElement("td");
+                const date = document.createElement("td");
 
-                descriptionCell.textContent =
-                    transaction.description ||
-                    transaction.name ||
-                    "Account transaction";
+                description.textContent =
+                    transaction.description || "Account transaction";
 
-                typeCell.textContent = transaction.type || "Transaction";
+                type.textContent = transaction.type || "Transaction";
 
-                amountCell.textContent = Number(transaction.amount || 0)
+                amount.textContent = Number(transaction.amount || 0)
                     .toLocaleString("en-NG", {
                         style: "currency",
                         currency: "NGN"
                     });
 
-                dateCell.textContent = transaction.date
+                date.textContent = transaction.date
                     ? new Date(transaction.date).toLocaleDateString("en-NG")
                     : "Date unavailable";
 
-                row.append(
-                    descriptionCell,
-                    typeCell,
-                    amountCell,
-                    dateCell
-                );
-
+                row.append(description, type, amount, date);
                 recentTransactions.appendChild(row);
             });
         }
