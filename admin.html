@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBS BANK | Administration</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">DBS<span>BANK</span></a>
+        <span class="admin-label">ADMINISTRATION</span>
+    </header>
+
+    <main class="container">
+
+        <section class="login-card" id="loginSection">
+            <h1>Administrator Login</h1>
+            <p>Sign in to access the test deposit page.</p>
+
+            <form id="adminLoginForm">
+                <label for="adminUsername">Username</label>
+                <input type="text" id="adminUsername" required
+                       autocomplete="username" placeholder="Enter username">
+
+                <label for="adminPassword">Password</label>
+                <input type="password" id="adminPassword" required
+                       autocomplete="current-password" placeholder="Enter password">
+
+                <button type="submit">Sign In</button>
+                <p id="loginMessage" class="message" aria-live="polite"></p>
+            </form>
+
+            <p class="demo-credentials">
+                Test login: <strong>admin</strong><br>
+                Test password: <strong>DBSadmin123!</strong>
+            </p>
+        </section>
+
+        <section id="adminPanel" hidden>
+
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">DBS BANK</p>
+                    <h1>Admin Deposit Panel</h1>
+                    <p>Credit a customer's test account.</p>
+                </div>
+                <button type="button" id="logoutButton" class="logout-button">
+                    Admin Logout
+                </button>
+            </div>
+
+            <section class="deposit-card">
+                <h2>Find Customer Account</h2>
+
+                <form id="searchForm">
+                    <label for="accountNumber">Customer Account Number</label>
+                    <div class="search-row">
+                        <input
+                            type="text"
+                            id="accountNumber"
+                            placeholder="Enter account number"
+                            required
+                        >
+                        <button type="submit">Find Account</button>
+                    </div>
+                </form>
+
+                <p id="searchMessage" class="message" aria-live="polite"></p>
+
+                <div id="customerDetails" class="customer-details" hidden>
+                    <h3>Customer Details</h3>
+
+                    <div class="detail-row">
+                        <span>Customer Name</span>
+                        <strong id="customerName">-</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Email Address</span>
+                        <strong id="customerEmail">-</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Account Number</span>
+                        <strong id="displayAccountNumber">-</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Current Test Balance</span>
+                        <strong id="customerBalance">₦0.00</strong>
+                    </div>
+
+                    <form id="depositForm">
+                        <label for="depositAmount">Deposit Amount (NGN)</label>
+                        <input
+                            type="number"
+                            id="depositAmount"
+                            min="1"
+                            max="1000000000"
+                            step="0.01"
+                            placeholder="Enter deposit amount"
+                            required
+                        >
+
+                        <label for="depositDescription">Deposit Description</label>
+                        <input
+                            type="text"
+                            id="depositDescription"
+                            maxlength="100"
+                            placeholder="Example: Test account deposit"
+                        >
+
+                        <button type="submit" id="depositButton">
+                            Credit Test Account
+                        </button>
+
+                        <p id="depositMessage" class="message" aria-live="polite"></p>
+                    </form>
+                </div>
+            </section>
+
+            <section class="history-card">
+                <h2>Recent Admin Deposits</h2>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Reference</th>
+                                <th>Account Number</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="depositHistory">
+                            <tr>
+                                <td colspan="4" class="empty-row">
+                                    No deposits recorded yet.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="year"></span> DBS BANK. Test administration page.</p>
+    </footer>
+
+    <script src="admin.js"></script>
+</body>
+</html>
