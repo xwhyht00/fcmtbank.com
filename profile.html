@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBS-BANK | Personal Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <script src="profile.js" defer></script>
+</head>
+<body>
+
+<header>
+    <div class="logo">DBS<span>BANK</span></div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="account.html">Account Details</a>
+        <a href="balance.html">Balance</a>
+        <a href="transfer.html">Transfers</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="login.html">Logout</a>
+    </nav>
+</header>
+
+<main>
+    <section class="profile-container">
+
+        <h1>Personal Banking Profile</h1>
+        <p>Manage and view your customer information.</p>
+
+        <div class="profile-card">
+
+            <div class="profile-icon">DB</div>
+
+            <h2 id="customerName">Demo Customer</h2>
+            <p>Personal Banking Customer</p>
+
+        </div>
+
+        <div class="profile-details">
+
+            <div class="detail">
+                <span>Full Name</span>
+                <strong id="fullName">Demo Customer</strong>
+            </div>
+
+            <div class="detail">
+                <span>Email Address</span>
+                <strong id="email">demo@example.com</strong>
+            </div>
+
+            <div class="detail">
+                <span>Phone Number</span>
+                <strong id="phone">Not provided</strong>
+            </div>
+
+            <div class="detail">
+                <span>Customer Type</span>
+                <strong>Personal Banking</strong>
+            </div>
+
+            <div class="detail">
+                <span>Account Status</span>
+                <strong class="status">Demo Profile</strong>
+            </div>
+
+        </div>
+
+        <button id="editButton">Edit Profile</button>
+
+        <form id="editForm" hidden>
+
+            <label>Full Name</label>
+            <input type="text" id="editName" required>
+
+            <label>Email Address</label>
+            <input type="email" id="editEmail" required>
+
+            <label>Phone Number</label>
+            <input type="tel" id="editPhone" required>
+
+            <button type="submit">Save Changes</button>
+
+        </form>
+
+        <p id="message"></p>
+
+    </section>
+</main>
+
+<footer>
+    &copy; 2026 DBS-BANK. All Rights Reserved.
+</footer>
+
+</body>
+</html>
