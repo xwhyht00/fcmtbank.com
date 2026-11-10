@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBS-BANK | Money Transfer</title>
+    <link rel="stylesheet" href="transfer.css">
+    <script src="transfer.js" defer></script>
+</head>
+<body>
+
+<header>
+    <div class="logo">DBS<span>BANK</span></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="profile.html">Profile</a>
+        <a href="account.html">Account</a>
+        <a href="balance.html">Balance</a>
+        <a href="beneficiaries.html">Beneficiaries</a>
+        <a href="transactions.html">Transactions</a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="transfer-container">
+
+        <h1>Money Transfer</h1>
+        <p>Transfer funds using your DBS-BANK demo account.</p>
+
+        <div class="account-info">
+            <span>Source Account</span>
+            <h3>0123456789</h3>
+            <p>Personal Savings Account</p>
+            <strong id="currentBalance">₦250,000.00</strong>
+            <small>Demo available balance</small>
+        </div>
+
+        <form id="transferForm">
+
+            <h2>Transfer Details</h2>
+
+            <label>Beneficiary</label>
+            <select id="beneficiary" required>
+                <option value="">Select Beneficiary</option>
+            </select>
+
+            <label>Beneficiary Account Number</label>
+            <input type="text" id="accountNumber"
+                   maxlength="20" required>
+
+            <label>Bank Name</label>
+            <input type="text" id="bankName"
+                   value="Demo Bank" required>
+
+            <label>Transfer Amount (NGN)</label>
+            <input type="number" id="amount"
+                   min="1" step="0.01" required>
+
+            <label>Narration</label>
+            <textarea id="narration"
+                      placeholder="Enter transfer description"></textarea>
+
+            <button type="submit">Review Transfer</button>
+
+        </form>
+
+        <div id="confirmation" hidden>
+            <h2>Confirm Demo Transfer</h2>
+            <div id="confirmationDetails"></div>
+            <button type="button" id="confirmTransfer">
+                Confirm Demo Transfer
+            </button>
+            <button type="button" id="cancelTransfer">
+                Cancel
+            </button>
+        </div>
+
+        <p id="message"></p>
+
+        <div class="notice">
+            DEMONSTRATION ONLY: No real money will be transferred.
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    &copy; 2026 DBS-BANK. All Rights Reserved.
+</footer>
+
+</body>
+</html>
