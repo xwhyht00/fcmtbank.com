@@ -1,11 +1,10 @@
 
-const STORAGE_KEY = "dbsDemoData";
-
-function getBankData() {
+function readStorage(storage, key, fallback) {
     try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        const value = JSON.parse(storage.getItem(key));
+        return value ?? fallback;
     } catch {
-        return {};
+        return fallback;
     }
 }
 
@@ -17,11 +16,41 @@ function formatCurrency(amount) {
 }
 
 function updateBalance() {
+    // Get the currently logged-in customer
+    const session = readStorage(
+        sessionStorage,
+        "dbsDemoSession",
+        null
+    );
 
-    const data = getBankData();
+    if (!session) {
+        window.location.href = "login.html";
+        return;
+    }
 
-    // Fictional starting balance
-    const balance = Number(data.balance ?? 250000);
+    // Get all registered customers
+    const customers = readStorage(
+        localStorage,
+        "dbsDemoCustomers",
+        []
+    );
+
+    // Find this customer's own account
+    const customer = customers.find(item =>
+        item.profile &&
+        item.profile.email === session.email &&
+        item.profile.accountNumber === session.accountNumber
+    );
+
+    if (!customer) {
+        sessionStorage.removeItem("dbsDemoSession");
+        window.location.href = "login.html";
+        return;
+    }
+
+    const data = customer.bankData || {};
+
+    const balance = Number(data.balance ?? 0);
 
     document.getElementById("availableBalance").textContent =
         formatCurrency(balance);
@@ -31,15 +60,15 @@ function updateBalance() {
 
     const deposits = records
         .filter(item => item.type === "Deposit")
-        .reduce((total, item) => total + Number(item.amount), 0);
+        .reduce((total, item) => total + Number(item.amount || 0), 0);
 
     const withdrawals = records
         .filter(item => item.type === "Withdrawal")
-        .reduce((total, item) => total + Number(item.amount), 0);
+        .reduce((total, item) => total + Number(item.amount || 0), 0);
 
     const transfers = transactions
         .filter(item => item.type === "Transfer")
-        .reduce((total, item) => total + Number(item.amount), 0);
+        .reduce((total, item) => total + Number(item.amount || 0), 0);
 
     document.getElementById("totalDeposits").textContent =
         formatCurrency(deposits);
@@ -53,5 +82,4 @@ function updateBalance() {
 
 updateBalance();
 
-// Refresh displayed figures when returning to this page
 window.addEventListener("pageshow", updateBalance);
