@@ -1,0 +1,175 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f5f9;
+    color: #263747;
+}
+
+header {
+    background: #092b49;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #55b9f3;
+}
+
+nav {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #55b9f3;
+}
+
+main {
+    padding: 50px 15px;
+}
+
+.profile-container {
+    max-width: 850px;
+    margin: auto;
+    background: white;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+}
+
+h1 {
+    color: #092b49;
+    margin-bottom: 10px;
+}
+
+.profile-container > p {
+    color: #777;
+}
+
+.profile-card {
+    text-align: center;
+    margin: 35px 0;
+    padding: 25px;
+    background: #f0f6fb;
+    border-radius: 10px;
+}
+
+.profile-icon {
+    width: 85px;
+    height: 85px;
+    margin: auto auto 15px;
+    border-radius: 50%;
+    background: #0877bd;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.profile-card h2 {
+    color: #092b49;
+    margin-bottom: 8px;
+}
+
+.profile-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.detail {
+    background: #f5f7fa;
+    padding: 18px;
+    border-radius: 7px;
+}
+
+.detail span {
+    display: block;
+    color: #777;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.detail strong {
+    color: #092b49;
+    overflow-wrap: anywhere;
+}
+
+.status {
+    color: #087b45 !important;
+}
+
+button {
+    margin-top: 25px;
+    padding: 13px 25px;
+    background: #0877bd;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+form {
+    margin-top: 25px;
+}
+
+form label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: bold;
+}
+
+form input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+#message {
+    margin-top: 15px;
+    color: #087b45;
+}
+
+footer {
+    background: #092b49;
+    color: white;
+    text-align: center;
+    padding: 18px;
+}
+
+@media(max-width: 600px) {
+    .profile-details {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        justify-content: center;
+    }
+}
