@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBS-BANK | Account Balance</title>
+    <link rel="stylesheet" href="balance.css">
+    <script src="balance.js" defer></script>
+</head>
+<body>
+
+<header>
+    <div class="logo">DBS<span>BANK</span></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="profile.html">Profile</a>
+        <a href="account.html">Account Details</a>
+        <a href="transfer.html">Transfers</a>
+        <a href="beneficiaries.html">Beneficiaries</a>
+        <a href="transactions.html">Transactions</a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="balance-container">
+
+        <h1>Account Balance</h1>
+        <p>View your available banking balance.</p>
+
+        <div class="balance-card">
+
+            <div class="balance-header">
+                <h2>DBS-BANK</h2>
+                <span>PERSONAL ACCOUNT</span>
+            </div>
+
+            <div class="balance-content">
+                <span>Available Balance</span>
+                <h1 id="availableBalance">₦250,000.00</h1>
+                <p>Nigerian Naira (NGN)</p>
+            </div>
+
+            <div class="balance-footer">
+                <span>Account Number</span>
+                <strong>0123456789</strong>
+            </div>
+
+        </div>
+
+        <div class="summary">
+
+            <div class="summary-card">
+                <span>Total Deposits</span>
+                <h2 id="totalDeposits">₦0.00</h2>
+            </div>
+
+            <div class="summary-card">
+                <span>Total Withdrawals</span>
+                <h2 id="totalWithdrawals">₦0.00</h2>
+            </div>
+
+            <div class="summary-card">
+                <span>Total Transfers</span>
+                <h2 id="totalTransfers">₦0.00</h2>
+            </div>
+
+        </div>
+
+        <div class="actions">
+            <a href="transfer.html">Transfer Money</a>
+            <a href="records.html">Deposit / Withdrawal Records</a>
+            <a href="transactions.html">Transaction History</a>
+        </div>
+
+        <p class="notice">
+            Demonstration balance only. This is not real money or a live bank account.
+        </p>
+
+    </section>
+
+</main>
+
+<footer>
+    &copy; 2026 DBS-BANK. All Rights Reserved.
+</footer>
+
+</body>
+</html>
