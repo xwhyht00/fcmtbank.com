@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beneficiaries | DBS-BANK</title>
+    <link rel="stylesheet" href="beneficiaries.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">DBS<span>BANK</span></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="profile.html">Profile</a>
+        <a href="account.html">Account</a>
+        <a href="balance.html">Balance</a>
+        <a href="transfer.html">Transfers</a>
+        <a href="transactions.html">Transactions</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="page-heading">
+        <h1>Beneficiary Management</h1>
+        <p>Add and manage your saved transfer beneficiaries.</p>
+    </section>
+
+    <section class="panel">
+        <h2>Add New Beneficiary</h2>
+
+        <form id="beneficiaryForm">
+
+            <div class="form-group">
+                <label for="beneficiaryName">Beneficiary Full Name</label>
+                <input
+                    type="text"
+                    id="beneficiaryName"
+                    placeholder="Enter beneficiary name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="beneficiaryAccount">Account Number</label>
+                <input
+                    type="text"
+                    id="beneficiaryAccount"
+                    placeholder="Enter account number"
+                    inputmode="numeric"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="beneficiaryBank">Bank Name</label>
+                <input
+                    type="text"
+                    id="beneficiaryBank"
+                    placeholder="Enter bank name"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="primary-btn">
+                Add Beneficiary
+            </button>
+
+            <p id="message" class="message" aria-live="polite"></p>
+
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>Saved Beneficiaries</h2>
+
+        <div id="beneficiaryList">
+            <p class="empty-message">Loading beneficiaries...</p>
+        </div>
+    </section>
+
+    <p class="demo-notice">
+        Demo only: beneficiary information is stored in this browser.
+        Do not enter real banking or personal information.
+    </p>
+
+</main>
+
+<script src="beneficiaries.js"></script>
+</body>
+</html>
