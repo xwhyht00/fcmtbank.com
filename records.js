@@ -1,73 +1,88 @@
 
-const STORAGE_KEY = "dbsDemoData";
+const CUSTOMERS_KEY = "dbsDemoCustomers";
+const SESSION_KEY = "dbsDemoSession";
 
 const recordForm = document.getElementById("recordForm");
 const recordsTable = document.getElementById("recordsTable");
 const message = document.getElementById("message");
 
-function getData() {
-    try {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        const data = saved && typeof saved === "object" ? saved : {};
-
-        if (typeof data.balance !== "number") {
-            data.balance = 250000;
-        }
-
-        if (!Array.isArray(data.records)) {
-            data.records = [];
-        }
-
-        if (!Array.isArray(data.transactions)) {
-            data.transactions = [];
-        }
-
-        if (!Array.isArray(data.beneficiaries)) {
-            data.beneficiaries = [];
-        }
-
-        return data;
-
-    } catch (error) {
-        return {
-            balance: 250000,
-            records: [],
-            transactions: [],
-            beneficiaries: []
-        };
-    }
-}
-
-function saveData(data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
-
 function formatMoney(amount) {
-    return Number(amount).toLocaleString("en-NG", {
+    return Number(amount || 0).toLocaleString("en-NG", {
         style: "currency",
         currency: "NGN",
         minimumFractionDigits: 2
     });
 }
 
+function getCurrentCustomer() {
+    const session = JSON.parse(
+        sessionStorage.getItem(SESSION_KEY) || "null"
+    );
+
+    if (!session) return null;
+
+    const customers = JSON.parse(
+        localStorage.getItem(CUSTOMERS_KEY) || "[]"
+    );
+
+    return customers.find(customer =>
+        customer.profile &&
+        customer.bankData &&
+        customer.profile.email === session.email &&
+        customer.profile.accountNumber === session.accountNumber
+    ) || null;
+}
+
+function saveCustomers(customers) {
+    localStorage.setItem(CUSTOMERS_KEY, JSON.stringify(customers));
+}
+
 function showMessage(text, type) {
+    if (!message) return;
+
     message.textContent = text;
     message.className = "message " + type;
 }
 
 function updateBalance() {
-    const data = getData();
+    const customer = getCurrentCustomer();
+    const balanceElement = document.getElementById("accountBalance");
 
-    document.getElementById("accountBalance").textContent =
-        formatMoney(data.balance);
+    if (!balanceElement) return;
+
+    if (!customer) {
+        balanceElement.textContent = formatMoney(0);
+        showMessage("Please log in to view your account balance.", "error");
+        return;
+    }
+
+    balanceElement.textContent = formatMoney(
+        customer.bankData.balance
+    );
 }
 
 function renderRecords() {
-    const data = getData();
+    if (!recordsTable) return;
+
+    const customer = getCurrentCustomer();
 
     recordsTable.innerHTML = "";
 
-    if (data.records.length === 0) {
+    if (!customer) {
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+
+        cell.colSpan = 6;
+        cell.textContent = "Please log in to view your records.";
+
+        row.appendChild(cell);
+        recordsTable.appendChild(row);
+        return;
+    }
+
+    const records = customer.bankData.records || [];
+
+    if (records.length === 0) {
         const row = document.createElement("tr");
         const cell = document.createElement("td");
 
@@ -79,111 +94,139 @@ function renderRecords() {
         return;
     }
 
-    [...data.records].reverse().forEach(function(record) {
+    [...records].reverse().forEach(record => {
         const row = document.createElement("tr");
 
-        const dateCell = document.createElement("td");
-        dateCell.textContent = record.date || "Unavailable";
+        const values = [
+            record.date || "Unavailable",
+            record.reference || "Demo record",
+            record.type || "Transaction",
+            record.description || "-",
+            formatMoney(record.amount),
+            record.status || "Demo Recorded"
+        ];
 
-        const referenceCell = document.createElement("td");
-        referenceCell.textContent = record.reference || "Demo record";
+        values.forEach((value, index) => {
+            const cell = document.createElement("td");
+            cell.textContent = value;
 
-        const typeCell = document.createElement("td");
-        typeCell.textContent = record.type || "Transaction";
+            if (index === 4) {
+                cell.className =
+                    String(record.type).toLowerCase().includes("deposit")
+                    ? "credit"
+                    : "debit";
+            }
 
-        const descriptionCell = document.createElement("td");
-        descriptionCell.textContent = record.description || "-";
-
-        const amountCell = document.createElement("td");
-        amountCell.textContent = formatMoney(record.amount);
-        amountCell.className =
-            record.type === "Deposit" ? "credit" : "debit";
-
-        const statusCell = document.createElement("td");
-        statusCell.textContent = "Demo Recorded";
-
-        row.append(
-            dateCell,
-            referenceCell,
-            typeCell,
-            descriptionCell,
-            amountCell,
-            statusCell
-        );
+            row.appendChild(cell);
+        });
 
         recordsTable.appendChild(row);
     });
 }
 
-recordForm.addEventListener("submit", function(event) {
-    event.preventDefault();
+if (recordForm) {
+    recordForm.addEventListener("submit", function(event) {
+        event.preventDefault();
 
-    const type = document.getElementById("transactionType").value;
-    const amount = Number(document.getElementById("amount").value);
-    const description =
-        document.getElementById("description").value.trim() ||
-        type + " transaction";
+        const customer = getCurrentCustomer();
 
-    if (!type) {
-        showMessage("Please select a transaction type.", "error");
-        return;
-    }
+        if (!customer) {
+            showMessage("Please log in before making a transaction.", "error");
+            return;
+        }
 
-    if (!Number.isFinite(amount) || amount <= 0) {
-        showMessage("Enter a valid amount greater than zero.", "error");
-        return;
-    }
+        const type = document.getElementById("transactionType").value;
+        const amount = Number(document.getElementById("amount").value);
 
-    const data = getData();
+        const description =
+            document.getElementById("description").value.trim() ||
+            type + " transaction";
 
-    if (type === "Withdrawal" && amount > data.balance) {
-        showMessage("Insufficient demo account balance.", "error");
-        return;
-    }
+        if (type !== "Deposit" && type !== "Withdrawal") {
+            showMessage("Please select a transaction type.", "error");
+            return;
+        }
 
-    if (type === "Deposit") {
-        data.balance += amount;
-    } else {
-        data.balance -= amount;
-    }
+        if (!Number.isFinite(amount) || amount <= 0) {
+            showMessage("Enter a valid amount greater than zero.", "error");
+            return;
+        }
 
-    const now = new Date();
-    const reference =
-        "DBS" + now.getTime().toString();
+        const customers = JSON.parse(
+            localStorage.getItem(CUSTOMERS_KEY) || "[]"
+        );
 
-    const date = now.toLocaleString("en-NG");
+        const customerIndex = customers.findIndex(item =>
+            item.profile &&
+            item.profile.email === customer.profile.email &&
+            item.profile.accountNumber === customer.profile.accountNumber
+        );
 
-    const record = {
-        date: date,
-        reference: reference,
-        type: type,
-        description: description,
-        amount: amount
-    };
+        if (customerIndex === -1) {
+            showMessage("Customer account could not be found.", "error");
+            return;
+        }
 
-    data.records.push(record);
+        const bankData = customers[customerIndex].bankData;
 
-    // Also add the entry to transaction history.
-    data.transactions.push({
-        date: date,
-        reference: reference,
-        type: type,
-        description: description,
-        amount: amount
+        if (!Array.isArray(bankData.records)) {
+            bankData.records = [];
+        }
+
+        if (!Array.isArray(bankData.transactions)) {
+            bankData.transactions = [];
+        }
+
+        const currentBalance = Number(bankData.balance) || 0;
+
+        if (type === "Withdrawal" && amount > currentBalance) {
+            showMessage("Insufficient account balance.", "error");
+            return;
+        }
+
+        if (type === "Deposit") {
+            bankData.balance = currentBalance + amount;
+        } else {
+            bankData.balance = currentBalance - amount;
+        }
+
+        const now = new Date();
+        const reference = "DBS" + now.getTime();
+        const date = now.toLocaleString("en-NG");
+
+        const record = {
+            date,
+            reference,
+            type,
+            description,
+            amount,
+            status: "Demo Recorded"
+        };
+
+        bankData.records.unshift(record);
+
+        bankData.transactions.unshift({
+            date,
+            reference,
+            type,
+            description,
+            amount,
+            status: "Demo Recorded"
+        });
+
+        saveCustomers(customers);
+
+        updateBalance();
+        renderRecords();
+
+        recordForm.reset();
+
+        showMessage(
+            type + " recorded successfully.",
+            "success"
+        );
     });
-
-    saveData(data);
-
-    updateBalance();
-    renderRecords();
-
-    recordForm.reset();
-
-    showMessage(
-        type + " recorded successfully in the demo.",
-        "success"
-    );
-});
+}
 
 updateBalance();
 renderRecords();
