@@ -1,5 +1,6 @@
 
 // DBS-BANK: Customer Transfer Page
+// Supports first-time transfers without a saved beneficiary.
 
 const STORAGE_KEY = "dbsDemoCustomers";
 const SESSION_KEY = "dbsDemoSession";
@@ -62,6 +63,12 @@ const currentBalance = document.getElementById("currentBalance");
 const confirmationDetails =
     document.getElementById("confirmationDetails");
 
+const confirmButton =
+    document.getElementById("confirmTransfer");
+
+const cancelButton =
+    document.getElementById("cancelTransfer");
+
 let pendingTransfer = null;
 
 function showMessage(text, type = "") {
@@ -77,35 +84,28 @@ function saveCustomers(customers) {
 
 function loadBeneficiaries() {
     const result = getCurrentCustomer();
-
     if (!result) return;
 
     const data = result.customer.bankData || {};
+    const beneficiaries = Array.isArray(data.beneficiaries)
+        ? data.beneficiaries
+        : [];
 
-    if (!Array.isArray(data.beneficiaries)) {
-        data.beneficiaries = [];
-    }
+    beneficiary.innerHTML = "";
 
-    beneficiary.replaceChildren();
+    const firstOption = document.createElement("option");
+    firstOption.value = "";
+    firstOption.textContent = "Select saved beneficiary (optional)";
+    beneficiary.appendChild(firstOption);
 
-    const defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = "Select Beneficiary";
-
-    beneficiary.appendChild(defaultOption);
-
-    data.beneficiaries.forEach((item, index) => {
+    beneficiaries.forEach((item, index) => {
         const option = document.createElement("option");
-
         option.value = String(index);
 
         option.textContent =
             (item.name || "Beneficiary") +
             " - " +
-            (item.account || item.accountNumber || "") +
-            " (" +
-            (item.bank || "Bank not specified") +
-            ")";
+            (item.account || item.accountNumber || "");
 
         beneficiary.appendChild(option);
     });
@@ -113,185 +113,192 @@ function loadBeneficiaries() {
     if (currentBalance) {
         currentBalance.textContent = currency(data.balance);
     }
-
-    if (data.beneficiaries.length === 0) {
-        showMessage(
-            "No beneficiaries saved. Please add a beneficiary first.",
-            "error"
-        );
-    } else {
-        showMessage(
-            data.beneficiaries.length + " beneficiary(ies) available.",
-            "success"
-        );
-    }
 }
 
 beneficiary.addEventListener("change", function() {
     const result = getCurrentCustomer();
-
     if (!result) return;
 
     const beneficiaries =
         result.customer.bankData.beneficiaries || [];
 
-    if (this.value === "") {
-        accountNumber.value = "";
-        bankName.value = "";
-        return;
-    }
+    if (this.value === "") return;
 
     const selected = beneficiaries[Number(this.value)];
 
-    if (!selected) {
-        showMessage("Please select a valid beneficiary.", "error");
-        return;
-    }
+    if (!selected) return;
 
     accountNumber.value =
         selected.account || selected.accountNumber || "";
 
     bankName.value = selected.bank || "";
 
-    showMessage(
-        "Beneficiary details loaded successfully.",
-        "success"
-    );
+    showMessage("Saved beneficiary selected.", "success");
 });
 
 form.addEventListener("submit", function(event) {
     event.preventDefault();
 
     const result = getCurrentCustomer();
-
     if (!result) return;
 
     const data = result.customer.bankData || {};
-    const beneficiaries = data.beneficiaries || [];
 
     const selectedIndex = beneficiary.value;
+    const beneficiaries = Array.isArray(data.beneficiaries)
+        ? data.beneficiaries
+        : [];
 
-    if (selectedIndex === "" ||
-        !beneficiaries[Number(selectedIndex)]) {
-        showMessage(
-            "Please select a beneficiary before continuing.",
-            "error"
-        );
+    let recipientAccount = accountNumber.value.trim();
+    let recipientBank = bankName.value.trim();
+    let recipientName = "";
+
+    // Use saved beneficiary details when one is selected.
+    if (selectedIndex !== "") {
+        const selected = beneficiaries[Number(selectedIndex)];
+
+        if (!selected) {
+            showMessage("Please select a valid beneficiary.", "error");
+            return;
+        }
+
+        recipientAccount =
+            selected.account || selected.accountNumber || "";
+
+        recipientBank = selected.bank || "";
+        recipientName = selected.name || "";
+    }
+
+    const transferAmount = Number(amount.value);
+
+    if (!/^[0-9]{6,20}$/.test(recipientAccount)) {
+        showMessage("Enter a valid recipient account number.", "error");
         return;
     }
 
-    const selected = beneficiaries[Number(selectedIndex)];
+    if (!recipientBank) {
+        showMessage("Enter the recipient's bank name.", "error");
+        return;
+    }
 
-    const account =
-        selected.account || selected.accountNumber || "";
-
-    const bank = selected.bank || "";
-
-    const balance = Number(data.balance || 0);
-    const value = Number(amount.value);
-
-    if (!Number.isFinite(value) || value <= 0) {
+    if (!Number.isFinite(transferAmount) || transferAmount <= 0) {
         showMessage("Enter a valid transfer amount.", "error");
         return;
     }
 
-    if (account === result.customer.profile.accountNumber) {
+    if (recipientAccount === result.customer.profile.accountNumber) {
         showMessage("You cannot transfer to your own account.", "error");
         return;
     }
 
-    if (value > balance) {
+    const balance = Number(data.balance) || 0;
+
+    if (transferAmount > balance) {
         showMessage("Insufficient available balance.", "error");
         return;
     }
 
     pendingTransfer = {
-        account,
-        bank,
-        beneficiaryName: selected.name || "Beneficiary",
-        amount: value,
+        account: recipientAccount,
+        bank: recipientBank,
+        name: recipientName,
+        amount: transferAmount,
         narration: narration.value.trim()
     };
 
     confirmationDetails.textContent =
-        "Beneficiary: " + pendingTransfer.beneficiaryName +
-        " | Account: " + account +
-        " | Bank: " + bank +
-        " | Amount: " + currency(value) +
+        "Recipient: " + (recipientName || "New recipient") +
+        " | Account: " + recipientAccount +
+        " | Bank: " + recipientBank +
+        " | Amount: " + currency(transferAmount) +
         " | Narration: " + pendingTransfer.narration;
 
     confirmation.hidden = false;
 
-    showMessage("Review the transfer details before confirming.");
+    showMessage("Please review and confirm your transfer.");
 });
 
-document.getElementById("confirmTransfer")
-    .addEventListener("click", function() {
+confirmButton.addEventListener("click", function() {
+    if (!pendingTransfer) return;
 
-        if (!pendingTransfer) return;
+    const result = getCurrentCustomer();
+    if (!result) return;
 
-        const result = getCurrentCustomer();
+    const data = result.customer.bankData || {};
+    const balance = Number(data.balance) || 0;
 
-        if (!result) return;
+    if (pendingTransfer.amount > balance) {
+        showMessage("Insufficient available balance.", "error");
+        confirmation.hidden = true;
+        pendingTransfer = null;
+        return;
+    }
 
-        const data = result.customer.bankData || {};
-        const balance = Number(data.balance || 0);
+    if (!Array.isArray(data.transactions)) {
+        data.transactions = [];
+    }
 
-        if (pendingTransfer.amount > balance) {
-            showMessage("Insufficient available balance.", "error");
-            confirmation.hidden = true;
-            pendingTransfer = null;
-            return;
-        }
+    if (!Array.isArray(data.beneficiaries)) {
+        data.beneficiaries = [];
+    }
 
-        data.balance = balance - pendingTransfer.amount;
+    // Save the simulated transfer.
+    data.balance = balance - pendingTransfer.amount;
 
-        if (!Array.isArray(data.transactions)) {
-            data.transactions = [];
-        }
+    const reference = "TEST-" + Date.now();
+    const date = new Date().toLocaleString("en-NG");
 
-        const reference = "TEST-" + Date.now();
-        const date = new Date().toLocaleString("en-NG");
+    data.transactions.unshift({
+        type: "Transfer",
+        amount: pendingTransfer.amount,
+        detail: "To account " + pendingTransfer.account,
+        description: "Transfer to " + pendingTransfer.account,
+        date,
+        narration: pendingTransfer.narration,
+        reference,
+        status: "Demo Recorded"
+    });
 
-        data.transactions.unshift({
-            type: "Transfer",
-            amount: pendingTransfer.amount,
-            detail: "To " + pendingTransfer.beneficiaryName +
-                " - " + pendingTransfer.account,
-            description: "Transfer to " + pendingTransfer.beneficiaryName,
-            date,
-            narration: pendingTransfer.narration,
-            reference,
-            status: "Demo Recorded"
+    // Automatically save a new recipient after the first transfer.
+    const alreadySaved = data.beneficiaries.some(item =>
+        (item.account || item.accountNumber) === pendingTransfer.account
+    );
+
+    if (!alreadySaved) {
+        data.beneficiaries.push({
+            name: pendingTransfer.name ||
+                "Recipient " + pendingTransfer.account.slice(-4),
+            account: pendingTransfer.account,
+            bank: pendingTransfer.bank
         });
+    }
 
-        result.customer.bankData = data;
-        result.customers[result.index] = result.customer;
+    result.customer.bankData = data;
+    result.customers[result.index] = result.customer;
 
-        saveCustomers(result.customers);
+    saveCustomers(result.customers);
 
+    if (currentBalance) {
         currentBalance.textContent = currency(data.balance);
+    }
 
-        confirmation.hidden = true;
-        form.reset();
-        pendingTransfer = null;
+    confirmation.hidden = true;
+    form.reset();
+    pendingTransfer = null;
 
-        loadBeneficiaries();
+    loadBeneficiaries();
 
-        showMessage(
-            "Test transfer recorded successfully. No real money was sent.",
-            "success"
-        );
-    });
+    showMessage(
+        "Test transfer recorded. The recipient has been saved to your beneficiaries. No real money was sent.",
+        "success"
+    );
+});
 
-document.getElementById("cancelTransfer")
-    .addEventListener("click", function() {
-
-        pendingTransfer = null;
-        confirmation.hidden = true;
-
-        showMessage("Transfer cancelled.");
-    });
+cancelButton.addEventListener("click", function() {
+    pendingTransfer = null;
+    confirmation.hidden = true;
+    showMessage("Transfer cancelled.");
+});
 
 loadBeneficiaries();
 
