@@ -4,51 +4,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBS-BANK | Customer Login</title>
+
+    <title>Novacrest Bank | Demo Login</title>
+    <meta name="description" content="Demo login page for the Novacrest Bank fictional banking software prototype.">
+
     <link rel="stylesheet" href="login.css">
     <script src="login.js" defer></script>
 </head>
 <body>
 
 <header>
-    <div class="logo">DBS<span>BANK</span></div>
-    <a href="register.html">Create Account</a>
+    <div class="logo">
+        NOVACREST <span>BANK</span>
+    </div>
+
+    <a href="index.html">Home</a>
 </header>
 
 <main>
     <div class="login-container">
 
+        <div class="prototype-notice">
+            <strong>DEMO WEBSITE ONLY</strong>
+            <p>
+                Novacrest Bank is a fictional banking software prototype,
+                not an operating bank or licensed financial institution.
+                All accounts and transactions are simulated.
+                Never enter real banking credentials or financial information.
+            </p>
+        </div>
+
         <h1>Welcome Back</h1>
-        <p>Login to your DBS-BANK Online Banking</p>
 
-        <form id="loginForm">
+        <p>
+            Sign in to the Novacrest Bank demonstration account.
+        </p>
 
-            <label>Email Address</label>
-            <input type="email" id="email" required>
+        <form id="loginForm" autocomplete="off">
 
-            <label>Password</label>
-            <input type="password" id="password" required>
+            <label for="email">Demo Email Address</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your demo email"
+                autocomplete="off"
+                required
+            >
+
+            <label for="password">Demo Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your demo password"
+                autocomplete="new-password"
+                required
+            >
 
             <div class="forgot">
-                <a href="forgot-password.html">Forgot Password?</a>
+                <a href="forgot-password.html">Demo Password Help</a>
             </div>
 
-            <button type="submit">Login Securely</button>
+            <button type="submit">
+                Sign In to Demo
+            </button>
 
         </form>
 
-        <p id="message"></p>
+        <p id="message" role="status" aria-live="polite"></p>
 
         <div class="register-link">
-            Don't have an account?
-            <a href="register.html">Register Now</a>
+            New to the demonstration?
+            <a href="register.html">Create Demo Account</a>
         </div>
+
+        <p class="back-home">
+            <a href="index.html">← Back to Homepage</a>
+        </p>
 
     </div>
 </main>
 
 <footer>
-    &copy; 2026 DBS-BANK. All Rights Reserved.
+    <p>
+        &copy; 2026 Novacrest Bank Software Prototype.
+        Not a real bank. No real banking services are provided.
+    </p>
 </footer>
 
 </body>
