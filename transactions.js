@@ -1,40 +1,11 @@
 
-const STORAGE_KEY = "dbsDemoData";
+// DBS-BANK: Customer Transaction History
 
-const transactionTable = document.getElementById("transactionTable");
-const emptyMessage = document.getElementById("emptyMessage");
-
-function getData() {
+function readStorage(storage, key, fallback) {
     try {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-
-        const data = saved && typeof saved === "object" ? saved : {};
-
-        if (!Array.isArray(data.transactions)) {
-            data.transactions = [];
-        }
-
-        if (!Array.isArray(data.records)) {
-            data.records = [];
-        }
-
-        if (!Array.isArray(data.beneficiaries)) {
-            data.beneficiaries = [];
-        }
-
-        if (typeof data.balance !== "number") {
-            data.balance = 250000;
-        }
-
-        return data;
-
-    } catch (error) {
-        return {
-            balance: 250000,
-            beneficiaries: [],
-            transactions: [],
-            records: []
-        };
+        return JSON.parse(storage.getItem(key)) ?? fallback;
+    } catch {
+        return fallback;
     }
 }
 
@@ -46,37 +17,88 @@ function formatMoney(amount) {
     });
 }
 
-function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, function(char) {
-        const characters = {
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#039;"
-        };
+function getCurrentCustomer() {
+    const session = readStorage(
+        sessionStorage,
+        "dbsDemoSession",
+        null
+    );
 
-        return characters[char];
-    });
+    if (!session) {
+        window.location.href = "login.html";
+        return null;
+    }
+
+    const customers = readStorage(
+        localStorage,
+        "dbsDemoCustomers",
+        []
+    );
+
+    const customer = customers.find(item =>
+        item.profile &&
+        item.profile.email === session.email &&
+        item.profile.accountNumber === session.accountNumber
+    );
+
+    if (!customer) {
+        sessionStorage.removeItem("dbsDemoSession");
+        window.location.href = "login.html";
+        return null;
+    }
+
+    return customer;
 }
 
 function getTransactionType(transaction) {
     return String(
-        transaction.type || transaction.description || "Transaction"
+        transaction.type ||
+        transaction.description ||
+        "Transaction"
     );
 }
 
 function renderTransactions() {
-    const data = getData();
+    const customer = getCurrentCustomer();
+    if (!customer) return;
 
-    const transactions = [...data.transactions].reverse();
+    const data = customer.bankData || {};
+    const transactions = Array.isArray(data.transactions)
+        ? data.transactions
+        : [];
 
-    transactionTable.innerHTML = "";
+    const records = Array.isArray(data.records)
+        ? data.records
+        : [];
+
+    const allTransactions = [...transactions];
+
+    // Include deposit and withdrawal records not already listed
+    records.forEach(record => {
+        if (!allTransactions.some(item =>
+            item.reference &&
+            item.reference === record.reference
+        )) {
+            allTransactions.push(record);
+        }
+    });
+
+    allTransactions.sort((a, b) => {
+        return new Date(b.date || 0) - new Date(a.date || 0);
+    });
+
+    const transactionTable =
+        document.getElementById("transactionTable");
+
+    const emptyMessage =
+        document.getElementById("emptyMessage");
+
+    transactionTable.replaceChildren();
 
     let totalDeposits = 0;
     let totalWithdrawals = 0;
 
-    data.transactions.forEach(function(transaction) {
+    allTransactions.forEach(transaction => {
         const type = getTransactionType(transaction).toLowerCase();
         const amount = Number(transaction.amount) || 0;
 
@@ -90,7 +112,7 @@ function renderTransactions() {
     });
 
     document.getElementById("totalTransactions").textContent =
-        data.transactions.length;
+        allTransactions.length;
 
     document.getElementById("totalDeposits").textContent =
         formatMoney(totalDeposits);
@@ -98,35 +120,32 @@ function renderTransactions() {
     document.getElementById("totalWithdrawals").textContent =
         formatMoney(totalWithdrawals);
 
-    if (transactions.length === 0) {
+    if (allTransactions.length === 0) {
         emptyMessage.hidden = false;
 
         const row = document.createElement("tr");
         const cell = document.createElement("td");
 
         cell.colSpan = 6;
-        cell.textContent = "No transactions recorded.";
+        cell.textContent = "No transactions recorded yet.";
 
         row.appendChild(cell);
         transactionTable.appendChild(row);
-
         return;
     }
 
     emptyMessage.hidden = true;
 
-    transactions.forEach(function(transaction) {
+    allTransactions.forEach(transaction => {
         const row = document.createElement("tr");
 
-        const date = transaction.date || "Date unavailable";
-        const reference = transaction.reference || "Demo transaction";
-        const description = transaction.description || transaction.type || "Transaction";
         const type = getTransactionType(transaction);
+        const typeLower = type.toLowerCase();
         const amount = Number(transaction.amount) || 0;
 
-        const typeLower = type.toLowerCase();
-
-        const isCredit = typeLower.includes("deposit");
+        const isCredit =
+            typeLower.includes("deposit") ||
+            typeLower.includes("credit");
 
         const amountClass = isCredit
             ? "amount-credit"
@@ -134,23 +153,55 @@ function renderTransactions() {
 
         const sign = isCredit ? "+" : "-";
 
-        row.innerHTML = `
-            <td>${escapeHTML(date)}</td>
-            <td>${escapeHTML(reference)}</td>
-            <td>${escapeHTML(description)}</td>
-            <td>${escapeHTML(type)}</td>
-            <td class="${amountClass}">
-                ${sign}${escapeHTML(formatMoney(amount))}
-            </td>
-            <td><span class="status">Demo Recorded</span></td>
-        `;
+        const date = transaction.date
+            ? new Date(transaction.date).toLocaleString("en-NG")
+            : "Date unavailable";
+
+        const reference =
+            transaction.reference || "Test transaction";
+
+        const description =
+            transaction.detail ||
+            transaction.description ||
+            transaction.narration ||
+            "Account transaction";
+
+        const cells = [
+            date,
+            reference,
+            description,
+            type,
+            sign + formatMoney(amount)
+        ];
+
+        cells.forEach((value, index) => {
+            const cell = document.createElement("td");
+            cell.textContent = value;
+
+            if (index === 4) {
+                cell.className = amountClass;
+            }
+
+            row.appendChild(cell);
+        });
+
+        const statusCell = document.createElement("td");
+        const status = document.createElement("span");
+
+        status.className = "status";
+        status.textContent = "Test Recorded";
+
+        statusCell.appendChild(status);
+        row.appendChild(statusCell);
 
         transactionTable.appendChild(row);
     });
 }
 
-document.getElementById("refreshBtn").addEventListener("click", function() {
-    renderTransactions();
-});
+const refreshButton = document.getElementById("refreshBtn");
+
+refreshButton.addEventListener("click", renderTransactions);
 
 renderTransactions();
+
+window.addEventListener("pageshow", renderTransactions);
