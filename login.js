@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("loginForm");
     const message = document.getElementById("message");
 
-    if (!form) return;
+    if (!form || !message) return;
 
     function showMessage(text, success = false) {
         message.textContent = text;
@@ -15,27 +15,38 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.getItem("dbsDemoCustomers") || "null"
         );
 
-        if (Array.isArray(customers)) return customers;
+        if (Array.isArray(customers)) {
+            return customers;
+        }
 
         customers = [];
 
         const profile = JSON.parse(
             localStorage.getItem("dbsDemoProfile") || "null"
         );
+
         const credentials = JSON.parse(
             localStorage.getItem("dbsDemoCredentials") || "null"
         );
+
         const bankData = JSON.parse(
             localStorage.getItem("dbsDemoData") || "null"
         );
 
         if (profile && credentials && bankData) {
-            const accountNumber = bankData.accountNumber || "0123456789";
+            const accountNumber =
+                bankData.accountNumber || "0123456789";
 
             customers.push({
-                profile: { ...profile, accountNumber: accountNumber },
+                profile: {
+                    ...profile,
+                    accountNumber: accountNumber
+                },
                 credentials: credentials,
-                bankData: { ...bankData, accountNumber: accountNumber }
+                bankData: {
+                    ...bankData,
+                    accountNumber: accountNumber
+                }
             });
 
             localStorage.setItem(
@@ -48,8 +59,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function hashPassword(password, saltHex) {
+        if (
+            !saltHex ||
+            typeof saltHex !== "string" ||
+            !/^[0-9a-f]+$/i.test(saltHex) ||
+            saltHex.length % 2 !== 0
+        ) {
+            throw new Error("Invalid demo password data.");
+        }
+
         const salt = new Uint8Array(
-            saltHex.match(/.{1,2}/g).map(byte => parseInt(byte, 16))
+            saltHex.match(/.{1,2}/g).map(byte =>
+                parseInt(byte, 16)
+            )
         );
 
         const key = await crypto.subtle.importKey(
@@ -79,28 +101,59 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
 
-        const email = document.getElementById("email").value.trim().toLowerCase();
+        const email = document
+            .getElementById("email")
+            .value.trim()
+            .toLowerCase();
+
         const password = document.getElementById("password").value;
 
         if (!email || !password) {
-            showMessage("Enter your email and password.");
+            showMessage("Enter your demo email and password.");
             return;
         }
 
-        if (!crypto.subtle) {
-            showMessage("Please open the website using HTTPS.");
+        if (!window.crypto || !window.crypto.subtle) {
+            showMessage(
+                "Secure browser features are unavailable. Please use HTTPS."
+            );
             return;
+        }
+
+        const submitButton = form.querySelector(
+            'button[type="submit"]'
+        );
+
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = "Checking demo account...";
         }
 
         try {
             const customers = getCustomers();
 
             const customer = customers.find(item =>
+                item &&
+                item.profile &&
+                item.profile.email &&
                 item.profile.email.toLowerCase() === email
             );
 
             if (!customer) {
-                showMessage("Account not found. Please register first.");
+                showMessage(
+                    "Demo account not found. Please create a demo account."
+                );
+                return;
+            }
+
+            if (
+                !customer.credentials ||
+                !customer.credentials.salt ||
+                !customer.credentials.passwordHash
+            ) {
+                showMessage(
+                    "Demo account information is incomplete."
+                );
                 return;
             }
 
@@ -110,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
             if (enteredHash !== customer.credentials.passwordHash) {
-                showMessage("Incorrect email or password.");
+                showMessage("Incorrect demo email or password.");
                 return;
             }
 
@@ -118,19 +171,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 "dbsDemoSession",
                 JSON.stringify({
                     email: customer.profile.email,
-                    accountNumber: customer.profile.accountNumber
+                    accountNumber:
+                        customer.profile.accountNumber ||
+                        customer.bankData?.accountNumber ||
+                        ""
                 })
             );
 
-            showMessage("Login successful. Opening your dashboard...", true);
+            showMessage(
+                "Demo login successful. Opening your dashboard...",
+                true
+            );
 
-            setTimeout(function () {
-                window.location.href = "dashboard.html";
-            }, 1000);
+            window.location.href = "dashboard.html";
 
         } catch (error) {
-            console.error(error);
-            showMessage("Login could not be completed. Please try again.");
+            showMessage(
+                "Demo login could not be completed. Please try again."
+            );
+
+        } finally {
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = "Sign In to Demo";
+            }
         }
     });
 });
