@@ -1,50 +1,65 @@
 
-const STORAGE_KEY = "dbsDemoData";
+// DBS-BANK: Customer Beneficiary Management
 
-const beneficiaryForm = document.getElementById("beneficiaryForm");
-const beneficiaryList = document.getElementById("beneficiaryList");
-const message = document.getElementById("message");
-
-function getData() {
+function readStorage(storage, key, fallback) {
     try {
-        const savedData = JSON.parse(
-            localStorage.getItem(STORAGE_KEY)
-        );
-
-        const data = savedData && typeof savedData === "object"
-            ? savedData
-            : {};
-
-        if (!Array.isArray(data.beneficiaries)) {
-            data.beneficiaries = [];
-        }
-
-        if (!Array.isArray(data.transactions)) {
-            data.transactions = [];
-        }
-
-        if (!Array.isArray(data.records)) {
-            data.records = [];
-        }
-
-        if (typeof data.balance !== "number") {
-            data.balance = 250000;
-        }
-
-        return data;
-
-    } catch (error) {
-        return {
-            balance: 250000,
-            beneficiaries: [],
-            transactions: [],
-            records: []
-        };
+        return JSON.parse(storage.getItem(key)) ?? fallback;
+    } catch {
+        return fallback;
     }
 }
 
-function saveData(data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+function getCurrentCustomer() {
+    const session = readStorage(
+        sessionStorage,
+        "dbsDemoSession",
+        null
+    );
+
+    if (!session) {
+        window.location.href = "login.html";
+        return null;
+    }
+
+    const customers = readStorage(
+        localStorage,
+        "dbsDemoCustomers",
+        []
+    );
+
+    const index = customers.findIndex(customer =>
+        customer.profile &&
+        customer.profile.email === session.email &&
+        customer.profile.accountNumber === session.accountNumber
+    );
+
+    if (index === -1) {
+        sessionStorage.removeItem("dbsDemoSession");
+        window.location.href = "login.html";
+        return null;
+    }
+
+    return {
+        customers,
+        index,
+        customer: customers[index]
+    };
+}
+
+const beneficiaryForm =
+    document.getElementById("beneficiaryForm");
+
+const beneficiaryList =
+    document.getElementById("beneficiaryList");
+
+const message =
+    document.getElementById("message");
+
+function saveCustomers(customers) {
+    localStorage.setItem(
+        "dbsDemoCustomers",
+        JSON.stringify(customers)
+    );
 }
 
 function showMessage(text, type) {
@@ -53,11 +68,17 @@ function showMessage(text, type) {
 }
 
 function renderBeneficiaries() {
-    const data = getData();
+    const result = getCurrentCustomer();
+    if (!result) return;
 
-    beneficiaryList.innerHTML = "";
+    const data = result.customer.bankData || {};
+    const beneficiaries = Array.isArray(data.beneficiaries)
+        ? data.beneficiaries
+        : [];
 
-    if (data.beneficiaries.length === 0) {
+    beneficiaryList.replaceChildren();
+
+    if (beneficiaries.length === 0) {
         const empty = document.createElement("p");
         empty.className = "empty-message";
         empty.textContent = "No beneficiaries saved yet.";
@@ -65,7 +86,7 @@ function renderBeneficiaries() {
         return;
     }
 
-    data.beneficiaries.forEach((beneficiary, index) => {
+    beneficiaries.forEach((item, index) => {
         const card = document.createElement("div");
         card.className = "beneficiary-card";
 
@@ -73,17 +94,16 @@ function renderBeneficiaries() {
         info.className = "beneficiary-info";
 
         const name = document.createElement("h3");
-        name.textContent = beneficiary.name;
+        name.textContent = item.name || "Beneficiary";
 
         const account = document.createElement("p");
-        account.textContent = "Account Number: " + beneficiary.account;
+        account.textContent =
+            "Account Number: " + (item.account || item.accountNumber || "");
 
         const bank = document.createElement("p");
-        bank.textContent = "Bank: " + (beneficiary.bank || "Not specified");
+        bank.textContent = "Bank: " + (item.bank || "Not specified");
 
-        info.appendChild(name);
-        info.appendChild(account);
-        info.appendChild(bank);
+        info.append(name, account, bank);
 
         const removeButton = document.createElement("button");
         removeButton.className = "remove-btn";
@@ -91,9 +111,7 @@ function renderBeneficiaries() {
         removeButton.type = "button";
         removeButton.dataset.index = index;
 
-        card.appendChild(info);
-        card.appendChild(removeButton);
-
+        card.append(info, removeButton);
         beneficiaryList.appendChild(card);
     });
 }
@@ -102,16 +120,13 @@ beneficiaryForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
     const name = document
-        .getElementById("beneficiaryName")
-        .value.trim();
+        .getElementById("beneficiaryName").value.trim();
 
     const account = document
-        .getElementById("beneficiaryAccount")
-        .value.trim();
+        .getElementById("beneficiaryAccount").value.trim();
 
     const bank = document
-        .getElementById("beneficiaryBank")
-        .value.trim();
+        .getElementById("beneficiaryBank").value.trim();
 
     if (!name || !account || !bank) {
         showMessage("Please complete all fields.", "error");
@@ -126,11 +141,18 @@ beneficiaryForm.addEventListener("submit", function(event) {
         return;
     }
 
-    const data = getData();
+    const result = getCurrentCustomer();
+    if (!result) return;
 
-    const duplicate = data.beneficiaries.some(function(item) {
-        return item.account === account;
-    });
+    const data = result.customer.bankData || {};
+
+    if (!Array.isArray(data.beneficiaries)) {
+        data.beneficiaries = [];
+    }
+
+    const duplicate = data.beneficiaries.some(item =>
+        (item.account || item.accountNumber) === account
+    );
 
     if (duplicate) {
         showMessage(
@@ -141,17 +163,20 @@ beneficiaryForm.addEventListener("submit", function(event) {
     }
 
     data.beneficiaries.push({
-        name: name,
-        account: account,
-        bank: bank
+        name,
+        account,
+        bank
     });
 
-    saveData(data);
+    result.customer.bankData = data;
+    result.customers[result.index] = result.customer;
+
+    saveCustomers(result.customers);
 
     beneficiaryForm.reset();
 
     showMessage(
-        "Demo beneficiary saved successfully.",
+        "Test beneficiary saved successfully.",
         "success"
     );
 
@@ -165,23 +190,34 @@ beneficiaryList.addEventListener("click", function(event) {
 
     const index = Number(event.target.dataset.index);
 
-    const data = getData();
+    const result = getCurrentCustomer();
+    if (!result) return;
+
+    const data = result.customer.bankData || {};
+    const beneficiaries = data.beneficiaries || [];
 
     if (!Number.isInteger(index) ||
         index < 0 ||
-        index >= data.beneficiaries.length) {
+        index >= beneficiaries.length) {
         return;
     }
 
-    data.beneficiaries.splice(index, 1);
+    beneficiaries.splice(index, 1);
 
-    saveData(data);
+    data.beneficiaries = beneficiaries;
+    result.customer.bankData = data;
+    result.customers[result.index] = result.customer;
+
+    saveCustomers(result.customers);
+
     renderBeneficiaries();
 
     showMessage(
-        "Demo beneficiary removed.",
+        "Test beneficiary removed.",
         "success"
     );
 });
 
 renderBeneficiaries();
+
+window.addEventListener("pageshow", renderBeneficiaries);
