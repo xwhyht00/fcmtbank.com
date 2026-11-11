@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DBS-BANK | Money Transfer</title>
     <link rel="stylesheet" href="transfer.css">
-    <script src="transfer.js" defer></script>
+    <script src="transfer.js?v=4" defer></script>
 </head>
 <body>
 
@@ -24,7 +24,6 @@
 </header>
 
 <main>
-
     <section class="transfer-container">
 
         <h1>Money Transfer</h1>
@@ -32,9 +31,9 @@
 
         <div class="account-info">
             <span>Source Account</span>
-            <h3>0123456789</h3>
+            <h3 id="sourceAccount">Your Account</h3>
             <p>Personal Savings Account</p>
-            <strong id="currentBalance">₦250,000.00</strong>
+            <strong id="currentBalance">₦0.00</strong>
             <small>Demo available balance</small>
         </div>
 
@@ -42,26 +41,43 @@
 
             <h2>Transfer Details</h2>
 
-            <label>Beneficiary</label>
-            <select id="beneficiary" required>
-                <option value="">Select Beneficiary</option>
+            <label for="beneficiary">Saved Beneficiary (Optional)</label>
+            <select id="beneficiary">
+                <option value="">Enter a new recipient below</option>
             </select>
 
-            <label>Beneficiary Account Number</label>
-            <input type="text" id="accountNumber"
-                   maxlength="20" required>
+            <label for="accountNumber">Beneficiary Account Number</label>
+            <input
+                type="text"
+                id="accountNumber"
+                maxlength="20"
+                placeholder="Enter recipient account number"
+                required
+            >
 
-            <label>Bank Name</label>
-            <input type="text" id="bankName"
-                   value="Demo Bank" required>
+            <label for="bankName">Bank Name</label>
+            <input
+                type="text"
+                id="bankName"
+                placeholder="Enter recipient bank"
+                required
+            >
 
-            <label>Transfer Amount (NGN)</label>
-            <input type="number" id="amount"
-                   min="1" step="0.01" required>
+            <label for="amount">Transfer Amount (NGN)</label>
+            <input
+                type="number"
+                id="amount"
+                min="1"
+                step="0.01"
+                placeholder="Enter amount"
+                required
+            >
 
-            <label>Narration</label>
-            <textarea id="narration"
-                      placeholder="Enter transfer description"></textarea>
+            <label for="narration">Narration</label>
+            <textarea
+                id="narration"
+                placeholder="Enter transfer description"
+            ></textarea>
 
             <button type="submit">Review Transfer</button>
 
@@ -69,10 +85,13 @@
 
         <div id="confirmation" hidden>
             <h2>Confirm Demo Transfer</h2>
+
             <div id="confirmationDetails"></div>
+
             <button type="button" id="confirmTransfer">
                 Confirm Demo Transfer
             </button>
+
             <button type="button" id="cancelTransfer">
                 Cancel
             </button>
@@ -85,7 +104,6 @@
         </div>
 
     </section>
-
 </main>
 
 <footer>
