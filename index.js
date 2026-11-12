@@ -1,48 +1,111 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  // Mobile navigation
+  /* =====================================
+     MOBILE NAVIGATION
+  ===================================== */
+
   const menuToggle = document.getElementById("menuToggle");
   const navigation = document.getElementById("navigation");
 
-  menuToggle.addEventListener("click", function () {
-    const isOpen = navigation.classList.toggle("active");
+  if (menuToggle && navigation) {
 
-    menuToggle.setAttribute("aria-expanded", isOpen);
-    menuToggle.innerHTML = isOpen ? "✕" : "☰";
-  });
-
-  // Close mobile menu after clicking a link
-  const navLinks = navigation.querySelectorAll("a");
-
-  navLinks.forEach(function (link) {
-    link.addEventListener("click", function () {
+    function closeMenu() {
       navigation.classList.remove("active");
       menuToggle.setAttribute("aria-expanded", "false");
       menuToggle.innerHTML = "☰";
-    });
-  });
+    }
 
-  // Contact form
+    function toggleMenu() {
+      const isOpen = navigation.classList.toggle("active");
+
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.innerHTML = isOpen ? "✕" : "☰";
+    }
+
+    menuToggle.addEventListener("click", toggleMenu);
+
+    // Close menu after selecting a navigation link
+    const navLinks = navigation.querySelectorAll("a");
+
+    navLinks.forEach(function (link) {
+      link.addEventListener("click", closeMenu);
+    });
+
+    // Close menu when Escape is pressed
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeMenu();
+        menuToggle.focus();
+      }
+    });
+
+    // Close mobile menu when switching to desktop width
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 768) {
+        closeMenu();
+      }
+    });
+  }
+
+
+  /* =====================================
+     CONTACT FORM - DEMO ONLY
+  ===================================== */
+
   const contactForm = document.getElementById("contactForm");
   const formMessage = document.getElementById("formMessage");
 
-  contactForm.addEventListener("submit", function (event) {
-    event.preventDefault();
+  if (contactForm && formMessage) {
 
-    const name = document.getElementById("customerName").value.trim();
-    const email = document.getElementById("customerEmail").value.trim();
-    const message = document.getElementById("customerMessage").value.trim();
+    contactForm.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-    if (!name || !email || !message) {
-      formMessage.textContent = "Please complete all fields.";
-      return;
-    }
+      const nameField = document.getElementById("customerName");
+      const emailField = document.getElementById("customerEmail");
+      const messageField = document.getElementById("customerMessage");
 
-    formMessage.textContent =
-      "Your enquiry form is ready. Connect a secure form service to deliver messages.";
+      if (!nameField || !emailField || !messageField) {
+        formMessage.textContent =
+          "The demonstration form is not configured correctly.";
+        return;
+      }
 
-    contactForm.reset();
-  });
+      const name = nameField.value.trim();
+      const email = emailField.value.trim();
+      const message = messageField.value.trim();
+
+      // Check that all fields have been completed
+      if (!name || !email || !message) {
+        formMessage.textContent = "Please complete all fields.";
+        return;
+      }
+
+      // Basic email format validation
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailPattern.test(email)) {
+        formMessage.textContent = "Please enter a valid demonstration email address.";
+        return;
+      }
+
+      // This prototype does not collect or transmit form information
+      formMessage.textContent =
+        "Demo only: this form does not send or store messages. Do not enter real personal information.";
+
+      contactForm.reset();
+    });
+  }
+
+
+  /* =====================================
+     FOOTER YEAR
+  ===================================== */
+
+  const currentYear = document.getElementById("currentYear");
+
+  if (currentYear) {
+    currentYear.textContent = new Date().getFullYear();
+  }
 
 });
