@@ -4,52 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBS-BANK | Create Account</title>
+
+    <title>Novacrest Bank | Create Demo Account</title>
+    <meta name="description" content="Create a fictional demonstration profile for the Novacrest banking software prototype.">
+
     <link rel="stylesheet" href="register.css">
     <script src="register.js" defer></script>
 </head>
 <body>
 
 <header>
-    <div class="logo">DBS<span>BANK</span></div>
-    <a href="login.html">Customer Login</a>
+    <div class="logo">NOVACREST <span>BANK</span></div>
+    <a href="index.html">Home</a>
 </header>
 
 <main>
     <div class="register-container">
-        <h1>Create Your Account</h1>
-        <p>Register for DBS-BANK Online Banking</p>
 
-        <form id="registerForm">
-            <label>Full Name</label>
-            <input type="text" id="fullname" required>
+        <div class="prototype-notice">
+            <strong>DEMO WEBSITE ONLY</strong>
+            <p>
+                This is a fictional banking software demonstration.
+                Novacrest Bank is not an operating bank or licensed
+                financial institution. No real accounts or banking
+                services are provided. Do not enter personal,
+                financial, or banking information.
+            </p>
+        </div>
 
-            <label>Email Address</label>
-            <input type="email" id="email" required>
+        <h1>Create a Demo Profile</h1>
 
-            <label>Phone Number</label>
-            <input type="tel" id="phone" required>
+        <p>
+            Set up a fictional profile to explore the demonstration dashboard.
+        </p>
 
-            <label>Create Password</label>
-            <input type="password" id="password" minlength="8" required>
+        <form id="registerForm" autocomplete="off">
 
-            <label>Confirm Password</label>
-            <input type="password" id="confirmPassword" required>
+            <label for="fullname">Fictional Display Name</label>
+            <input
+                type="text"
+                id="fullname"
+                name="fullname"
+                placeholder="Example: Demo Customer"
+                maxlength="40"
+                required
+            >
 
-            <button type="submit">Create Account</button>
+            <p class="field-help">
+                Use a fictional name. Do not enter your real identity.
+            </p>
+
+            <button type="submit">
+                Create Demo Profile
+            </button>
+
         </form>
 
-        <p id="message"></p>
+        <p id="message" role="status" aria-live="polite"></p>
 
         <div class="login-link">
-            Already have an account?
-            <a href="login.html">Login Here</a>
+            Already exploring?
+            <a href="index.html">Return to Homepage</a>
         </div>
+
+        <p class="login-link">
+            <a href="login.html">Demo Login Information</a>
+        </p>
+
     </div>
 </main>
 
 <footer>
-    &copy; 2026 DBS-BANK. All Rights Reserved.
+    <p>
+        &copy; 2026 Novacrest Bank Software Prototype.
+        Not a real bank. All account information and transactions are simulated.
+    </p>
 </footer>
 
 </body>
