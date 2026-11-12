@@ -1,18 +1,38 @@
 
+/* =================================
+   NOVACREST BANK - DASHBOARD CSS
+   Fictional Banking Software Demo
+================================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f6fa;
-    color: #17233c;
+:root {
+    --navy: #071b3a;
+    --navy-light: #174b83;
+    --gold: #d8b45e;
+    --gold-light: #e6bd62;
+    --text: #17233c;
+    --muted: #748095;
+    --background: #f4f6fa;
+    --white: #ffffff;
+    --border: #edf0f5;
 }
 
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+/* HEADER */
+
 .header {
-    background: #071b3a;
+    background: var(--navy);
     min-height: 75px;
     padding: 18px 5%;
     display: flex;
@@ -23,15 +43,16 @@ body {
 }
 
 .logo {
-    color: white;
-    font-size: 26px;
+    color: var(--white);
+    font-size: 25px;
     font-weight: bold;
     text-decoration: none;
     white-space: nowrap;
+    letter-spacing: 0.5px;
 }
 
 .logo span {
-    color: #d5ad52;
+    color: var(--gold);
 }
 
 .main-nav {
@@ -45,13 +66,15 @@ body {
     color: #e5eaf3;
     text-decoration: none;
     font-size: 13px;
-    transition: 0.3s;
+    transition: color 0.3s;
 }
 
 .main-nav a:hover,
 .main-nav a.active {
-    color: #e6bd62;
+    color: var(--gold-light);
 }
+
+/* MAIN CONTAINER */
 
 .container {
     width: 90%;
@@ -59,9 +82,25 @@ body {
     margin: 35px auto;
 }
 
+/* PROTOTYPE NOTICE */
+
+.prototype-notice {
+    background: #fff7df;
+    color: #684d13;
+    border: 1px solid #ead18b;
+    border-left: 5px solid var(--gold);
+    border-radius: 8px;
+    padding: 15px 18px;
+    margin-bottom: 25px;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* WELCOME SECTION */
+
 .welcome {
     background: linear-gradient(120deg, #092650, #174b83);
-    color: white;
+    color: var(--white);
     padding: 35px;
     border-radius: 12px;
     display: flex;
@@ -72,7 +111,7 @@ body {
 }
 
 .eyebrow {
-    color: #e6bd62;
+    color: var(--gold-light);
     font-size: 12px;
     font-weight: bold;
     letter-spacing: 2px;
@@ -85,17 +124,28 @@ body {
 }
 
 .welcome p {
-    line-height: 1.6;
+    line-height: 1.7;
+    color: #e3eaf4;
 }
 
 .profile-button {
-    background: #d8b45e;
-    color: #071b3a;
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
     padding: 13px 22px;
     border-radius: 6px;
     text-decoration: none;
     font-weight: bold;
+    font-size: 14px;
+    transition: 0.3s;
 }
+
+.profile-button:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+}
+
+/* ACCOUNT SUMMARY */
 
 .summary-grid {
     display: grid;
@@ -105,11 +155,12 @@ body {
 }
 
 .summary-card {
-    background: white;
+    background: var(--white);
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.04);
-    border-left: 4px solid #d8b45e;
+    border-left: 4px solid var(--gold);
+    min-width: 0;
 }
 
 .summary-card p {
@@ -132,12 +183,20 @@ body {
     font-weight: bold;
 }
 
+.summary-card a:hover,
+.view-all:hover {
+    text-decoration: underline;
+}
+
+/* SECTION HEADINGS */
+
 .section-heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 15px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .section-heading h2 {
@@ -146,9 +205,11 @@ body {
 }
 
 .section-heading p {
-    color: #748095;
+    color: var(--muted);
     font-size: 14px;
 }
+
+/* BANKING SERVICES */
 
 .services-section {
     margin-bottom: 40px;
@@ -161,17 +222,19 @@ body {
 }
 
 .service-card {
-    background: white;
+    background: var(--white);
     padding: 25px 20px;
     border-radius: 10px;
     text-decoration: none;
-    color: #17233c;
+    color: var(--text);
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.04);
     transition: 0.3s;
+    border: 1px solid transparent;
 }
 
 .service-card:hover {
     transform: translateY(-4px);
+    border-color: #e4d5ad;
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.09);
 }
 
@@ -187,13 +250,15 @@ body {
 }
 
 .service-card p {
-    color: #748095;
+    color: var(--muted);
     font-size: 13px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
+/* TRANSACTION HISTORY */
+
 .transactions-section {
-    background: white;
+    background: var(--white);
     padding: 25px;
     border-radius: 10px;
     margin-bottom: 40px;
@@ -203,6 +268,7 @@ body {
 .table-wrapper {
     width: 100%;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 table {
@@ -215,13 +281,22 @@ th,
 td {
     padding: 15px;
     text-align: left;
-    border-bottom: 1px solid #edf0f5;
+    border-bottom: 1px solid var(--border);
     font-size: 14px;
 }
 
 th {
     color: #64728a;
     background: #f8f9fc;
+    font-weight: bold;
+}
+
+td {
+    color: #39465b;
+}
+
+tbody tr:hover {
+    background: #f8faff;
 }
 
 .empty-message {
@@ -230,13 +305,18 @@ th {
     padding: 25px;
 }
 
+/* FOOTER */
+
 .footer {
-    background: #071b3a;
+    background: var(--navy);
     color: #dce4ef;
     padding: 22px;
     text-align: center;
     font-size: 13px;
+    line-height: 1.7;
 }
+
+/* TABLET */
 
 @media (max-width: 1000px) {
     .services-grid {
@@ -246,12 +326,23 @@ th {
     .main-nav {
         gap: 12px;
     }
+
+    .summary-card h2 {
+        font-size: 22px;
+    }
 }
+
+/* MOBILE */
 
 @media (max-width: 700px) {
     .header {
         align-items: flex-start;
         flex-direction: column;
+        padding: 18px 4%;
+    }
+
+    .logo {
+        font-size: 23px;
     }
 
     .main-nav {
@@ -259,8 +350,16 @@ th {
         gap: 14px;
     }
 
+    .main-nav a {
+        font-size: 12px;
+    }
+
     .summary-grid {
         grid-template-columns: 1fr;
+    }
+
+    .welcome {
+        padding: 28px 22px;
     }
 
     .welcome h1 {
@@ -269,8 +368,15 @@ th {
 
     .container {
         width: 92%;
+        margin: 25px auto;
+    }
+
+    .section-heading h2 {
+        font-size: 20px;
     }
 }
+
+/* SMALL MOBILE */
 
 @media (max-width: 450px) {
     .services-grid {
@@ -283,5 +389,18 @@ th {
 
     .transactions-section {
         padding: 18px;
+    }
+
+    .summary-card {
+        padding: 20px;
+    }
+
+    .profile-button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .prototype-notice {
+        padding: 12px;
     }
 }
