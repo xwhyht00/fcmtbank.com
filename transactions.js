@@ -1,91 +1,16 @@
 
-// DBS-BANK: Customer Transaction History
+/* =========================================
+   NOVACREST BANK
+   TRANSACTION HISTORY
+   Fictional Banking Prototype
+========================================= */
 
-function readStorage(storage, key, fallback) {
-    try {
-        return JSON.parse(storage.getItem(key)) ?? fallback;
-    } catch {
-        return fallback;
-    }
-}
+document.addEventListener("DOMContentLoaded", function () {
 
-function formatMoney(amount) {
-    return Number(amount || 0).toLocaleString("en-NG", {
-        style: "currency",
-        currency: "NGN",
-        minimumFractionDigits: 2
-    });
-}
+    "use strict";
 
-function getCurrentCustomer() {
-    const session = readStorage(
-        sessionStorage,
-        "dbsDemoSession",
-        null
-    );
-
-    if (!session) {
-        window.location.href = "login.html";
-        return null;
-    }
-
-    const customers = readStorage(
-        localStorage,
-        "dbsDemoCustomers",
-        []
-    );
-
-    const customer = customers.find(item =>
-        item.profile &&
-        item.profile.email === session.email &&
-        item.profile.accountNumber === session.accountNumber
-    );
-
-    if (!customer) {
-        sessionStorage.removeItem("dbsDemoSession");
-        window.location.href = "login.html";
-        return null;
-    }
-
-    return customer;
-}
-
-function getTransactionType(transaction) {
-    return String(
-        transaction.type ||
-        transaction.description ||
-        "Transaction"
-    );
-}
-
-function renderTransactions() {
-    const customer = getCurrentCustomer();
-    if (!customer) return;
-
-    const data = customer.bankData || {};
-    const transactions = Array.isArray(data.transactions)
-        ? data.transactions
-        : [];
-
-    const records = Array.isArray(data.records)
-        ? data.records
-        : [];
-
-    const allTransactions = [...transactions];
-
-    // Include deposit and withdrawal records not already listed
-    records.forEach(record => {
-        if (!allTransactions.some(item =>
-            item.reference &&
-            item.reference === record.reference
-        )) {
-            allTransactions.push(record);
-        }
-    });
-
-    allTransactions.sort((a, b) => {
-        return new Date(b.date || 0) - new Date(a.date || 0);
-    });
+    const CUSTOMERS_KEY = "dbsDemoCustomers";
+    const SESSION_KEY = "dbsDemoSession";
 
     const transactionTable =
         document.getElementById("transactionTable");
@@ -93,55 +18,323 @@ function renderTransactions() {
     const emptyMessage =
         document.getElementById("emptyMessage");
 
-    transactionTable.replaceChildren();
+    const refreshButton =
+        document.getElementById("refreshBtn");
 
-    let totalDeposits = 0;
-    let totalWithdrawals = 0;
+    const totalTransactions =
+        document.getElementById("totalTransactions");
 
-    allTransactions.forEach(transaction => {
-        const type = getTransactionType(transaction).toLowerCase();
-        const amount = Number(transaction.amount) || 0;
+    const totalDeposits =
+        document.getElementById("totalDeposits");
 
-        if (type.includes("deposit")) {
-            totalDeposits += amount;
-        }
+    const totalWithdrawals =
+        document.getElementById("totalWithdrawals");
 
-        if (type.includes("withdraw")) {
-            totalWithdrawals += amount;
-        }
-    });
+    const yearElement =
+        document.getElementById("currentYear");
 
-    document.getElementById("totalTransactions").textContent =
-        allTransactions.length;
+    if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+    }
 
-    document.getElementById("totalDeposits").textContent =
-        formatMoney(totalDeposits);
-
-    document.getElementById("totalWithdrawals").textContent =
-        formatMoney(totalWithdrawals);
-
-    if (allTransactions.length === 0) {
-        emptyMessage.hidden = false;
-
-        const row = document.createElement("tr");
-        const cell = document.createElement("td");
-
-        cell.colSpan = 6;
-        cell.textContent = "No transactions recorded yet.";
-
-        row.appendChild(cell);
-        transactionTable.appendChild(row);
+    if (!transactionTable) {
+        console.error("Transaction table was not found.");
         return;
     }
 
-    emptyMessage.hidden = true;
+    /* =====================================
+       STORAGE HELPERS
+    ===================================== */
 
-    allTransactions.forEach(transaction => {
+    function readStorage(storage, key, fallback) {
+
+        try {
+            const value = storage.getItem(key);
+
+            if (!value) {
+                return fallback;
+            }
+
+            return JSON.parse(value) ?? fallback;
+
+        } catch (error) {
+            console.error("Storage read error:", error);
+            return fallback;
+        }
+    }
+
+    /* =====================================
+       CURRENCY FORMATTER
+    ===================================== */
+
+    function formatMoney(amount) {
+
+        const value = Number(amount);
+
+        return (Number.isFinite(value) ? value : 0)
+            .toLocaleString("en-NG", {
+                style: "currency",
+                currency: "NGN",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+    }
+
+    /* =====================================
+       CURRENT CUSTOMER
+    ===================================== */
+
+    function getCurrentCustomer() {
+
+        const session = readStorage(
+            sessionStorage,
+            SESSION_KEY,
+            null
+        );
+
+        if (!session || !session.email) {
+
+            window.location.href = "login.html";
+
+            return null;
+        }
+
+        const customers = readStorage(
+            localStorage,
+            CUSTOMERS_KEY,
+            []
+        );
+
+        if (!Array.isArray(customers)) {
+            showError("Demo customer records could not be loaded.");
+            return null;
+        }
+
+        const customer = customers.find(function (item) {
+
+            if (!item || !item.profile) {
+                return false;
+            }
+
+            const emailMatches =
+                item.profile.email === session.email;
+
+            const accountNumber =
+                item.accountNumber ||
+                item.profile.accountNumber;
+
+            const accountMatches =
+                !session.accountNumber ||
+                accountNumber === session.accountNumber;
+
+            return emailMatches && accountMatches;
+        });
+
+        if (!customer) {
+
+            sessionStorage.removeItem(SESSION_KEY);
+
+            window.location.href = "login.html";
+
+            return null;
+        }
+
+        return customer;
+    }
+
+    /* =====================================
+       TRANSACTION HELPERS
+    ===================================== */
+
+    function getTransactionType(transaction) {
+
+        return String(
+            transaction.type ||
+            transaction.description ||
+            "Transaction"
+        ).trim();
+    }
+
+    function getTransactionAmount(transaction) {
+
+        const amount = Number(transaction.amount);
+
+        return Number.isFinite(amount) ? Math.abs(amount) : 0;
+    }
+
+    function getTransactionDate(transaction) {
+
+        if (!transaction.date) {
+            return 0;
+        }
+
+        const timestamp = new Date(transaction.date).getTime();
+
+        return Number.isFinite(timestamp) ? timestamp : 0;
+    }
+
+    function getTransactionStatus(transaction) {
+
+        return transaction.status || "Demo Recorded";
+    }
+
+    /* =====================================
+       COLLECT TRANSACTIONS
+    ===================================== */
+
+    function collectTransactions(customer) {
+
+        const data = customer.bankData || {};
+
+        const transactions = Array.isArray(data.transactions)
+            ? data.transactions
+            : [];
+
+        const records = Array.isArray(data.records)
+            ? data.records
+            : [];
+
+        const allTransactions = [];
+
+        const seenReferences = new Set();
+
+        function addTransaction(item) {
+
+            if (!item || typeof item !== "object") {
+                return;
+            }
+
+            const reference = item.reference
+                ? String(item.reference)
+                : "";
+
+            if (reference && seenReferences.has(reference)) {
+                return;
+            }
+
+            if (reference) {
+                seenReferences.add(reference);
+            }
+
+            allTransactions.push(item);
+        }
+
+        transactions.forEach(addTransaction);
+        records.forEach(addTransaction);
+
+        allTransactions.sort(function (a, b) {
+
+            return getTransactionDate(b) -
+                   getTransactionDate(a);
+        });
+
+        return allTransactions;
+    }
+
+    /* =====================================
+       EMPTY TABLE MESSAGE
+    ===================================== */
+
+    function showEmptyTransactions() {
+
+        transactionTable.replaceChildren();
+
+        const row = document.createElement("tr");
+
+        const cell = document.createElement("td");
+
+        cell.colSpan = 6;
+
+        cell.textContent =
+            "No demonstration transactions recorded yet.";
+
+        row.appendChild(cell);
+
+        transactionTable.appendChild(row);
+
+        if (emptyMessage) {
+            emptyMessage.hidden = false;
+        }
+    }
+
+    /* =====================================
+       ERROR DISPLAY
+    ===================================== */
+
+    function showError(text) {
+
+        transactionTable.replaceChildren();
+
+        const row = document.createElement("tr");
+
+        const cell = document.createElement("td");
+
+        cell.colSpan = 6;
+
+        cell.textContent = text;
+
+        row.appendChild(cell);
+
+        transactionTable.appendChild(row);
+    }
+
+    /* =====================================
+       UPDATE SUMMARY
+    ===================================== */
+
+    function updateSummary(transactions) {
+
+        let deposits = 0;
+        let withdrawals = 0;
+
+        transactions.forEach(function (transaction) {
+
+            const type = getTransactionType(
+                transaction
+            ).toLowerCase();
+
+            const amount = getTransactionAmount(
+                transaction
+            );
+
+            if (type.includes("deposit")) {
+                deposits += amount;
+            }
+
+            if (type.includes("withdraw")) {
+                withdrawals += amount;
+            }
+        });
+
+        if (totalTransactions) {
+            totalTransactions.textContent =
+                transactions.length.toLocaleString("en-NG");
+        }
+
+        if (totalDeposits) {
+            totalDeposits.textContent =
+                formatMoney(deposits);
+        }
+
+        if (totalWithdrawals) {
+            totalWithdrawals.textContent =
+                formatMoney(withdrawals);
+        }
+    }
+
+    /* =====================================
+       RENDER TRANSACTION ROW
+    ===================================== */
+
+    function createTransactionRow(transaction) {
+
         const row = document.createElement("tr");
 
         const type = getTransactionType(transaction);
+
         const typeLower = type.toLowerCase();
-        const amount = Number(transaction.amount) || 0;
+
+        const amount = getTransactionAmount(transaction);
 
         const isCredit =
             typeLower.includes("deposit") ||
@@ -153,20 +346,22 @@ function renderTransactions() {
 
         const sign = isCredit ? "+" : "-";
 
-        const date = transaction.date
-            ? new Date(transaction.date).toLocaleString("en-NG")
+        const timestamp = getTransactionDate(transaction);
+
+        const date = timestamp
+            ? new Date(timestamp).toLocaleString("en-NG")
             : "Date unavailable";
 
         const reference =
-            transaction.reference || "Test transaction";
+            transaction.reference || "Demo Record";
 
         const description =
             transaction.detail ||
-            transaction.description ||
             transaction.narration ||
-            "Account transaction";
+            transaction.description ||
+            "Simulated account activity";
 
-        const cells = [
+        const values = [
             date,
             reference,
             description,
@@ -174,9 +369,11 @@ function renderTransactions() {
             sign + formatMoney(amount)
         ];
 
-        cells.forEach((value, index) => {
+        values.forEach(function (value, index) {
+
             const cell = document.createElement("td");
-            cell.textContent = value;
+
+            cell.textContent = String(value);
 
             if (index === 4) {
                 cell.className = amountClass;
@@ -186,22 +383,92 @@ function renderTransactions() {
         });
 
         const statusCell = document.createElement("td");
+
         const status = document.createElement("span");
 
         status.className = "status";
-        status.textContent = "Test Recorded";
+
+        status.textContent = getTransactionStatus(
+            transaction
+        );
 
         statusCell.appendChild(status);
+
         row.appendChild(statusCell);
 
-        transactionTable.appendChild(row);
+        return row;
+    }
+
+    /* =====================================
+       RENDER TRANSACTION HISTORY
+    ===================================== */
+
+    function renderTransactions() {
+
+        const customer = getCurrentCustomer();
+
+        if (!customer) {
+            return;
+        }
+
+        const transactions = collectTransactions(customer);
+
+        updateSummary(transactions);
+
+        transactionTable.replaceChildren();
+
+        if (transactions.length === 0) {
+
+            showEmptyTransactions();
+
+            return;
+        }
+
+        if (emptyMessage) {
+            emptyMessage.hidden = true;
+        }
+
+        const fragment = document.createDocumentFragment();
+
+        transactions.forEach(function (transaction) {
+
+            const row = createTransactionRow(transaction);
+
+            fragment.appendChild(row);
+        });
+
+        transactionTable.appendChild(fragment);
+    }
+
+    /* =====================================
+       REFRESH BUTTON
+    ===================================== */
+
+    if (refreshButton) {
+
+        refreshButton.addEventListener("click", function () {
+
+            refreshButton.disabled = true;
+
+            refreshButton.textContent = "Refreshing...";
+
+            renderTransactions();
+
+            refreshButton.textContent = "Refresh Records";
+
+            refreshButton.disabled = false;
+        });
+    }
+
+    /* =====================================
+       PAGE REFRESH
+    ===================================== */
+
+    renderTransactions();
+
+    window.addEventListener("pageshow", function () {
+
+        renderTransactions();
     });
-}
 
-const refreshButton = document.getElementById("refreshBtn");
-
-refreshButton.addEventListener("click", renderTransactions);
-
-renderTransactions();
-
-window.addEventListener("pageshow", renderTransactions);
+});
