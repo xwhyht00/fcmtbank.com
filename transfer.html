@@ -4,110 +4,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBS-BANK | Money Transfer</title>
+
+    <title>Novacrest Bank | Demo Money Transfer</title>
+
+    <meta name="description" content="Try the simulated money transfer feature in the Novacrest Bank fictional banking prototype.">
+
     <link rel="stylesheet" href="transfer.css">
-    <script src="transfer.js?v=4" defer></script>
+    <script src="transfer.js?v=5" defer></script>
 </head>
 <body>
 
-<header>
-    <div class="logo">DBS<span>BANK</span></div>
+<header class="header">
+    <a href="index.html" class="logo">
+        NOVACREST <span>BANK</span>
+    </a>
 
-    <nav>
+    <nav class="main-nav">
         <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
         <a href="profile.html">Profile</a>
         <a href="account.html">Account</a>
         <a href="balance.html">Balance</a>
         <a href="beneficiaries.html">Beneficiaries</a>
         <a href="transactions.html">Transactions</a>
+        <a href="logout.html">Logout</a>
     </nav>
 </header>
 
-<main>
+<main class="main-container">
+
+    <div class="prototype-notice">
+        <strong>FICTIONAL BANKING DEMO:</strong>
+        Novacrest Bank is a software prototype, not a financial institution.
+        Do not enter real personal, account, or banking information.
+        All transfers are simulated and no real money moves.
+    </div>
+
     <section class="transfer-container">
 
-        <h1>Money Transfer</h1>
-        <p>Transfer funds using your DBS-BANK demo account.</p>
+        <div class="page-heading">
+            <span class="eyebrow">PERSONAL BANKING</span>
+            <h1>Demo Money Transfer</h1>
+            <p>Explore the simulated transfer process using fictional account details.</p>
+        </div>
 
         <div class="account-info">
-            <span>Source Account</span>
-            <h3 id="sourceAccount">Your Account</h3>
+            <div class="account-info-heading">
+                <span>YOUR DEMO SOURCE ACCOUNT</span>
+                <span class="demo-label">SIMULATION</span>
+            </div>
+
+            <h3 id="sourceAccount">Your Demo Account</h3>
+
             <p>Personal Savings Account</p>
+
             <strong id="currentBalance">₦0.00</strong>
-            <small>Demo available balance</small>
+
+            <small>Simulated available balance</small>
         </div>
 
         <form id="transferForm">
 
             <h2>Transfer Details</h2>
 
-            <label for="beneficiary">Saved Beneficiary (Optional)</label>
+            <p class="form-description">
+                Use fictional recipient details for this demonstration.
+            </p>
+
+            <label for="beneficiary">Saved Demo Beneficiary (Optional)</label>
+
             <select id="beneficiary">
-                <option value="">Enter a new recipient below</option>
+                <option value="">Enter a new demo recipient below</option>
             </select>
 
-            <label for="accountNumber">Beneficiary Account Number</label>
+            <label for="accountNumber">Recipient Demo Account Number</label>
+
             <input
                 type="text"
                 id="accountNumber"
                 maxlength="20"
-                placeholder="Enter recipient account number"
+                placeholder="Enter fictional account number"
+                autocomplete="off"
                 required
             >
 
-            <label for="bankName">Bank Name</label>
+            <label for="bankName">Demo Bank Name</label>
+
             <input
                 type="text"
                 id="bankName"
-                placeholder="Enter recipient bank"
+                placeholder="Enter fictional bank name"
+                autocomplete="off"
                 required
             >
 
-            <label for="amount">Transfer Amount (NGN)</label>
+            <label for="amount">Demo Transfer Amount (NGN)</label>
+
             <input
                 type="number"
                 id="amount"
                 min="1"
                 step="0.01"
-                placeholder="Enter amount"
+                placeholder="Enter demo amount"
                 required
             >
 
-            <label for="narration">Narration</label>
+            <label for="narration">Demo Narration</label>
+
             <textarea
                 id="narration"
-                placeholder="Enter transfer description"
+                maxlength="200"
+                placeholder="Describe this simulated transfer"
             ></textarea>
 
-            <button type="submit">Review Transfer</button>
+            <button type="submit" id="reviewButton">
+                Review Demo Transfer
+            </button>
 
         </form>
 
-        <div id="confirmation" hidden>
-            <h2>Confirm Demo Transfer</h2>
+        <div id="confirmation" class="confirmation" hidden>
+
+            <h2>Review Demo Transfer</h2>
+
+            <p>
+                Check these fictional details before confirming the simulation.
+            </p>
 
             <div id="confirmationDetails"></div>
 
             <button type="button" id="confirmTransfer">
-                Confirm Demo Transfer
+                Confirm Simulation
             </button>
 
-            <button type="button" id="cancelTransfer">
+            <button type="button" id="cancelTransfer" class="cancel-button">
                 Cancel
             </button>
+
         </div>
 
-        <p id="message"></p>
+        <p id="message" role="status" aria-live="polite"></p>
 
         <div class="notice">
-            DEMONSTRATION ONLY: No real money will be transferred.
+            <strong>Important:</strong>
+            This is not a real banking service. Confirming a transfer only
+            changes simulated demo records stored in your browser. No bank,
+            payment network, or recipient receives money.
         </div>
 
+        <a href="dashboard.html" class="back-link">
+            ← Back to Dashboard
+        </a>
+
     </section>
+
 </main>
 
-<footer>
-    &copy; 2026 DBS-BANK. All Rights Reserved.
+<footer class="footer">
+    <p>&copy; <span id="currentYear">2026</span> Novacrest Bank Demo. All Rights Reserved.</p>
+    <p>Fictional banking software prototype — not a financial institution.</p>
 </footer>
 
 </body>
