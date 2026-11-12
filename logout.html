@@ -4,45 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logout | DBS-BANK</title>
+    <meta name="description" content="Logout from the Novacrest Bank fictional banking prototype.">
+    <title>Logout | Novacrest Bank</title>
     <link rel="stylesheet" href="logout.css">
 </head>
 <body>
 
 <header class="header">
-    <div class="logo">DBS<span>BANK</span></div>
+    <a href="index.html" class="logo">
+        NOVACREST<span>BANK</span>
+    </a>
 </header>
 
 <main class="logout-container">
 
+    <div class="prototype-notice" role="note">
+        <strong>Fictional banking prototype:</strong>
+        This is a demonstration website, not a real financial institution.
+        All account information and transactions are simulated.
+    </div>
+
     <section class="logout-card">
 
-        <div class="logout-icon">👋</div>
+        <div class="logout-icon" aria-hidden="true">👋</div>
 
-        <h1>Logout of DBS-BANK?</h1>
+        <p class="eyebrow">ACCOUNT SESSION</p>
 
-        <p>
-            Are you sure you want to end your current demo session?
+        <h1>Logout of Novacrest Bank?</h1>
+
+        <p class="intro">
+            Are you sure you want to end your current demo banking session?
         </p>
 
         <button id="logoutBtn" class="logout-btn" type="button">
             Yes, Logout
         </button>
 
-        <a href="index.html" class="cancel-link">
-            Cancel and Return Home
+        <a href="dashboard.html" class="cancel-link">
+            Cancel and Return to Dashboard
         </a>
 
-        <p id="message" aria-live="polite"></p>
+        <p id="message" class="message" aria-live="polite"></p>
 
-        <p class="demo-notice">
-            Demo logout only. Saved demo profile and transaction
-            information will remain in this browser.
-        </p>
+        <div class="demo-notice">
+            <strong>Demo logout only:</strong>
+            Logging out ends your current browser session.
+            Saved demonstration profiles and transaction information
+            will remain in this browser.
+        </div>
 
     </section>
 
 </main>
+
+<footer class="footer">
+    <p>
+        © <span id="currentYear"></span> Novacrest Bank.
+        Fictional software demonstration.
+    </p>
+</footer>
 
 <script src="logout.js"></script>
 </body>
