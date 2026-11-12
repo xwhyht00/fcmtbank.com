@@ -4,33 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beneficiaries | DBS-BANK</title>
+
+    <meta name="description" content="Manage saved beneficiaries in the Novacrest Bank fictional banking prototype.">
+
+    <title>Beneficiaries | Novacrest Bank</title>
+
     <link rel="stylesheet" href="beneficiaries.css">
 </head>
+
 <body>
 
 <header class="header">
-    <div class="logo">DBS<span>BANK</span></div>
+    <a href="index.html" class="logo">NOVACREST <span>BANK</span></a>
 
-    <nav>
+    <nav class="main-nav">
         <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
         <a href="profile.html">Profile</a>
         <a href="account.html">Account</a>
         <a href="balance.html">Balance</a>
         <a href="transfer.html">Transfers</a>
         <a href="transactions.html">Transactions</a>
+        <a href="logout.html">Logout</a>
     </nav>
 </header>
 
 <main class="container">
 
+    <div class="prototype-notice">
+        <strong>Fictional prototype:</strong>
+        Novacrest Bank is a demonstration website, not a real financial institution.
+        Beneficiaries and transfers are simulated. Do not enter real personal,
+        banking, or account information.
+    </div>
+
     <section class="page-heading">
+        <span class="eyebrow">CUSTOMER SERVICES</span>
         <h1>Beneficiary Management</h1>
-        <p>Add and manage your saved transfer beneficiaries.</p>
+        <p>Add and manage saved recipients for simulated transfers.</p>
     </section>
 
     <section class="panel">
-        <h2>Add New Beneficiary</h2>
+
+        <div class="section-heading">
+            <h2>Add New Beneficiary</h2>
+            <p>Save a fictional recipient for your demonstration account.</p>
+        </div>
 
         <form id="beneficiaryForm">
 
@@ -39,28 +58,37 @@
                 <input
                     type="text"
                     id="beneficiaryName"
-                    placeholder="Enter beneficiary name"
+                    name="beneficiaryName"
+                    placeholder="Enter demo beneficiary name"
+                    maxlength="80"
+                    autocomplete="off"
                     required
                 >
             </div>
 
             <div class="form-group">
-                <label for="beneficiaryAccount">Account Number</label>
+                <label for="beneficiaryAccount">Demo Account Number</label>
                 <input
                     type="text"
                     id="beneficiaryAccount"
-                    placeholder="Enter account number"
+                    name="beneficiaryAccount"
+                    placeholder="Enter fictional account number"
                     inputmode="numeric"
+                    maxlength="20"
+                    autocomplete="off"
                     required
                 >
             </div>
 
             <div class="form-group">
-                <label for="beneficiaryBank">Bank Name</label>
+                <label for="beneficiaryBank">Demo Bank Name</label>
                 <input
                     type="text"
                     id="beneficiaryBank"
-                    placeholder="Enter bank name"
+                    name="beneficiaryBank"
+                    placeholder="Enter fictional bank name"
+                    maxlength="80"
+                    autocomplete="off"
                     required
                 >
             </div>
@@ -72,23 +100,39 @@
             <p id="message" class="message" aria-live="polite"></p>
 
         </form>
+
     </section>
 
     <section class="panel">
-        <h2>Saved Beneficiaries</h2>
 
-        <div id="beneficiaryList">
+        <div class="section-heading">
+            <h2>Saved Beneficiaries</h2>
+            <p>Your saved demonstration recipients appear below.</p>
+        </div>
+
+        <div id="beneficiaryList" aria-live="polite">
             <p class="empty-message">Loading beneficiaries...</p>
         </div>
+
     </section>
 
-    <p class="demo-notice">
-        Demo only: beneficiary information is stored in this browser.
-        Do not enter real banking or personal information.
-    </p>
+    <div class="demo-notice">
+        <strong>Demo data only:</strong>
+        Beneficiary information is stored in this browser. No real bank accounts
+        are accessed and no money can be sent through this prototype.
+    </div>
+
+    <a href="dashboard.html" class="back-link">
+        &larr; Back to Dashboard
+    </a>
 
 </main>
 
+<footer class="footer">
+    <p>&copy; <span id="currentYear"></span> Novacrest Bank. Fictional demonstration project.</p>
+</footer>
+
 <script src="beneficiaries.js"></script>
+
 </body>
 </html>
