@@ -2,292 +2,513 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="Novacrest Bank is an independent banking software prototype for demonstrating simulated banking features.">
+    <title>Novacrest | Fictional Banking Software Prototype</title>
 
-  <meta name="robots" content="index,follow">
+    <meta name="description" content="Explore Novacrest, a fictional banking software prototype demonstrating simulated account interfaces and transaction workflows.">
 
-  <title>Novacrest Bank | Banking Software Prototype</title>
+    <meta name="robots" content="noindex, nofollow">
 
-  <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
 
 <header class="header">
-  <a href="index.html" class="logo">NOVACREST <span>BANK</span></a>
 
-  <button class="menu-toggle" id="menuToggle"
-    aria-label="Toggle navigation" aria-expanded="false">
-    ☰
-  </button>
+    <a href="index.html" class="logo" aria-label="Novacrest prototype home">
+        NOVACREST <span>BANK</span>
+    </a>
 
-  <nav class="navigation" id="navigation">
-    <a href="index.html">Home</a>
-    <a href="personal.html">Personal Services</a>
-    <a href="business.html">Business Services</a>
-    <a href="cards.html">Cards</a>
-    <a href="loans.html">Loans</a>
-    <a href="about.html">About Us</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+    <button
+        class="menu-toggle"
+        id="menuToggle"
+        type="button"
+        aria-label="Toggle navigation"
+        aria-expanded="false"
+        aria-controls="navigation">
+        ☰
+    </button>
 
-  <a href="online-banking.html" class="header-button">Explore Prototype</a>
+    <nav class="navigation" id="navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="personal.html">Personal Services</a>
+        <a href="business.html">Business Services</a>
+        <a href="cards.html">Cards</a>
+        <a href="loans.html">Loans</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <a href="online-banking.html" class="header-button">
+        Explore Prototype
+    </a>
+
 </header>
 
 <main>
 
-  <section class="prototype-notice" aria-label="Important website information">
-    <strong>Independent software prototype</strong>
-    <p>
-      Novacrest Bank is a fictional banking software prototype.
-      It is not an operating bank or a licensed financial institution.
-      All accounts, balances and transactions are simulated.
-      Never enter real banking credentials or financial information.
-    </p>
-  </section>
+    <!-- IMPORTANT PROJECT DISCLOSURE -->
 
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <span class="eyebrow">BANKING SOFTWARE CONCEPT</span>
+    <section class="prototype-notice" aria-label="Project disclosure">
 
-      <h1>Exploring the future of digital banking.</h1>
+        <strong>FICTIONAL SOFTWARE PROTOTYPE — NOT A REAL BANK</strong>
 
-      <p>
-        Discover an independent software prototype demonstrating
-        digital banking interfaces, account management concepts
-        and simulated financial transactions.
-      </p>
-
-      <div class="hero-buttons">
-        <a href="about.html" class="button primary">About This Project</a>
-        <a href="online-banking.html" class="button secondary">
-          Explore Prototype
-        </a>
-      </div>
-    </div>
-
-    <div class="hero-image">
-      <div class="feature-card">
-        <span>DIGITAL BANKING CONCEPT</span>
-        <h2>Technology. Simplicity. Possibilities.</h2>
         <p>
-          Exploring how modern banking interfaces can work.
+            Novacrest Bank is a fictional name used for an independent
+            banking software demonstration. It is not an operating bank,
+            licensed financial institution or provider of banking services.
+            No real bank accounts, deposits, withdrawals, card payments
+            or money transfers are available. All displayed financial
+            information is simulated. Never enter real passwords,
+            card details, account credentials or personal financial information.
         </p>
-      </div>
-    </div>
-  </section>
 
-  <section class="quick-services">
-    <a href="personal.html">
-      <span>◈</span>
-      <strong>Personal Services</strong>
-      <small>Account interface concepts</small>
-    </a>
+    </section>
 
-    <a href="business.html">
-      <span>▦</span>
-      <strong>Business Services</strong>
-      <small>Business banking concepts</small>
-    </a>
+    <!-- HERO SECTION -->
 
-    <a href="cards.html">
-      <span>▣</span>
-      <strong>Card Interfaces</strong>
-      <small>Payment interface concepts</small>
-    </a>
+    <section class="hero" id="home">
 
-    <a href="loans.html">
-      <span>↗</span>
-      <strong>Loan Concepts</strong>
-      <small>Financing interface examples</small>
-    </a>
-  </section>
+        <div class="hero-content">
 
-  <section class="section" id="personal">
-    <div class="section-heading">
-      <span class="eyebrow">PERSONAL SERVICES</span>
-      <h2>Personal Banking Concepts</h2>
-      <p>
-        Explore sample interfaces for everyday account management.
-      </p>
-    </div>
+            <span class="eyebrow">BANKING SOFTWARE CONCEPT</span>
 
-    <div class="service-grid">
-      <article class="service-card">
-        <div class="service-icon">◈</div>
-        <h3>Savings Accounts</h3>
-        <p>Explore a sample savings account interface.</p>
-        <a href="personal.html">Learn More →</a>
-      </article>
+            <h1>Exploring the Future of Digital Banking.</h1>
 
-      <article class="service-card">
-        <div class="service-icon">▤</div>
-        <h3>Current Accounts</h3>
-        <p>Explore an account management interface concept.</p>
-        <a href="personal.html">Learn More →</a>
-      </article>
+            <p>
+                Discover an independent software prototype demonstrating
+                digital banking interfaces, account management concepts
+                and simulated financial transaction workflows.
+            </p>
 
-      <article class="service-card">
-        <div class="service-icon">↗</div>
-        <h3>Transfers</h3>
-        <p>Explore simulated money transfer functionality.</p>
-        <a href="personal.html">Learn More →</a>
-      </article>
-    </div>
-  </section>
+            <div class="hero-buttons">
 
-  <section class="business-section" id="business">
-    <div class="business-content">
-      <span class="eyebrow">BUSINESS INTERFACES</span>
-      <h2>Exploring business banking technology.</h2>
-      <p>
-        Discover sample layouts for business account management
-        and financial software interfaces.
-      </p>
-      <a href="business.html" class="button primary">Explore Concepts</a>
-    </div>
-  </section>
+                <a href="about.html" class="button primary">
+                    About This Project
+                </a>
 
-  <section class="section" id="cards">
-    <div class="section-heading">
-      <span class="eyebrow">PAYMENT INTERFACES</span>
-      <h2>Card Interface Concepts</h2>
-      <p>Explore sample payment card interface designs.</p>
-    </div>
+                <a href="online-banking.html" class="button secondary">
+                    Explore Prototype
+                </a>
 
-    <div class="card-grid">
-      <article class="bank-card">
-        <span>INTERFACE EXAMPLE</span>
-        <h3>Debit Card</h3>
-        <p>A sample debit card interface.</p>
-        <a href="cards.html">Learn More →</a>
-      </article>
+            </div>
 
-      <article class="bank-card alternate">
-        <span>INTERFACE EXAMPLE</span>
-        <h3>Credit Card</h3>
-        <p>A sample credit card interface.</p>
-        <a href="cards.html">Learn More →</a>
-      </article>
-    </div>
-  </section>
+        </div>
 
-  <section class="loan-section" id="loans">
-    <div>
-      <span class="eyebrow">FINANCIAL SOFTWARE</span>
-      <h2>Exploring loan management interfaces.</h2>
-      <p>
-        View sample financing and loan management interface concepts.
-      </p>
-      <a href="loans.html" class="button primary">Explore Concepts</a>
-    </div>
-  </section>
+        <div class="hero-image">
 
-  <section class="online-section" id="online-banking">
-    <div class="online-content">
-      <span class="eyebrow">SOFTWARE DEMONSTRATION</span>
-      <h2>Online Banking Prototype</h2>
-      <p>
-        Explore sample account dashboards and simulated transaction
-        interfaces. No real money is transferred or deposited.
-      </p>
+            <div class="feature-card">
 
-      <div class="access-notice">
-        This is a software demonstration, not an actual banking service.
-        Do not use real passwords or financial information.
-      </div>
+                <span>FICTIONAL SOFTWARE DEMONSTRATION</span>
 
-      <a href="online-banking.html" class="button primary">
-        View Prototype
-      </a>
-    </div>
-  </section>
+                <h2>Technology. Simplicity. Possibilities.</h2>
 
-  <section class="section about-section" id="about">
-    <div class="section-heading">
-      <span class="eyebrow">ABOUT THE PROJECT</span>
-      <h2>About Novacrest Bank</h2>
-      <p>
-        Novacrest Bank is an independent fictional project created
-        to demonstrate banking website design and software concepts.
-      </p>
-    </div>
+                <p>
+                    Exploring modern banking interface design
+                    through simulated software features.
+                </p>
 
-    <div class="about-grid">
-      <div>
-        <h3>Our Purpose</h3>
-        <p>To demonstrate digital banking interface concepts.</p>
-      </div>
+            </div>
 
-      <div>
-        <h3>Our Approach</h3>
-        <p>To explore accessible and easy-to-understand software designs.</p>
-      </div>
+        </div>
 
-      <div>
-        <h3>Our Values</h3>
-        <p>Transparency, responsible design and user awareness.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="contact-section" id="contact">
-    <div>
-      <span class="eyebrow">PROJECT ENQUIRIES</span>
-      <h2>Contact the project team.</h2>
-      <p>
-        Send a general enquiry about this software prototype.
-        Do not submit passwords, card details or banking information.
-      </p>
-    </div>
+    <!-- QUICK LINKS -->
 
-    <form id="contactForm">
-      <label for="customerName">Name</label>
-      <input id="customerName" type="text"
-        placeholder="Your name" required>
+    <section class="quick-services" aria-label="Prototype sections">
 
-      <label for="customerEmail">Email</label>
-      <input id="customerEmail" type="email"
-        placeholder="Your email" required>
+        <a href="personal.html">
+            <span aria-hidden="true">◈</span>
+            <strong>Personal Services</strong>
+            <small>Account interface concepts</small>
+        </a>
 
-      <label for="customerMessage">Message</label>
-      <textarea id="customerMessage" rows="5"
-        placeholder="General project enquiry only" required></textarea>
+        <a href="business.html">
+            <span aria-hidden="true">▦</span>
+            <strong>Business Services</strong>
+            <small>Business banking concepts</small>
+        </a>
 
-      <button type="submit" class="button primary">Send Enquiry</button>
+        <a href="cards.html">
+            <span aria-hidden="true">▣</span>
+            <strong>Card Interfaces</strong>
+            <small>Payment interface concepts</small>
+        </a>
 
-      <p id="formMessage" aria-live="polite"></p>
-    </form>
-  </section>
+        <a href="loans.html">
+            <span aria-hidden="true">↗</span>
+            <strong>Loan Concepts</strong>
+            <small>Financing interface examples</small>
+        </a>
+
+    </section>
+
+    <!-- PERSONAL SERVICES -->
+
+    <section class="section" id="personal">
+
+        <div class="section-heading">
+
+            <span class="eyebrow">PERSONAL SERVICES</span>
+
+            <h2>Personal Banking Concepts</h2>
+
+            <p>
+                Explore sample interfaces for everyday account
+                management and simulated banking workflows.
+            </p>
+
+        </div>
+
+        <div class="service-grid">
+
+            <article class="service-card">
+
+                <div class="service-icon" aria-hidden="true">◈</div>
+
+                <h3>Savings Accounts</h3>
+
+                <p>
+                    Explore a fictional savings account interface.
+                </p>
+
+                <a href="personal.html">Explore Concept →</a>
+
+            </article>
+
+            <article class="service-card">
+
+                <div class="service-icon" aria-hidden="true">▤</div>
+
+                <h3>Current Accounts</h3>
+
+                <p>
+                    Explore an account management interface concept.
+                </p>
+
+                <a href="personal.html">Explore Concept →</a>
+
+            </article>
+
+            <article class="service-card">
+
+                <div class="service-icon" aria-hidden="true">↗</div>
+
+                <h3>Transfers</h3>
+
+                <p>
+                    Explore simulated money transfer functionality.
+                </p>
+
+                <a href="personal.html">Explore Concept →</a>
+
+            </article>
+
+        </div>
+
+    </section>
+
+    <!-- BUSINESS SERVICES -->
+
+    <section class="business-section" id="business">
+
+        <div class="business-content">
+
+            <span class="eyebrow">BUSINESS INTERFACES</span>
+
+            <h2>Exploring Business Banking Technology.</h2>
+
+            <p>
+                Discover sample layouts for business account management
+                and fictional financial software interfaces.
+            </p>
+
+            <a href="business.html" class="button primary">
+                Explore Concepts
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- CARD INTERFACES -->
+
+    <section class="section" id="cards">
+
+        <div class="section-heading">
+
+            <span class="eyebrow">PAYMENT INTERFACES</span>
+
+            <h2>Card Interface Concepts</h2>
+
+            <p>
+                Explore sample payment card interface designs.
+                No real payment cards are issued.
+            </p>
+
+        </div>
+
+        <div class="card-grid">
+
+            <article class="bank-card">
+
+                <span>FICTIONAL INTERFACE EXAMPLE</span>
+
+                <h3>Debit Card</h3>
+
+                <p>
+                    A sample debit card interface design.
+                </p>
+
+                <a href="cards.html">Explore Concept →</a>
+
+            </article>
+
+            <article class="bank-card alternate">
+
+                <span>FICTIONAL INTERFACE EXAMPLE</span>
+
+                <h3>Credit Card</h3>
+
+                <p>
+                    A sample credit card interface design.
+                </p>
+
+                <a href="cards.html">Explore Concept →</a>
+
+            </article>
+
+        </div>
+
+    </section>
+
+    <!-- LOAN CONCEPTS -->
+
+    <section class="loan-section" id="loans">
+
+        <div>
+
+            <span class="eyebrow">FINANCIAL SOFTWARE</span>
+
+            <h2>Exploring Loan Management Interfaces.</h2>
+
+            <p>
+                View sample financing and loan management
+                interface concepts.
+            </p>
+
+            <a href="loans.html" class="button primary">
+                Explore Concepts
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- ONLINE BANKING DEMONSTRATION -->
+
+    <section class="online-section" id="online-banking">
+
+        <div class="online-content">
+
+            <span class="eyebrow">SOFTWARE DEMONSTRATION</span>
+
+            <h2>Online Banking Prototype</h2>
+
+            <p>
+                Explore sample account dashboards and simulated
+                transaction interfaces. This demonstration does
+                not connect to real financial institutions.
+            </p>
+
+            <div class="access-notice">
+
+                <strong>Demonstration only</strong>
+
+                <p>
+                    All account information and transactions are fictional.
+                    No real money is deposited, withdrawn or transferred.
+                    Do not use real passwords or financial information.
+                </p>
+
+            </div>
+
+            <a href="online-banking.html" class="button primary">
+                View Prototype
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- ABOUT THE PROJECT -->
+
+    <section class="section about-section" id="about">
+
+        <div class="section-heading">
+
+            <span class="eyebrow">ABOUT THE PROJECT</span>
+
+            <h2>About Novacrest</h2>
+
+            <p>
+                Novacrest is a fictional project created to demonstrate
+                banking website design, interface development and
+                simulated software functionality.
+            </p>
+
+        </div>
+
+        <div class="about-grid">
+
+            <div>
+
+                <h3>Our Purpose</h3>
+
+                <p>
+                    To demonstrate digital banking interface concepts
+                    through a fictional software project.
+                </p>
+
+            </div>
+
+            <div>
+
+                <h3>Our Approach</h3>
+
+                <p>
+                    To explore accessible and understandable
+                    software interface designs.
+                </p>
+
+            </div>
+
+            <div>
+
+                <h3>Our Values</h3>
+
+                <p>
+                    Transparency, responsible design and
+                    clear communication about simulated features.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- PROJECT ENQUIRIES -->
+
+    <section class="contact-section" id="contact">
+
+        <div>
+
+            <span class="eyebrow">PROJECT ENQUIRIES</span>
+
+            <h2>Contact the Project Team.</h2>
+
+            <p>
+                This section demonstrates a sample enquiry form.
+                It is not a banking support channel.
+            </p>
+
+        </div>
+
+        <form id="contactForm">
+
+            <div class="access-notice">
+                <strong>Demo form only</strong>
+                <p>
+                    Use fictional test details only.
+                    Do not enter your real name, email address,
+                    passwords, card details or banking information.
+                    This demonstration form does not provide banking support.
+                </p>
+            </div>
+
+            <label for="customerName">Demo Name</label>
+
+            <input
+                id="customerName"
+                type="text"
+                placeholder="Example: Demo User"
+                maxlength="60"
+                autocomplete="off"
+                required>
+
+            <label for="customerEmail">Demo Email</label>
+
+            <input
+                id="customerEmail"
+                type="email"
+                placeholder="example@example.invalid"
+                maxlength="100"
+                autocomplete="off"
+                required>
+
+            <label for="customerMessage">Demo Message</label>
+
+            <textarea
+                id="customerMessage"
+                rows="5"
+                maxlength="500"
+                placeholder="Enter a fictional test message only"
+                required></textarea>
+
+            <button type="submit" class="button primary">
+                Test Demo Form
+            </button>
+
+            <p id="formMessage" aria-live="polite"></p>
+
+        </form>
+
+    </section>
 
 </main>
 
+<!-- FOOTER -->
+
 <footer class="footer">
-  <a href="index.html" class="logo footer-logo">
-    NOVACREST <span>BANK</span>
-  </a>
 
-  <p>Independent banking software prototype.</p>
+    <a href="index.html" class="logo footer-logo">
+        NOVACREST <span>BANK</span>
+    </a>
 
-  <p>
-    This project is not an operating bank or a licensed financial institution.
-    All displayed financial activity is simulated.
-  </p>
+    <p>
+        Independent fictional banking software prototype.
+    </p>
 
-  <div class="footer-links">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="personal.html">Services</a>
-    <a href="contact.html">Contact</a>
-  </div>
+    <p>
+        Not an operating bank or licensed financial institution.
+        No real financial services are provided.
+        All displayed financial activity is simulated.
+    </p>
 
-  <p class="copyright">
-    © 2026 Novacrest Bank. Fictional software project.
-  </p>
+    <div class="footer-links">
+
+        <a href="index.html">Home</a>
+
+        <a href="about.html">About</a>
+
+        <a href="personal.html">Services</a>
+
+        <a href="contact.html">Project Contact</a>
+
+    </div>
+
+    <p class="copyright">
+        © 2026 Novacrest. Fictional software demonstration.
+    </p>
+
 </footer>
 
 <script src="index.js"></script>
+
 </body>
 </html>
