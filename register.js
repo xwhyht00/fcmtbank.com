@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("registerForm");
     const message = document.getElementById("message");
 
-    if (!form) return;
+    if (!form || !message) return;
 
     function showMessage(text, success = false) {
         message.textContent = text;
@@ -11,44 +11,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function getCustomers() {
-        let customers = JSON.parse(
-            localStorage.getItem("dbsDemoCustomers") || "null"
-        );
+        try {
+            const customers = JSON.parse(
+                localStorage.getItem("dbsDemoCustomers") || "[]"
+            );
 
-        if (Array.isArray(customers)) return customers;
-
-        customers = [];
-
-        // Preserve a previously registered single customer.
-        const oldProfile = JSON.parse(
-            localStorage.getItem("dbsDemoProfile") || "null"
-        );
-        const oldCredentials = JSON.parse(
-            localStorage.getItem("dbsDemoCredentials") || "null"
-        );
-        const oldData = JSON.parse(
-            localStorage.getItem("dbsDemoData") || "null"
-        );
-
-        if (oldProfile && oldCredentials && oldData) {
-            customers.push({
-                profile: {
-                    ...oldProfile,
-                    accountNumber: oldData.accountNumber || "0123456789"
-                },
-                credentials: oldCredentials,
-                bankData: {
-                    ...oldData,
-                    accountNumber: oldData.accountNumber || "0123456789"
-                }
-            });
+            return Array.isArray(customers) ? customers : [];
+        } catch {
+            return [];
         }
+    }
 
-        return customers;
+    function randomDigits(length) {
+        const numbers = new Uint32Array(length);
+        crypto.getRandomValues(numbers);
+
+        return Array.from(numbers)
+            .map(number => String(number % 10))
+            .join("");
     }
 
     function createSalt() {
         const bytes = crypto.getRandomValues(new Uint8Array(16));
+
         return Array.from(bytes)
             .map(byte => byte.toString(16).padStart(2, "0"))
             .join("");
@@ -69,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ["deriveBits"]
         );
 
-        const bits = await crypto.subtle.deriveBits(
+        const result = await crypto.subtle.deriveBits(
             {
                 name: "PBKDF2",
                 salt: salt,
@@ -80,86 +65,79 @@ document.addEventListener("DOMContentLoaded", function () {
             256
         );
 
-        return Array.from(new Uint8Array(bits))
+        return Array.from(new Uint8Array(result))
             .map(byte => byte.toString(16).padStart(2, "0"))
             .join("");
     }
 
     function createAccountNumber(customers) {
-        let number;
+        let accountNumber;
 
         do {
-            const bytes = crypto.getRandomValues(new Uint32Array(1));
-            number = String(1000000000 + (bytes[0] % 9000000000));
+            accountNumber = "9" + randomDigits(9);
         } while (
             customers.some(customer =>
-                customer.profile.accountNumber === number
+                customer.profile &&
+                customer.profile.accountNumber === accountNumber
             )
         );
 
-        return number;
+        return accountNumber;
     }
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
 
-        const name = document.getElementById("fullname").value.trim();
-        const email = document.getElementById("email").value.trim().toLowerCase();
-        const phone = document.getElementById("phone").value.trim();
-        const password = document.getElementById("password").value;
-        const confirmPassword = document.getElementById("confirmPassword").value;
+        const name = document
+            .getElementById("fullname")
+            .value.trim();
 
-        if (!name || !email || !phone || !password || !confirmPassword) {
-            showMessage("Please complete all fields.");
+        if (!name) {
+            showMessage("Enter a fictional display name.");
             return;
         }
 
-        if (password.length < 8) {
-            showMessage("Password must contain at least 8 characters.");
+        if (!window.crypto || !crypto.subtle) {
+            showMessage("Please open the demo website using HTTPS.");
             return;
         }
 
-        if (password !== confirmPassword) {
-            showMessage("Your passwords do not match.");
-            return;
-        }
+        const button = form.querySelector('button[type="submit"]');
 
-        if (!crypto.subtle) {
-            showMessage("Please open the website using HTTPS.");
-            return;
+        if (button) {
+            button.disabled = true;
+            button.textContent = "Creating demo profile...";
         }
 
         try {
             const customers = getCustomers();
 
-            const alreadyRegistered = customers.some(customer =>
-                customer.profile.email.toLowerCase() === email
-            );
-
-            if (alreadyRegistered) {
-                showMessage("This email is already registered. Please log in.");
-                return;
-            }
-
+            const demoID = randomDigits(8);
+            const demoEmail = "demo" + demoID + "@example.invalid";
+            const demoPassword = "Demo-" + randomDigits(12);
             const accountNumber = createAccountNumber(customers);
+
             const salt = createSalt();
+
             const passwordHash = await hashPassword(
-                password,
+                demoPassword,
                 hexToBytes(salt)
             );
 
             const newCustomer = {
                 profile: {
                     name: name,
-                    email: email,
-                    phone: phone,
+                    email: demoEmail,
+                    phone: "DEMO ONLY",
                     accountNumber: accountNumber
                 },
+
                 credentials: {
-                    email: email,
+                    email: demoEmail,
                     salt: salt,
                     passwordHash: passwordHash
                 },
+
                 bankData: {
                     balance: 0,
                     accountNumber: accountNumber,
@@ -176,28 +154,43 @@ document.addEventListener("DOMContentLoaded", function () {
                 JSON.stringify(customers)
             );
 
-            // Session identifies this particular customer.
             sessionStorage.setItem(
                 "dbsDemoSession",
                 JSON.stringify({
-                    email: email,
+                    email: demoEmail,
                     accountNumber: accountNumber
                 })
             );
 
-            showMessage(
-                "Registration successful. Your test account number is " +
-                accountNumber,
-                true
-            );
+            message.style.color = "#0877bd";
+            message.textContent =
+                "Demo profile created successfully. " +
+                "Login ID: " + demoEmail +
+                " | Demo password: " + demoPassword +
+                " | Demo account number: " + accountNumber +
+                ". Save these fictional demo details.";
+
+            form.reset();
+
+            if (button) {
+                button.textContent = "Demo Profile Created";
+            }
 
             setTimeout(function () {
                 window.location.href = "dashboard.html";
-            }, 1500);
+            }, 8000);
 
         } catch (error) {
             console.error(error);
-            showMessage("Registration could not be completed. Please try again.");
+
+            showMessage(
+                "Demo registration failed. Please try again."
+            );
+
+            if (button) {
+                button.disabled = false;
+                button.textContent = "Create Demo Profile";
+            }
         }
     });
 });
