@@ -4,87 +4,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBS-BANK | Account Balance</title>
+
+    <title>Novacrest Bank | Account Balance</title>
+
+    <meta name="description" content="View your simulated Novacrest Bank demo account balance and transaction summaries.">
+
     <link rel="stylesheet" href="balance.css">
     <script src="balance.js" defer></script>
 </head>
 <body>
 
-<header>
-    <div class="logo">DBS<span>BANK</span></div>
+<header class="header">
+    <a href="index.html" class="logo">
+        NOVACREST <span>BANK</span>
+    </a>
 
-    <nav>
+    <nav class="main-nav">
         <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
         <a href="profile.html">Profile</a>
         <a href="account.html">Account Details</a>
         <a href="transfer.html">Transfers</a>
         <a href="beneficiaries.html">Beneficiaries</a>
         <a href="transactions.html">Transactions</a>
+        <a href="logout.html">Logout</a>
     </nav>
 </header>
 
-<main>
+<main class="main-container">
+
+    <div class="prototype-notice">
+        <strong>DEMO WEBSITE:</strong>
+        This is a fictional banking software prototype.
+        All balances and transactions are simulated.
+        Do not enter real banking details or passwords.
+        No real money is held or transferred.
+    </div>
 
     <section class="balance-container">
 
-        <h1>Account Balance</h1>
-        <p>View your available banking balance.</p>
+        <div class="page-heading">
+            <span class="eyebrow">PERSONAL BANKING</span>
+            <h1>Account Balance</h1>
+            <p>View your simulated account balance and transaction summary.</p>
+        </div>
 
         <div class="balance-card">
 
             <div class="balance-header">
-                <h2>DBS-BANK</h2>
-                <span>PERSONAL ACCOUNT</span>
+                <div>
+                    <h2>NOVACREST BANK</h2>
+                    <span>DEMO ACCOUNT</span>
+                </div>
+
+                <span class="account-type">PERSONAL ACCOUNT</span>
             </div>
 
             <div class="balance-content">
-                <span>Available Balance</span>
-                <h1 id="availableBalance">₦250,000.00</h1>
+                <span>Available Demo Balance</span>
+
+                <h2 id="availableBalance">₦0.00</h2>
+
                 <p>Nigerian Naira (NGN)</p>
             </div>
 
             <div class="balance-footer">
-                <span>Account Number</span>
-                <strong>0123456789</strong>
+                <span>Demo Account Number</span>
+                <strong id="accountNumber">Loading...</strong>
             </div>
 
         </div>
 
-        <div class="summary">
+        <section class="summary-section">
 
-            <div class="summary-card">
-                <span>Total Deposits</span>
-                <h2 id="totalDeposits">₦0.00</h2>
+            <h2 class="section-heading">Transaction Summary</h2>
+
+            <div class="summary">
+
+                <div class="summary-card">
+                    <span>Total Demo Deposits</span>
+                    <h2 id="totalDeposits">₦0.00</h2>
+                </div>
+
+                <div class="summary-card">
+                    <span>Total Demo Withdrawals</span>
+                    <h2 id="totalWithdrawals">₦0.00</h2>
+                </div>
+
+                <div class="summary-card">
+                    <span>Total Demo Transfers</span>
+                    <h2 id="totalTransfers">₦0.00</h2>
+                </div>
+
             </div>
 
-            <div class="summary-card">
-                <span>Total Withdrawals</span>
-                <h2 id="totalWithdrawals">₦0.00</h2>
+        </section>
+
+        <section class="actions-section">
+            <h2 class="section-heading">Account Activities</h2>
+
+            <div class="actions">
+                <a href="transfer.html">Demo Transfer</a>
+                <a href="records.html">Deposit / Withdrawal Records</a>
+                <a href="transactions.html">Transaction History</a>
             </div>
-
-            <div class="summary-card">
-                <span>Total Transfers</span>
-                <h2 id="totalTransfers">₦0.00</h2>
-            </div>
-
-        </div>
-
-        <div class="actions">
-            <a href="transfer.html">Transfer Money</a>
-            <a href="records.html">Deposit / Withdrawal Records</a>
-            <a href="transactions.html">Transaction History</a>
-        </div>
+        </section>
 
         <p class="notice">
-            Demonstration balance only. This is not real money or a live bank account.
+            This page is for demonstration purposes only.
+            The displayed balance and transaction records are fictional.
+            No real banking services are provided.
         </p>
+
+        <a href="dashboard.html" class="back-link">
+            ← Back to Dashboard
+        </a>
 
     </section>
 
 </main>
 
-<footer>
-    &copy; 2026 DBS-BANK. All Rights Reserved.
+<footer class="footer">
+    <p>&copy; <span id="currentYear">2026</span> Novacrest Bank Demo. All Rights Reserved.</p>
+    <p>Fictional banking software prototype — not a financial institution.</p>
 </footer>
 
 </body>
