@@ -4,60 +4,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction History | DBS-BANK</title>
+
+    <meta name="description" content="View simulated transaction records in the Novacrest Bank fictional banking prototype.">
+
+    <title>Transaction History | Novacrest Bank</title>
+
     <link rel="stylesheet" href="transactions.css">
 </head>
+
 <body>
 
 <header class="header">
-    <div class="logo">DBS<span>BANK</span></div>
 
-    <nav>
+    <a href="index.html" class="logo">
+        NOVACREST <span>BANK</span>
+    </a>
+
+    <nav class="main-nav">
         <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
         <a href="profile.html">Profile</a>
         <a href="account.html">Account</a>
         <a href="balance.html">Balance</a>
         <a href="transfer.html">Transfers</a>
         <a href="beneficiaries.html">Beneficiaries</a>
-        <a href="login.html">Logout</a>
+        <a href="logout.html">Logout</a>
     </nav>
+
 </header>
 
 <main class="container">
 
+    <div class="prototype-notice">
+        <strong>Fictional banking prototype:</strong>
+        Novacrest Bank is a demonstration website, not a real financial institution.
+        All balances and transaction records are simulated. No real money is
+        deposited, withdrawn, or transferred. Do not enter real banking information.
+    </div>
+
     <section class="page-heading">
+        <span class="eyebrow">ACCOUNT ACTIVITY</span>
+
         <h1>Transaction History</h1>
-        <p>Review your recorded demo banking transactions.</p>
+
+        <p>
+            Review the simulated deposits, withdrawals, and transfers
+            recorded in your demonstration account.
+        </p>
     </section>
+
+    <!-- TRANSACTION SUMMARY -->
 
     <section class="summary-grid">
+
         <div class="summary-card">
+            <div class="summary-icon">#</div>
             <h3>Total Transactions</h3>
             <p id="totalTransactions">0</p>
+            <span>Demo records</span>
         </div>
 
         <div class="summary-card">
+            <div class="summary-icon">+</div>
             <h3>Total Deposits</h3>
             <p id="totalDeposits">₦0.00</p>
+            <span>Simulated deposits</span>
         </div>
 
         <div class="summary-card">
+            <div class="summary-icon">−</div>
             <h3>Total Withdrawals</h3>
             <p id="totalWithdrawals">₦0.00</p>
+            <span>Simulated withdrawals</span>
         </div>
+
     </section>
 
-    <section class="panel">
-        <div class="table-heading">
-            <h2>Recent Transactions</h2>
+    <!-- TRANSACTION TABLE -->
 
-            <button id="refreshBtn" class="refresh-btn" type="button">
-                Refresh
+    <section class="panel">
+
+        <div class="table-heading">
+
+            <div>
+                <h2>Recent Transactions</h2>
+                <p>Transaction records for this demo account.</p>
+            </div>
+
+            <button
+                id="refreshBtn"
+                class="refresh-btn"
+                type="button"
+            >
+                Refresh Records
             </button>
+
         </div>
 
         <div class="table-wrapper">
+
             <table>
+
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -70,25 +117,52 @@
                 </thead>
 
                 <tbody id="transactionTable">
+
                     <tr>
-                        <td colspan="6">Loading transactions...</td>
+                        <td colspan="6">
+                            Loading demonstration transactions...
+                        </td>
                     </tr>
+
                 </tbody>
+
             </table>
+
         </div>
 
-        <p id="emptyMessage" class="empty-message" hidden>
-            No transactions have been recorded yet.
+        <p
+            id="emptyMessage"
+            class="empty-message"
+            hidden
+        >
+            No demonstration transactions have been recorded yet.
         </p>
+
     </section>
 
-    <p class="demo-notice">
-        Demo only: transaction information is stored in this browser.
-        These records do not represent real bank transactions.
-    </p>
+    <!-- NOTICE -->
+
+    <div class="demo-notice">
+        <strong>Important:</strong>
+        These are fictional transaction records stored in your browser.
+        They are not bank statements, payment confirmations, or evidence
+        of real financial activity.
+    </div>
+
+    <a href="dashboard.html" class="back-link">
+        &larr; Back to Dashboard
+    </a>
 
 </main>
 
+<footer class="footer">
+    <p>
+        &copy; <span id="currentYear"></span>
+        Novacrest Bank. Fictional demonstration project.
+    </p>
+</footer>
+
 <script src="transactions.js"></script>
+
 </body>
 </html>
