@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Novacrest Bank | Demo Dashboard</title>
-    <meta name="description" content="Novacrest fictional banking software demonstration dashboard.">
+    <title>Novacrest | Demo Dashboard</title>
+    <meta name="description" content="Explore the Novacrest fictional banking software prototype and its simulated account features.">
+    <meta name="robots" content="noindex, nofollow">
 
     <link rel="stylesheet" href="dashboard.css">
 </head>
@@ -14,46 +15,37 @@
 <body>
 
     <header class="header">
-
-        <a href="index.html" class="logo">
+        <a href="index.html" class="logo" aria-label="Novacrest prototype home">
             NOVACREST<span>BANK</span>
         </a>
 
-        <nav class="main-nav">
-            <a href="dashboard.html" class="active">Dashboard</a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <a href="dashboard.html" class="active" aria-current="page">Dashboard</a>
             <a href="profile.html">Demo Profile</a>
             <a href="account.html">Account Details</a>
             <a href="balance.html">Balance</a>
-            <a href="transfer.html">Transfers</a>
+            <a href="transfer.html">Transfer Demo</a>
             <a href="beneficiaries.html">Beneficiaries</a>
             <a href="transactions.html">Transactions</a>
             <a href="records.html">Deposit / Withdrawal</a>
             <a href="logout.html">Logout</a>
         </nav>
-
     </header>
 
     <main class="container">
 
-        <!-- DEMO NOTICE -->
-
-        <section class="prototype-notice">
-            <strong>DEMONSTRATION ENVIRONMENT</strong>
-
+        <section class="prototype-notice" aria-label="Important prototype notice">
+            <strong>FICTIONAL SOFTWARE PROTOTYPE — NOT A REAL BANK</strong>
             <p>
-                This is a fictional banking software prototype.
-                Novacrest Bank is not an operating bank or licensed
-                financial institution. All account details, balances,
-                beneficiaries and transactions displayed here are simulated.
-                No real money is held or transferred.
-                Do not enter real financial or banking information.
+                This website is a demonstration project, not an operating bank
+                or licensed financial institution. All accounts, balances,
+                beneficiaries and transactions are fictional and simulated.
+                No real deposits or transfers take place. Never enter real
+                passwords, banking credentials or financial information.
             </p>
         </section>
 
-        <!-- WELCOME SECTION -->
-
         <section class="welcome">
-
             <div>
                 <p class="eyebrow">DEMO CUSTOMER AREA</p>
 
@@ -62,158 +54,133 @@
                 </h1>
 
                 <p>
-                    Explore the demonstration account and its simulated features.
+                    Explore the features of this fictional banking software
+                    using demonstration account information.
                 </p>
             </div>
 
             <a href="profile.html" class="profile-button">
                 View Demo Profile
             </a>
-
         </section>
 
-        <!-- ACCOUNT SUMMARY -->
-
-        <section class="summary-grid">
+        <section class="summary-grid" aria-label="Demo account summary">
 
             <div class="summary-card">
                 <p>Simulated Balance</p>
-
                 <h2 id="accountBalance">₦0.00</h2>
-
                 <a href="balance.html">View demo balance</a>
             </div>
 
             <div class="summary-card">
                 <p>Demo Account Number</p>
-
                 <h2 id="accountNumber">0123456789</h2>
-
                 <a href="account.html">View demo details</a>
             </div>
 
             <div class="summary-card">
                 <p>Demo Transactions</p>
-
                 <h2 id="transactionCount">0</h2>
-
                 <a href="transactions.html">View demo transactions</a>
             </div>
 
         </section>
 
-        <!-- DEMONSTRATION FEATURES -->
-
         <section class="services-section">
 
             <div class="section-heading">
                 <h2>Demonstration Features</h2>
-
                 <p>
-                    Explore the available software features.
-                    All activities are simulations.
+                    Explore the available software features. All activities
+                    and account information are simulated.
                 </p>
             </div>
 
             <div class="services-grid">
 
                 <a href="profile.html" class="service-card">
-                    <span class="service-icon">👤</span>
+                    <span class="service-icon" aria-hidden="true">👤</span>
                     <h3>Demo Profile</h3>
-                    <p>View your demonstration profile.</p>
+                    <p>View and update your fictional profile details.</p>
                 </a>
 
                 <a href="account.html" class="service-card">
-                    <span class="service-icon">🏦</span>
+                    <span class="service-icon" aria-hidden="true">🏦</span>
                     <h3>Account Details</h3>
                     <p>View your simulated account information.</p>
                 </a>
 
                 <a href="balance.html" class="service-card">
-                    <span class="service-icon">💰</span>
+                    <span class="service-icon" aria-hidden="true">💰</span>
                     <h3>Demo Balance</h3>
-                    <p>Explore the simulated account balance.</p>
+                    <p>Explore your simulated account balance.</p>
                 </a>
 
                 <a href="transfer.html" class="service-card">
-                    <span class="service-icon">💸</span>
+                    <span class="service-icon" aria-hidden="true">💸</span>
                     <h3>Transfer Simulation</h3>
-                    <p>Explore simulated transfer functionality.</p>
+                    <p>Explore the fictional transfer workflow.</p>
                 </a>
 
                 <a href="beneficiaries.html" class="service-card">
-                    <span class="service-icon">👥</span>
+                    <span class="service-icon" aria-hidden="true">👥</span>
                     <h3>Demo Beneficiaries</h3>
                     <p>Manage fictional beneficiary records.</p>
                 </a>
 
                 <a href="transactions.html" class="service-card">
-                    <span class="service-icon">📋</span>
+                    <span class="service-icon" aria-hidden="true">📋</span>
                     <h3>Transaction History</h3>
                     <p>Review simulated transaction records.</p>
                 </a>
 
                 <a href="records.html" class="service-card">
-                    <span class="service-icon">📥</span>
+                    <span class="service-icon" aria-hidden="true">📥</span>
                     <h3>Deposit & Withdrawal Demo</h3>
                     <p>Explore simulated deposit and withdrawal records.</p>
                 </a>
 
                 <a href="forgot-password.html" class="service-card">
-                    <span class="service-icon">🔐</span>
+                    <span class="service-icon" aria-hidden="true">🔐</span>
                     <h3>Demo Account Help</h3>
-                    <p>Explore demonstration account recovery.</p>
+                    <p>View the demonstration account recovery page.</p>
                 </a>
 
             </div>
-
         </section>
-
-        <!-- RECENT ACTIVITY -->
 
         <section class="transactions-section">
 
             <div class="section-heading">
-
                 <div>
                     <h2>Recent Demo Activity</h2>
-
-                    <p>
-                        Your latest simulated account activity.
-                    </p>
+                    <p>Your latest simulated account activity.</p>
                 </div>
 
                 <a href="transactions.html" class="view-all">
                     View All
                 </a>
-
             </div>
 
             <div class="table-wrapper">
-
                 <table>
-
                     <thead>
                         <tr>
-                            <th>Description</th>
-                            <th>Type</th>
-                            <th>Simulated Amount</th>
-                            <th>Date</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Simulated Amount</th>
+                            <th scope="col">Date</th>
                         </tr>
                     </thead>
 
                     <tbody id="recentTransactions">
-
                         <tr>
                             <td colspan="4" class="empty-message">
                                 No demo transactions available.
                             </td>
                         </tr>
-
                     </tbody>
-
                 </table>
-
             </div>
 
         </section>
@@ -221,13 +188,11 @@
     </main>
 
     <footer class="footer">
-
         <p>
             &copy; <span id="currentYear"></span>
-            Novacrest Bank Software Prototype.
-            Not a real bank. All activities are simulated.
+            Novacrest Banking Software Prototype.
+            Fictional demonstration only. Not a real bank.
         </p>
-
     </footer>
 
     <script src="dashboard.js"></script>
