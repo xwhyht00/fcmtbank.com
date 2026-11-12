@@ -4,92 +4,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBS-BANK | Personal Profile</title>
+
+    <title>Novacrest Bank | Demo Profile</title>
+
+    <meta name="description" content="Novacrest Bank fictional banking software prototype. Manage a simulated customer profile.">
+
     <link rel="stylesheet" href="profile.css">
     <script src="profile.js" defer></script>
 </head>
+
 <body>
 
-<header>
-    <div class="logo">DBS<span>BANK</span></div>
-    <nav>
+<header class="header">
+
+    <a href="index.html" class="logo">
+        NOVACREST <span>BANK</span>
+    </a>
+
+    <nav class="main-nav">
         <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
         <a href="account.html">Account Details</a>
         <a href="balance.html">Balance</a>
         <a href="transfer.html">Transfers</a>
         <a href="transactions.html">Transactions</a>
-        <a href="login.html">Logout</a>
+        <a href="logout.html">Logout</a>
     </nav>
+
 </header>
 
-<main>
+<main class="container">
+
+    <div class="prototype-notice">
+        <strong>DEMO SOFTWARE NOTICE:</strong>
+        Novacrest Bank is a fictional banking software prototype,
+        not a real bank or licensed financial institution.
+        All customer profiles and account information are simulated.
+        Do not enter real personal or financial information.
+    </div>
+
     <section class="profile-container">
 
-        <h1>Personal Banking Profile</h1>
-        <p>Manage and view your customer information.</p>
+        <div class="page-heading">
+            <span class="eyebrow">CUSTOMER AREA</span>
+            <h1>Personal Demo Profile</h1>
+            <p>
+                View and manage the fictional customer information
+                associated with your demonstration account.
+            </p>
+        </div>
 
         <div class="profile-card">
 
-            <div class="profile-icon">DB</div>
+            <div class="profile-icon">NC</div>
 
             <h2 id="customerName">Demo Customer</h2>
-            <p>Personal Banking Customer</p>
 
+            <p>Personal Demo Customer</p>
+
+            <span class="profile-badge">DEMO PROFILE</span>
+
+        </div>
+
+        <div class="details-heading">
+            <h2>Profile Information</h2>
+            <p>Your simulated customer details.</p>
         </div>
 
         <div class="profile-details">
 
             <div class="detail">
-                <span>Full Name</span>
+                <span>Display Name</span>
                 <strong id="fullName">Demo Customer</strong>
             </div>
 
             <div class="detail">
-                <span>Email Address</span>
-                <strong id="email">demo@example.com</strong>
+                <span>Demo Email Address</span>
+                <strong id="email">Not available</strong>
             </div>
 
             <div class="detail">
-                <span>Phone Number</span>
+                <span>Demo Phone Number</span>
                 <strong id="phone">Not provided</strong>
             </div>
 
             <div class="detail">
                 <span>Customer Type</span>
-                <strong>Personal Banking</strong>
+                <strong>Personal Demo Profile</strong>
             </div>
 
             <div class="detail">
-                <span>Account Status</span>
+                <span>Profile Status</span>
                 <strong class="status">Demo Profile</strong>
             </div>
 
         </div>
 
-        <button id="editButton">Edit Profile</button>
+        <button type="button" id="editButton">
+            Edit Demo Profile
+        </button>
 
         <form id="editForm" hidden>
 
-            <label>Full Name</label>
-            <input type="text" id="editName" required>
+            <h2>Edit Demo Information</h2>
 
-            <label>Email Address</label>
-            <input type="email" id="editEmail" required>
+            <p class="form-notice">
+                Use fictional information only. Do not enter real
+                personal, banking, or contact details.
+            </p>
 
-            <label>Phone Number</label>
-            <input type="tel" id="editPhone" required>
+            <label for="editName">Display Name</label>
+            <input
+                type="text"
+                id="editName"
+                maxlength="40"
+                autocomplete="off"
+                required
+            >
 
-            <button type="submit">Save Changes</button>
+            <label for="editEmail">Demo Email Address</label>
+            <input
+                type="email"
+                id="editEmail"
+                autocomplete="off"
+                required
+            >
+
+            <label for="editPhone">Demo Phone Number</label>
+            <input
+                type="tel"
+                id="editPhone"
+                autocomplete="off"
+            >
+
+            <div class="form-buttons">
+                <button type="submit">Save Demo Changes</button>
+                <button type="button" id="cancelButton" class="cancel-button">
+                    Cancel
+                </button>
+            </div>
 
         </form>
 
-        <p id="message"></p>
+        <p id="message" role="status" aria-live="polite"></p>
+
+        <div class="back-link">
+            <a href="dashboard.html">← Back to Demo Dashboard</a>
+        </div>
 
     </section>
+
 </main>
 
-<footer>
-    &copy; 2026 DBS-BANK. All Rights Reserved.
+<footer class="footer">
+    <p>
+        &copy; <span id="currentYear">2026</span> Novacrest Bank.
+        Fictional Banking Software Prototype.
+    </p>
+    <p>Not a real financial institution. No real banking services are provided.</p>
 </footer>
 
 </body>
