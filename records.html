@@ -4,39 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deposit and Withdrawal | DBS-BANK</title>
+    <meta name="description" content="Novacrest Bank fictional banking software prototype.">
+    <title>Deposits and Withdrawals | Novacrest Bank</title>
     <link rel="stylesheet" href="records.css">
 </head>
 <body>
 
 <header class="header">
-    <div class="logo">DBS<span>BANK</span></div>
+    <a href="index.html" class="logo">NOVACREST<span>BANK</span></a>
 
-    <nav>
+    <nav class="main-nav" aria-label="Main navigation">
         <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
         <a href="profile.html">Profile</a>
         <a href="account.html">Account</a>
         <a href="balance.html">Balance</a>
         <a href="transfer.html">Transfers</a>
         <a href="beneficiaries.html">Beneficiaries</a>
         <a href="transactions.html">Transactions</a>
+        <a href="logout.html">Logout</a>
     </nav>
 </header>
 
 <main class="container">
 
+    <div class="prototype-notice" role="note">
+        <strong>Fictional banking prototype:</strong>
+        Novacrest Bank is a demonstration website, not a real financial
+        institution. All accounts, balances, deposits and withdrawals are
+        simulated in your browser. Do not enter real banking or personal details.
+    </div>
+
     <section class="page-heading">
-        <h1>Deposit and Withdrawal</h1>
-        <p>Record demo deposits and withdrawals and review your activity.</p>
+        <p class="eyebrow">ACCOUNT ACTIVITY</p>
+        <h1>Deposits and Withdrawals</h1>
+        <p>Record simulated deposits and withdrawals and review your demo activity.</p>
     </section>
 
     <section class="balance-card">
-        <p>Demo Account Balance</p>
-        <h2 id="accountBalance">₦250,000.00</h2>
+        <p>Simulated Account Balance</p>
+        <h2 id="accountBalance">₦0.00</h2>
+        <span>Demo balance only — no real funds are held.</span>
     </section>
 
     <section class="panel">
-        <h2>New Transaction</h2>
+        <h2>New Demo Transaction</h2>
+        <p class="section-description">
+            Choose a transaction type and enter an amount to update your simulated balance.
+        </p>
 
         <form id="recordForm">
 
@@ -44,8 +59,8 @@
                 <label for="transactionType">Transaction Type</label>
                 <select id="transactionType" required>
                     <option value="">Select transaction type</option>
-                    <option value="Deposit">Deposit</option>
-                    <option value="Withdrawal">Withdrawal</option>
+                    <option value="Deposit">Demo Deposit</option>
+                    <option value="Withdrawal">Demo Withdrawal</option>
                 </select>
             </div>
 
@@ -56,7 +71,8 @@
                     id="amount"
                     min="1"
                     step="0.01"
-                    placeholder="Enter amount"
+                    max="100000000"
+                    placeholder="Enter demo amount"
                     required
                 >
             </div>
@@ -67,12 +83,12 @@
                     type="text"
                     id="description"
                     maxlength="100"
-                    placeholder="Enter transaction description"
+                    placeholder="Enter a demo transaction description"
                 >
             </div>
 
             <button type="submit" class="primary-btn">
-                Submit Demo Transaction
+                Record Demo Transaction
             </button>
 
             <p id="message" class="message" aria-live="polite"></p>
@@ -81,7 +97,14 @@
     </section>
 
     <section class="panel">
-        <h2>Deposit and Withdrawal History</h2>
+        <div class="section-heading">
+            <div>
+                <h2>Deposit and Withdrawal History</h2>
+                <p class="section-description">
+                    Your simulated account activity is listed below.
+                </p>
+            </div>
+        </div>
 
         <div class="table-wrapper">
             <table>
@@ -98,7 +121,7 @@
 
                 <tbody id="recordsTable">
                     <tr>
-                        <td colspan="6">Loading records...</td>
+                        <td colspan="6">Loading demo records...</td>
                     </tr>
                 </tbody>
             </table>
@@ -106,11 +129,17 @@
     </section>
 
     <p class="demo-notice">
-        Demo only: these entries change a simulated balance stored in your
-        browser. No real money is deposited or withdrawn.
+        <strong>Demo only:</strong> These entries update a simulated balance
+        stored in your browser. No real money is deposited, withdrawn, or transferred.
     </p>
 
+    <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+
 </main>
+
+<footer class="footer">
+    <p>© <span id="currentYear"></span> Novacrest Bank. Fictional software demonstration.</p>
+</footer>
 
 <script src="records.js"></script>
 </body>
