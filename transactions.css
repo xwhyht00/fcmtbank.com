@@ -1,4 +1,10 @@
 
+/* =====================================
+   NOVACREST BANK
+   TRANSACTION HISTORY PAGE
+   Fictional Banking Prototype
+===================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,55 +12,90 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f2f5f9;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f6fa;
     color: #263445;
+    line-height: 1.6;
 }
+
+/* HEADER */
 
 .header {
     background: #092b49;
-    color: white;
-    padding: 20px 6%;
+    color: #ffffff;
+    padding: 18px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 20px;
 }
 
 .logo {
-    font-size: 25px;
-    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
 
 .logo span {
     color: #55b9f3;
 }
 
-nav {
+.main-nav {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     gap: 16px;
 }
 
-nav a {
-    color: white;
+.main-nav a {
+    color: #ffffff;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
+    transition: color 0.2s ease;
 }
 
-nav a:hover {
+.main-nav a:hover {
     color: #55b9f3;
 }
+
+/* MAIN CONTAINER */
 
 .container {
     width: 92%;
     max-width: 1200px;
-    margin: 40px auto;
+    margin: 35px auto;
 }
+
+/* PROTOTYPE NOTICE */
+
+.prototype-notice {
+    background: #fff7df;
+    border: 1px solid #efd99a;
+    border-left: 5px solid #d6a52b;
+    color: #755719;
+    padding: 15px 18px;
+    border-radius: 7px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* PAGE HEADING */
 
 .page-heading {
     margin-bottom: 25px;
+}
+
+.eyebrow {
+    display: inline-block;
+    color: #0877bd;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
 }
 
 .page-heading h1 {
@@ -65,39 +106,68 @@ nav a:hover {
 
 .page-heading p {
     color: #687789;
+    font-size: 15px;
 }
+
+/* SUMMARY GRID */
 
 .summary-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
     margin-bottom: 25px;
 }
 
 .summary-card {
-    background: white;
+    background: #ffffff;
     padding: 24px;
     border-radius: 9px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e7ecf2;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.045);
+}
+
+.summary-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8f3fb;
+    color: #0877bd;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 14px;
 }
 
 .summary-card h3 {
     color: #687789;
     font-size: 14px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .summary-card p {
     color: #092b49;
     font-size: 25px;
     font-weight: bold;
+    overflow-wrap: anywhere;
 }
 
+.summary-card span {
+    display: block;
+    color: #8995a3;
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+/* TRANSACTION PANEL */
+
 .panel {
-    background: white;
+    background: #ffffff;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e7ecf2;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.045);
 }
 
 .table-heading {
@@ -105,62 +175,99 @@ nav a:hover {
     justify-content: space-between;
     align-items: center;
     gap: 15px;
+    flex-wrap: wrap;
     margin-bottom: 20px;
 }
 
 .table-heading h2 {
     color: #092b49;
     font-size: 21px;
+    margin-bottom: 5px;
 }
+
+.table-heading p {
+    color: #718093;
+    font-size: 13px;
+}
+
+/* REFRESH BUTTON */
 
 .refresh-btn {
     background: #0877bd;
-    color: white;
+    color: #ffffff;
     border: none;
-    padding: 10px 18px;
-    border-radius: 5px;
+    padding: 11px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
     cursor: pointer;
+    transition: background 0.2s ease;
 }
 
 .refresh-btn:hover {
     background: #065e98;
 }
 
+.refresh-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* TABLE */
+
 .table-wrapper {
     width: 100%;
     overflow-x: auto;
+    border: 1px solid #e7ecf1;
+    border-radius: 7px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 750px;
+    min-width: 800px;
 }
 
-th, td {
+th,
+td {
     padding: 15px 12px;
     text-align: left;
     border-bottom: 1px solid #e7ecf1;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 th {
     background: #f5f8fb;
     color: #092b49;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
 td {
     color: #536274;
 }
 
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background: #fafcff;
+}
+
+/* TRANSACTION STATUS */
+
 .status {
     display: inline-block;
-    padding: 6px 10px;
+    padding: 5px 10px;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: bold;
     background: #e4f7eb;
     color: #168044;
 }
+
+/* TRANSACTION AMOUNTS */
 
 .amount-credit {
     color: #168044;
@@ -172,11 +279,16 @@ td {
     font-weight: bold;
 }
 
+/* EMPTY MESSAGE */
+
 .empty-message {
     text-align: center;
     padding: 25px 10px;
     color: #687789;
+    font-size: 14px;
 }
+
+/* DEMO NOTICE */
 
 .demo-notice {
     margin-top: 20px;
@@ -184,22 +296,73 @@ td {
     border: 1px solid #f1dfa9;
     color: #805d16;
     border-radius: 7px;
-    padding: 15px;
+    padding: 16px;
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
-@media (max-width: 750px) {
+/* BACK LINK */
+
+.back-link {
+    display: inline-block;
+    margin-top: 22px;
+    color: #0877bd;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* FOOTER */
+
+.footer {
+    background: #092b49;
+    color: #d5e0eb;
+    text-align: center;
+    padding: 20px;
+    margin-top: 45px;
+    font-size: 12px;
+}
+
+/* TABLET */
+
+@media (max-width: 850px) {
+
     .summary-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .header {
         align-items: flex-start;
         flex-direction: column;
     }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .header {
+        padding: 18px 5%;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+
+    .main-nav {
+        gap: 11px;
+    }
+
+    .main-nav a {
+        font-size: 12px;
+    }
 
     .container {
+        width: 92%;
         margin: 25px auto;
     }
 
@@ -207,7 +370,40 @@ td {
         font-size: 25px;
     }
 
+    .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .summary-card {
+        padding: 20px;
+    }
+
     .panel {
         padding: 18px;
+    }
+
+    .table-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .refresh-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .main-nav {
+        gap: 9px;
+    }
+
+    .main-nav a {
+        font-size: 11px;
+    }
+
+    .page-heading h1 {
+        font-size: 22px;
     }
 }
