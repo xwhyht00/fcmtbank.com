@@ -1,4 +1,9 @@
 
+/* ========================================
+   NOVACREST BANK - HOMEPAGE STYLES
+   Fictional banking software prototype
+======================================== */
+
 * {
   margin: 0;
   padding: 0;
@@ -7,12 +12,13 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 90px;
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: #172033;
-  background: #fff;
+  background: #ffffff;
   line-height: 1.6;
 }
 
@@ -20,6 +26,19 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* HEADER */
 
 .header {
   min-height: 85px;
@@ -29,13 +48,16 @@ a {
   justify-content: space-between;
   gap: 20px;
   background: #101d35;
-  color: white;
+  color: #ffffff;
+  position: relative;
+  z-index: 100;
 }
 
 .logo {
   font-size: 27px;
   font-weight: bold;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 .logo span {
@@ -50,7 +72,8 @@ a {
 
 .navigation a {
   font-size: 13px;
-  transition: color .3s;
+  color: #ffffff;
+  transition: color 0.3s ease;
 }
 
 .navigation a:hover {
@@ -58,22 +81,46 @@ a {
 }
 
 .header-button {
+  display: inline-block;
   background: #e8b94e;
   color: #101d35;
   padding: 11px 18px;
   border-radius: 5px;
   font-size: 13px;
   font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.header-button:hover {
+  background: #f4ce75;
 }
 
 .menu-toggle {
   display: none;
   border: none;
-  color: white;
+  color: #ffffff;
   background: transparent;
-  font-size: 27px;
+  font-size: 28px;
   cursor: pointer;
 }
+
+/* PROTOTYPE DISCLOSURE */
+
+.prototype-notice {
+  padding: 13px 6%;
+  background: #fff4d8;
+  border-bottom: 1px solid #ead49b;
+  color: #624a13;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.prototype-notice strong {
+  color: #49350a;
+}
+
+/* HERO SECTION */
 
 .hero {
   min-height: 570px;
@@ -90,10 +137,12 @@ a {
 }
 
 .eyebrow {
+  display: inline-block;
   color: #b58a2e;
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .hero h1 {
@@ -106,6 +155,7 @@ a {
 .hero p {
   color: #657087;
   margin-bottom: 25px;
+  font-size: 16px;
 }
 
 .hero-buttons {
@@ -121,7 +171,9 @@ a {
   padding: 13px 22px;
   font-size: 14px;
   font-weight: bold;
+  text-align: center;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .primary {
@@ -129,9 +181,20 @@ a {
   color: #14213a;
 }
 
+.primary:hover {
+  background: #f2c96d;
+  transform: translateY(-2px);
+}
+
 .secondary {
   border: 1px solid #14213a;
   color: #14213a;
+  background: transparent;
+}
+
+.secondary:hover {
+  background: #14213a;
+  color: #ffffff;
 }
 
 .hero-image {
@@ -139,37 +202,47 @@ a {
   border-radius: 15px;
   background: linear-gradient(135deg, #142747, #31547d);
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   padding: 30px;
+  overflow: hidden;
 }
 
 .feature-card {
-  background: white;
+  background: #ffffff;
   padding: 28px;
   border-radius: 10px;
   max-width: 350px;
+  width: 100%;
+  box-shadow: 0 10px 30px #00000018;
 }
 
 .feature-card span {
   color: #b58a2e;
   font-size: 11px;
   font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .feature-card h2 {
   margin: 12px 0;
   color: #14213a;
+  font-size: 22px;
 }
 
 .feature-card p {
   margin: 0;
+  color: #657087;
+  font-size: 14px;
 }
+
+/* QUICK SERVICES */
 
 .quick-services {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   padding: 35px 7%;
   gap: 15px;
+  background: #ffffff;
 }
 
 .quick-services a {
@@ -177,7 +250,7 @@ a {
   text-align: center;
   border: 1px solid #e5e9ef;
   border-radius: 8px;
-  transition: .3s;
+  transition: all 0.3s ease;
 }
 
 .quick-services a:hover,
@@ -198,10 +271,17 @@ a {
   display: block;
 }
 
+.quick-services strong {
+  color: #14213a;
+}
+
 .quick-services small {
   color: #7a8495;
   margin-top: 5px;
+  font-size: 12px;
 }
+
+/* GENERAL SECTIONS */
 
 .section {
   padding: 80px 8%;
@@ -219,13 +299,17 @@ a {
 .online-section h2,
 .contact-section h2 {
   font-size: 36px;
+  line-height: 1.2;
   margin: 12px 0;
   color: #14213a;
 }
 
 .section-heading p {
   color: #758094;
+  font-size: 15px;
 }
+
+/* PERSONAL BANKING SERVICES */
 
 .service-grid {
   display: grid;
@@ -237,7 +321,8 @@ a {
   border: 1px solid #e6eaf0;
   border-radius: 10px;
   padding: 30px;
-  transition: .3s;
+  background: #ffffff;
+  transition: all 0.3s ease;
 }
 
 .service-icon {
@@ -248,23 +333,34 @@ a {
 
 .service-card h3 {
   margin-bottom: 12px;
+  color: #14213a;
+  font-size: 19px;
 }
 
 .service-card p {
   color: #718096;
   margin-bottom: 20px;
+  font-size: 14px;
 }
 
 .service-card a,
 .bank-card a {
   color: #a47b25;
   font-weight: bold;
+  font-size: 14px;
 }
+
+.service-card a:hover,
+.bank-card a:hover {
+  text-decoration: underline;
+}
+
+/* BUSINESS BANKING */
 
 .business-section {
   padding: 100px 9%;
   background: #122541;
-  color: white;
+  color: #ffffff;
 }
 
 .business-content {
@@ -272,15 +368,16 @@ a {
 }
 
 .business-section h2 {
-  color: white;
+  color: #ffffff;
 }
 
-.business-section p,
-.loan-section p,
-.online-section p {
+.business-section p {
   margin: 20px 0;
   color: #c4ccda;
+  font-size: 15px;
 }
+
+/* BANKING CARDS */
 
 .card-grid {
   display: grid;
@@ -292,7 +389,7 @@ a {
   background: #142744;
   padding: 40px;
   border-radius: 12px;
-  color: white;
+  color: #ffffff;
 }
 
 .bank-card.alternate {
@@ -303,6 +400,7 @@ a {
   color: #e9bd57;
   font-size: 11px;
   letter-spacing: 2px;
+  font-weight: bold;
 }
 
 .bank-card h3 {
@@ -313,7 +411,10 @@ a {
 .bank-card p {
   margin-bottom: 20px;
   color: #d1d8e2;
+  font-size: 14px;
 }
+
+/* LOANS */
 
 .loan-section {
   padding: 90px 9%;
@@ -324,9 +425,18 @@ a {
   max-width: 650px;
 }
 
+.loan-section p {
+  margin: 20px 0;
+  color: #657087;
+  font-size: 15px;
+}
+
+/* ONLINE BANKING PROTOTYPE */
+
 .online-section {
   padding: 80px 9%;
   background: #142744;
+  color: #ffffff;
 }
 
 .online-content {
@@ -334,16 +444,27 @@ a {
 }
 
 .online-section h2 {
-  color: white;
+  color: #ffffff;
+}
+
+.online-section p {
+  margin: 20px 0;
+  color: #c4ccda;
+  font-size: 15px;
 }
 
 .access-notice {
   padding: 20px;
   border: 1px solid #718096;
   border-radius: 7px;
-  color: white;
+  color: #ffffff;
   margin-top: 25px;
+  background: #ffffff0a;
+  font-size: 14px;
+  line-height: 1.8;
 }
+
+/* ABOUT SECTION */
 
 .about-grid {
   display: grid;
@@ -360,11 +481,15 @@ a {
 .about-grid h3 {
   margin-bottom: 12px;
   color: #142744;
+  font-size: 19px;
 }
 
 .about-grid p {
   color: #718096;
+  font-size: 14px;
 }
+
+/* CONTACT SECTION */
 
 .contact-section {
   background: #f2f5fa;
@@ -372,12 +497,24 @@ a {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
+  align-items: start;
+}
+
+.contact-section h2 {
+  color: #14213a;
+}
+
+.contact-section p {
+  color: #657087;
+  margin: 15px 0;
+  font-size: 15px;
 }
 
 .contact-section form {
-  background: white;
+  background: #ffffff;
   padding: 30px;
   border-radius: 10px;
+  box-shadow: 0 8px 25px #00000008;
 }
 
 .contact-section label {
@@ -385,6 +522,7 @@ a {
   margin: 15px 0 7px;
   font-weight: bold;
   font-size: 14px;
+  color: #172033;
 }
 
 .contact-section input,
@@ -395,31 +533,50 @@ a {
   border-radius: 5px;
   font-family: inherit;
   font-size: 14px;
+  color: #172033;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.contact-section input:focus,
+.contact-section textarea:focus {
+  border-color: #b58a2e;
+  box-shadow: 0 0 0 3px #e8b94e25;
 }
 
 .contact-section textarea {
   resize: vertical;
+  min-height: 120px;
 }
 
 .contact-section form button {
   margin-top: 18px;
+  width: 100%;
 }
 
 #formMessage {
   margin-top: 12px;
   color: #26734b;
+  font-size: 13px;
 }
+
+/* FOOTER */
 
 .footer {
   padding: 45px 8%;
   text-align: center;
   background: #101d35;
-  color: white;
+  color: #ffffff;
 }
 
 .footer-logo {
   display: inline-block;
   margin-bottom: 10px;
+}
+
+.footer-logo span {
+  color: #e8b94e;
 }
 
 .footer-links {
@@ -428,6 +585,12 @@ a {
   gap: 25px;
   margin: 20px 0;
   flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: #d5dce7;
+  transition: color 0.3s ease;
 }
 
 .footer-links a:hover {
@@ -439,7 +602,13 @@ a {
   font-size: 13px;
 }
 
+/* TABLET RESPONSIVENESS */
+
 @media (max-width: 1000px) {
+  .header {
+    padding: 15px 3%;
+  }
+
   .navigation {
     gap: 10px;
   }
@@ -448,15 +617,39 @@ a {
     font-size: 12px;
   }
 
-  .header {
-    padding: 15px 3%;
+  .hero {
+    padding: 70px 6%;
+    gap: 30px;
+  }
+
+  .section {
+    padding: 70px 6%;
+  }
+
+  .quick-services {
+    padding: 30px 5%;
+  }
+
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* MOBILE RESPONSIVENESS */
 
 @media (max-width: 768px) {
   .header {
     position: relative;
     flex-wrap: wrap;
+    padding: 15px 5%;
+  }
+
+  .logo {
+    font-size: 23px;
   }
 
   .menu-toggle {
@@ -469,7 +662,9 @@ a {
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
+    gap: 0;
     padding: 15px 0;
+    border-top: 1px solid #ffffff20;
   }
 
   .navigation.active {
@@ -477,21 +672,42 @@ a {
   }
 
   .navigation a {
+    display: block;
+    width: 100%;
     font-size: 14px;
-    padding: 8px 0;
+    padding: 10px 0;
   }
 
   .header-button {
     display: none;
   }
 
+  .prototype-notice {
+    padding: 12px 5%;
+    font-size: 12px;
+  }
+
   .hero {
     grid-template-columns: 1fr;
     padding: 60px 7%;
+    gap: 35px;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-image {
+    min-height: 300px;
   }
 
   .quick-services {
     grid-template-columns: repeat(2, 1fr);
+    padding: 30px 5%;
+  }
+
+  .section {
+    padding: 60px 7%;
   }
 
   .service-grid,
@@ -503,19 +719,57 @@ a {
     grid-template-columns: 1fr;
   }
 
+  .business-section,
+  .loan-section,
+  .online-section {
+    padding: 70px 7%;
+  }
+
   .contact-section {
     grid-template-columns: 1fr;
     gap: 30px;
+    padding: 60px 7%;
+  }
+
+  .contact-section form {
+    padding: 25px;
+  }
+
+  .footer {
+    padding: 40px 6%;
   }
 }
 
+/* SMALL MOBILE PHONES */
+
 @media (max-width: 480px) {
-  .quick-services {
-    grid-template-columns: 1fr;
+  .logo {
+    font-size: 21px;
+  }
+
+  .hero {
+    padding: 50px 6%;
   }
 
   .hero h1 {
     font-size: 36px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .hero-image {
+    min-height: 260px;
+    padding: 18px;
+  }
+
+  .feature-card {
+    padding: 22px;
+  }
+
+  .quick-services {
+    grid-template-columns: 1fr;
   }
 
   .section-heading h2,
@@ -531,6 +785,28 @@ a {
   }
 
   .hero-buttons .button {
+    width: 100%;
     text-align: center;
+  }
+
+  .service-card,
+  .about-grid div {
+    padding: 25px;
+  }
+
+  .bank-card {
+    padding: 28px;
+  }
+
+  .bank-card h3 {
+    font-size: 23px;
+  }
+
+  .contact-section form {
+    padding: 20px;
+  }
+
+  .footer-links {
+    gap: 15px;
   }
 }
