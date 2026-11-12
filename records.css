@@ -5,83 +5,127 @@
     box-sizing: border-box;
 }
 
+:root {
+    --navy: #092b49;
+    --navy-light: #123f63;
+    --gold: #d7ad55;
+    --blue: #0877bd;
+    --background: #f2f5f9;
+    --text: #263445;
+    --muted: #687789;
+    --border: #e2e8ef;
+}
+
 body {
     font-family: Arial, sans-serif;
-    background: #f2f5f9;
-    color: #263445;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
 }
 
 .header {
-    background: #092b49;
+    background: var(--navy);
     color: white;
-    padding: 20px 6%;
+    padding: 20px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 20px;
 }
 
 .logo {
-    font-size: 25px;
+    color: white;
+    text-decoration: none;
+    font-size: 23px;
     font-weight: bold;
+    letter-spacing: 1px;
 }
 
 .logo span {
-    color: #55b9f3;
+    color: var(--gold);
 }
 
-nav {
+.main-nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 15px;
 }
 
-nav a {
+.main-nav a {
     color: white;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
+    transition: color 0.2s ease;
 }
 
-nav a:hover {
-    color: #55b9f3;
+.main-nav a:hover {
+    color: var(--gold);
 }
 
 .container {
     width: 92%;
     max-width: 1100px;
-    margin: 40px auto;
+    margin: 35px auto;
+}
+
+.prototype-notice {
+    background: #fff3d6;
+    border: 1px solid #e8ce8b;
+    color: #76571b;
+    padding: 16px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 30px;
 }
 
 .page-heading {
     margin-bottom: 25px;
 }
 
+.eyebrow {
+    color: #a27a2c;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
 .page-heading h1 {
-    color: #092b49;
+    color: var(--navy);
     font-size: 30px;
     margin-bottom: 8px;
 }
 
 .page-heading p {
-    color: #687789;
+    color: var(--muted);
 }
 
 .balance-card {
-    background: #092b49;
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
     color: white;
-    padding: 28px;
-    border-radius: 10px;
+    padding: 30px;
+    border-radius: 12px;
     margin-bottom: 25px;
+    box-shadow: 0 5px 18px rgba(9, 43, 73, 0.12);
 }
 
 .balance-card p {
-    color: #c9d9e8;
-    margin-bottom: 12px;
+    color: #d4e1ec;
+    margin-bottom: 10px;
+    font-size: 14px;
 }
 
 .balance-card h2 {
-    font-size: 32px;
+    font-size: 34px;
+    margin-bottom: 8px;
+    overflow-wrap: anywhere;
+}
+
+.balance-card span {
+    color: #c5d4e0;
+    font-size: 12px;
 }
 
 .panel {
@@ -93,13 +137,23 @@ nav a:hover {
 }
 
 .panel h2 {
-    color: #092b49;
+    color: var(--navy);
     font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.section-description {
+    color: var(--muted);
+    font-size: 13px;
     margin-bottom: 22px;
 }
 
+.section-heading {
+    margin-bottom: 20px;
+}
+
 .form-group {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
@@ -107,41 +161,55 @@ nav a:hover {
     font-weight: bold;
     font-size: 14px;
     margin-bottom: 8px;
+    color: var(--navy);
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
-    padding: 13px;
+    padding: 14px;
     border: 1px solid #d5dce5;
     border-radius: 6px;
     font-size: 15px;
     outline: none;
     background: white;
+    color: var(--text);
+    font-family: inherit;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-    border-color: #0877bd;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(8, 119, 189, 0.1);
 }
 
 .primary-btn {
-    background: #0877bd;
+    background: var(--blue);
     color: white;
     border: none;
-    padding: 13px 22px;
+    padding: 14px 24px;
     border-radius: 6px;
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
+    transition: background 0.2s ease;
 }
 
 .primary-btn:hover {
     background: #065e98;
 }
 
+.primary-btn:focus-visible,
+.main-nav a:focus-visible,
+.logo:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+}
+
 .message {
     margin-top: 15px;
     font-size: 14px;
+    line-height: 1.5;
 }
 
 .message.success {
@@ -155,29 +223,37 @@ nav a:hover {
 .table-wrapper {
     width: 100%;
     overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 7px;
 }
 
 table {
     width: 100%;
-    min-width: 700px;
+    min-width: 750px;
     border-collapse: collapse;
 }
 
 th,
 td {
     padding: 14px 12px;
-    border-bottom: 1px solid #e7ecf1;
+    border-bottom: 1px solid var(--border);
     text-align: left;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 th {
     background: #f5f8fb;
-    color: #092b49;
+    color: var(--navy);
+    font-weight: bold;
+    white-space: nowrap;
 }
 
 td {
     color: #536274;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .credit {
@@ -194,16 +270,47 @@ td {
     background: #fff7df;
     border: 1px solid #f1dfa9;
     color: #805d16;
-    padding: 15px;
+    padding: 16px;
     border-radius: 7px;
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.7;
+    margin-bottom: 22px;
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--blue);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 5px 0 25px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.footer {
+    background: var(--navy);
+    color: #d4e1ec;
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
 }
 
 @media (max-width: 700px) {
     .header {
         align-items: flex-start;
         flex-direction: column;
+        padding: 20px 5%;
+    }
+
+    .main-nav {
+        gap: 12px;
+    }
+
+    .main-nav a {
+        font-size: 12px;
     }
 
     .container {
@@ -214,11 +321,33 @@ td {
         font-size: 25px;
     }
 
+    .balance-card {
+        padding: 24px;
+    }
+
     .balance-card h2 {
-        font-size: 27px;
+        font-size: 28px;
     }
 
     .panel {
         padding: 20px;
+    }
+
+    .primary-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+    .logo {
+        font-size: 20px;
+    }
+
+    .page-heading h1 {
+        font-size: 22px;
+    }
+
+    .balance-card h2 {
+        font-size: 25px;
     }
 }
