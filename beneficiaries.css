@@ -1,4 +1,9 @@
 
+/* =====================================
+   NOVACREST BANK - BENEFICIARIES PAGE
+   Fictional banking prototype
+===================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,55 +11,90 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f2f5f9;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f6fa;
     color: #263445;
+    line-height: 1.6;
 }
+
+/* HEADER */
 
 .header {
     background: #092b49;
-    color: white;
-    padding: 20px 6%;
+    color: #ffffff;
+    padding: 18px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 20px;
 }
 
 .logo {
-    font-size: 25px;
-    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
 
 .logo span {
     color: #55b9f3;
 }
 
-nav {
+.main-nav {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 17px;
 }
 
-nav a {
-    color: white;
+.main-nav a {
+    color: #ffffff;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
+    transition: color 0.2s ease;
 }
 
-nav a:hover {
+.main-nav a:hover {
     color: #55b9f3;
 }
+
+/* MAIN CONTAINER */
 
 .container {
     width: 90%;
     max-width: 950px;
-    margin: 40px auto;
+    margin: 35px auto;
 }
+
+/* PROTOTYPE NOTICE */
+
+.prototype-notice {
+    background: #fff7df;
+    border: 1px solid #efd99a;
+    border-left: 5px solid #d6a52b;
+    color: #755719;
+    padding: 15px 18px;
+    border-radius: 7px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* PAGE HEADING */
 
 .page-heading {
     margin-bottom: 25px;
+}
+
+.eyebrow {
+    display: inline-block;
+    color: #0877bd;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
 }
 
 .page-heading h1 {
@@ -65,63 +105,100 @@ nav a:hover {
 
 .page-heading p {
     color: #687789;
+    font-size: 15px;
 }
 
+/* PANELS */
+
 .panel {
-    background: white;
+    background: #ffffff;
     padding: 28px;
     border-radius: 10px;
     margin-bottom: 25px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e7ecf2;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.045);
 }
 
-.panel h2 {
-    color: #092b49;
-    margin-bottom: 22px;
-    font-size: 21px;
+.section-heading {
+    margin-bottom: 23px;
 }
+
+.section-heading h2 {
+    color: #092b49;
+    font-size: 21px;
+    margin-bottom: 5px;
+}
+
+.section-heading p {
+    color: #718093;
+    font-size: 13px;
+}
+
+/* FORM */
 
 .form-group {
-    margin-bottom: 18px;
+    margin-bottom: 19px;
 }
 
 .form-group label {
     display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
+    color: #263445;
+    font-weight: 600;
     font-size: 14px;
+    margin-bottom: 8px;
 }
 
 .form-group input {
     width: 100%;
-    padding: 13px;
+    padding: 14px;
+    background: #ffffff;
     border: 1px solid #d5dce5;
     border-radius: 6px;
+    color: #263445;
     font-size: 15px;
     outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-group input:focus {
     border-color: #0877bd;
+    box-shadow: 0 0 0 3px rgba(8, 119, 189, 0.1);
 }
 
+.form-group input::placeholder {
+    color: #a0aab6;
+}
+
+/* BUTTONS */
+
 .primary-btn {
+    display: inline-block;
     background: #0877bd;
-    color: white;
+    color: #ffffff;
     border: none;
-    padding: 13px 22px;
+    padding: 13px 23px;
     border-radius: 6px;
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
+    transition: background 0.2s ease;
 }
 
 .primary-btn:hover {
     background: #065e98;
 }
 
+.primary-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* MESSAGE */
+
 .message {
     margin-top: 15px;
     font-size: 14px;
+    min-height: 20px;
 }
 
 .message.success {
@@ -132,28 +209,49 @@ nav a:hover {
     color: #c62828;
 }
 
+/* BENEFICIARY CARDS */
+
+#beneficiaryList {
+    width: 100%;
+}
+
 .beneficiary-card {
     border: 1px solid #e0e6ed;
+    background: #ffffff;
     border-radius: 8px;
-    padding: 18px;
+    padding: 19px;
     margin-bottom: 14px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 15px;
     flex-wrap: wrap;
+    transition: box-shadow 0.2s ease;
+}
+
+.beneficiary-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.beneficiary-info {
+    flex: 1;
+    min-width: 180px;
 }
 
 .beneficiary-info h3 {
     color: #092b49;
+    font-size: 16px;
     margin-bottom: 7px;
 }
 
 .beneficiary-info p {
     color: #687789;
-    font-size: 14px;
+    font-size: 13px;
     margin-top: 5px;
+    overflow-wrap: anywhere;
 }
+
+/* REMOVE BUTTON */
 
 .remove-btn {
     background: #fff0f0;
@@ -161,37 +259,84 @@ nav a:hover {
     border: 1px solid #f1caca;
     padding: 9px 15px;
     border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .remove-btn:hover {
     background: #c62828;
-    color: white;
+    color: #ffffff;
 }
+
+/* EMPTY MESSAGE */
 
 .empty-message {
     color: #687789;
-    padding: 10px 0;
+    background: #f8fafc;
+    border: 1px dashed #d5dce5;
+    border-radius: 7px;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
 }
+
+/* DEMO NOTICE */
 
 .demo-notice {
     color: #805d16;
     background: #fff7df;
     border: 1px solid #f1dfa9;
     border-radius: 7px;
-    padding: 15px;
+    padding: 16px;
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.6;
+    margin-top: 10px;
 }
 
-@media (max-width: 650px) {
+/* BACK LINK */
+
+.back-link {
+    display: inline-block;
+    margin-top: 22px;
+    color: #0877bd;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* FOOTER */
+
+.footer {
+    background: #092b49;
+    color: #d5e0eb;
+    text-align: center;
+    padding: 20px;
+    margin-top: 45px;
+    font-size: 12px;
+}
+
+/* MOBILE RESPONSIVENESS */
+
+@media (max-width: 700px) {
+
     .header {
         align-items: flex-start;
         flex-direction: column;
+        padding: 18px 5%;
     }
 
-    nav {
+    .main-nav {
         gap: 12px;
+    }
+
+    .main-nav a {
+        font-size: 12px;
     }
 
     .container {
@@ -199,11 +344,43 @@ nav a:hover {
         margin: 25px auto;
     }
 
+    .page-heading h1 {
+        font-size: 25px;
+    }
+
     .panel {
         padding: 20px;
     }
 
+    .beneficiary-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .remove-btn {
+        width: 100%;
+    }
+
+    .primary-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .main-nav {
+        gap: 10px;
+    }
+
+    .main-nav a {
+        font-size: 11px;
+    }
+
     .page-heading h1 {
-        font-size: 25px;
+        font-size: 22px;
     }
 }
