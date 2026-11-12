@@ -1,89 +1,153 @@
 
+/* ==========================================
+   NOVACREST BANK - PROFILE CSS
+   Fictional Banking Software Prototype
+========================================== */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #f2f5f9;
-    color: #263747;
+:root {
+    --navy: #071b3a;
+    --navy-light: #174b83;
+    --gold: #d8b45e;
+    --gold-light: #e6bd62;
+    --text: #17233c;
+    --muted: #748095;
+    --background: #f4f6fa;
+    --white: #ffffff;
+    --border: #e5eaf1;
 }
 
-header {
-    background: #092b49;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* HEADER */
+
+.header {
+    background: var(--navy);
     padding: 20px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 20px;
 }
 
 .logo {
-    color: white;
-    font-size: 26px;
+    color: var(--white);
+    font-size: 25px;
     font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 .logo span {
-    color: #55b9f3;
+    color: var(--gold);
 }
 
-nav {
+.main-nav {
     display: flex;
-    gap: 18px;
+    gap: 17px;
     flex-wrap: wrap;
+    align-items: center;
 }
 
-nav a {
-    color: white;
+.main-nav a {
+    color: #e5eaf3;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
+    transition: color 0.3s;
 }
 
-nav a:hover {
-    color: #55b9f3;
+.main-nav a:hover {
+    color: var(--gold-light);
 }
 
-main {
-    padding: 50px 15px;
+/* MAIN CONTAINER */
+
+.container {
+    width: 92%;
+    max-width: 1100px;
+    margin: 40px auto;
 }
+
+/* PROTOTYPE NOTICE */
+
+.prototype-notice {
+    background: #fff7df;
+    color: #684d13;
+    border: 1px solid #ead18b;
+    border-left: 5px solid var(--gold);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 25px;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* PROFILE CONTAINER */
 
 .profile-container {
     max-width: 850px;
     margin: auto;
-    background: white;
+    background: var(--white);
     padding: 35px;
     border-radius: 12px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
 }
 
-h1 {
-    color: #092b49;
+/* PAGE HEADING */
+
+.page-heading {
+    margin-bottom: 25px;
+}
+
+.eyebrow {
+    display: block;
+    color: #a47b24;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
     margin-bottom: 10px;
 }
 
-.profile-container > p {
-    color: #777;
+.page-heading h1 {
+    color: var(--navy);
+    font-size: 29px;
+    margin-bottom: 8px;
 }
+
+.page-heading p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* PROFILE CARD */
 
 .profile-card {
     text-align: center;
-    margin: 35px 0;
-    padding: 25px;
-    background: #f0f6fb;
+    margin: 30px 0;
+    padding: 30px 20px;
+    background: #f1f5fa;
+    border: 1px solid var(--border);
     border-radius: 10px;
 }
 
 .profile-icon {
     width: 85px;
     height: 85px;
-    margin: auto auto 15px;
+    margin: 0 auto 15px;
     border-radius: 50%;
-    background: #0877bd;
-    color: white;
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    color: var(--gold-light);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,8 +156,43 @@ h1 {
 }
 
 .profile-card h2 {
-    color: #092b49;
-    margin-bottom: 8px;
+    color: var(--navy);
+    font-size: 23px;
+    margin-bottom: 5px;
+}
+
+.profile-card p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.profile-badge {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: #fff1c9;
+    color: #765515;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* PROFILE DETAILS */
+
+.details-heading {
+    margin-bottom: 18px;
+}
+
+.details-heading h2 {
+    color: var(--navy);
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.details-heading p {
+    color: var(--muted);
+    font-size: 13px;
 }
 
 .profile-details {
@@ -103,73 +202,238 @@ h1 {
 }
 
 .detail {
-    background: #f5f7fa;
+    background: #f6f8fb;
     padding: 18px;
-    border-radius: 7px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    min-width: 0;
 }
 
 .detail span {
     display: block;
-    color: #777;
+    color: var(--muted);
     margin-bottom: 8px;
     font-size: 13px;
 }
 
 .detail strong {
-    color: #092b49;
+    color: var(--navy);
+    font-size: 14px;
     overflow-wrap: anywhere;
 }
 
 .status {
-    color: #087b45 !important;
+    color: #8a6418 !important;
 }
+
+/* BUTTONS */
 
 button {
     margin-top: 25px;
     padding: 13px 25px;
-    background: #0877bd;
-    color: white;
+    background: var(--navy);
+    color: var(--white);
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 14px;
+    transition: 0.3s;
 }
 
-form {
-    margin-top: 25px;
+button:hover {
+    background: var(--navy-light);
 }
 
-form label {
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+}
+
+/* EDIT FORM */
+
+#editForm {
+    margin-top: 30px;
+    padding: 25px;
+    background: #f7f9fc;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+}
+
+#editForm[hidden] {
+    display: none;
+}
+
+#editForm h2 {
+    color: var(--navy);
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.form-notice {
+    background: #fff7df;
+    color: #684d13;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+#editForm label {
     display: block;
     margin: 15px 0 7px;
+    font-size: 14px;
     font-weight: bold;
+    color: var(--navy);
 }
 
-form input {
+#editForm input {
     width: 100%;
     padding: 13px;
-    border: 1px solid #ccc;
+    border: 1px solid #cbd3df;
     border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--white);
 }
+
+#editForm input:focus {
+    outline: none;
+    border-color: var(--navy-light);
+    box-shadow: 0 0 0 3px rgba(23, 75, 131, 0.1);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.form-buttons button {
+    margin-top: 20px;
+}
+
+.form-buttons .cancel-button {
+    background: #68758a;
+}
+
+.form-buttons .cancel-button:hover {
+    background: #4c596d;
+}
+
+/* MESSAGE */
 
 #message {
     margin-top: 15px;
     color: #087b45;
+    font-size: 14px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
 }
 
-footer {
-    background: #092b49;
-    color: white;
+/* BACK LINK */
+
+.back-link {
+    margin-top: 25px;
+}
+
+.back-link a {
+    color: #15549a;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}
+
+/* FOOTER */
+
+.footer {
+    background: var(--navy);
+    color: #dce4ef;
     text-align: center;
-    padding: 18px;
+    padding: 22px 15px;
+    font-size: 13px;
+    line-height: 1.8;
 }
 
-@media(max-width: 600px) {
+.footer p + p {
+    margin-top: 5px;
+    color: #b9c6d8;
+}
+
+/* TABLET */
+
+@media (max-width: 800px) {
+    .header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .main-nav {
+        gap: 13px;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
     .profile-details {
         grid-template-columns: 1fr;
     }
 
-    header {
-        justify-content: center;
+    .container {
+        width: 94%;
+        margin: 25px auto;
+    }
+
+    .profile-container {
+        padding: 23px 18px;
+    }
+
+    .page-heading h1 {
+        font-size: 24px;
+    }
+
+    .profile-card {
+        padding: 25px 15px;
+    }
+
+    .main-nav {
+        gap: 12px;
+    }
+
+    .main-nav a {
+        font-size: 12px;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .form-buttons button {
+        width: 100%;
+    }
+
+    .prototype-notice {
+        padding: 13px;
+    }
+}
+
+@media (max-width: 380px) {
+    .logo {
+        font-size: 21px;
+    }
+
+    .profile-container {
+        padding: 20px 14px;
+    }
+
+    #editForm {
+        padding: 18px;
     }
 }
