@@ -4,81 +4,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBS-BANK | Account Details</title>
+
+    <title>Novacrest Bank | Demo Account Details</title>
+
+    <meta name="description" content="View your simulated account information in the Novacrest Bank fictional banking software prototype.">
+
     <link rel="stylesheet" href="account.css">
     <script src="account.js" defer></script>
 </head>
+
 <body>
 
-<header>
-    <div class="logo">DBS<span>BANK</span></div>
+<header class="header">
 
-    <nav>
+    <a href="index.html" class="logo">
+        NOVACREST <span>BANK</span>
+    </a>
+
+    <nav class="main-nav">
         <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
         <a href="profile.html">Profile</a>
         <a href="balance.html">Balance</a>
         <a href="transfer.html">Transfers</a>
         <a href="transactions.html">Transactions</a>
-        <a href="login.html">Logout</a>
+        <a href="logout.html">Logout</a>
     </nav>
+
 </header>
 
-<main>
+<main class="container">
+
+    <div class="prototype-notice">
+        <strong>DEMO SOFTWARE NOTICE:</strong>
+        Novacrest Bank is a fictional banking software prototype,
+        not a real bank or licensed financial institution.
+        Account numbers and account information displayed here are
+        simulated. No real deposits, withdrawals, or transfers are possible.
+        Do not use real banking information.
+    </div>
+
     <section class="account-container">
 
-        <h1>Account Details</h1>
-        <p>View your personal banking account information.</p>
+        <div class="page-heading">
+            <span class="eyebrow">CUSTOMER AREA</span>
+            <h1>Demo Account Details</h1>
+            <p>
+                View the account information generated for your
+                fictional demonstration profile.
+            </p>
+        </div>
+
+        <!-- DEMO ACCOUNT CARD -->
 
         <div class="account-card">
 
             <div class="card-header">
-                <h2>DBS BANK</h2>
-                <span>PERSONAL BANKING</span>
+                <h2>NOVACREST BANK</h2>
+                <span>DEMO ACCOUNT</span>
             </div>
 
             <div class="account-number">
-                <span>Account Number</span>
-                <h2 id="accountNumber">0123456789</h2>
+                <span>Demo Account Number</span>
+                <h2 id="accountNumber">Loading...</h2>
             </div>
 
             <div class="card-footer">
+
                 <div>
-                    <span>Account Holder</span>
-                    <strong id="accountHolder">Demo Customer</strong>
+                    <span>Demo Account Holder</span>
+                    <strong id="accountHolder">Loading...</strong>
                 </div>
 
                 <div>
                     <span>Account Type</span>
-                    <strong>Savings</strong>
+                    <strong>Demo Savings</strong>
                 </div>
+
             </div>
 
         </div>
 
+        <!-- ACCOUNT INFORMATION -->
+
         <div class="details-section">
 
-            <h2>Account Information</h2>
+            <div class="section-heading">
+                <h2>Account Information</h2>
+                <p>Simulated account details.</p>
+            </div>
 
             <div class="details-grid">
 
                 <div class="detail">
                     <span>Account Holder Name</span>
-                    <strong id="holderName">Demo Customer</strong>
+                    <strong id="holderName">Loading...</strong>
                 </div>
 
                 <div class="detail">
-                    <span>Account Number</span>
-                    <strong>0123456789</strong>
+                    <span>Demo Account Number</span>
+                    <strong id="accountNumberDetails">Loading...</strong>
                 </div>
 
                 <div class="detail">
                     <span>Account Type</span>
-                    <strong>Personal Savings</strong>
+                    <strong>Personal Demo Savings</strong>
                 </div>
 
                 <div class="detail">
                     <span>Currency</span>
-                    <strong>NGN - Nigerian Naira</strong>
+                    <strong>NGN - Nigerian Naira (Demo)</strong>
                 </div>
 
                 <div class="detail">
@@ -87,23 +122,38 @@
                 </div>
 
                 <div class="detail">
-                    <span>Bank Name</span>
-                    <strong>DBS-BANK Demo</strong>
+                    <span>Institution</span>
+                    <strong>Novacrest Banking Software Prototype</strong>
                 </div>
 
             </div>
 
         </div>
 
-        <button id="copyAccount">Copy Account Number</button>
+        <div class="account-actions">
 
-        <p id="message"></p>
+            <button type="button" id="copyAccount">
+                Copy Demo Account Number
+            </button>
+
+            <p id="message" role="status" aria-live="polite"></p>
+
+        </div>
+
+        <div class="back-link">
+            <a href="dashboard.html">← Back to Demo Dashboard</a>
+        </div>
 
     </section>
+
 </main>
 
-<footer>
-    &copy; 2026 DBS-BANK. All Rights Reserved.
+<footer class="footer">
+    <p>
+        &copy; <span id="currentYear">2026</span> Novacrest Bank.
+        Fictional Banking Software Prototype.
+    </p>
+    <p>Not a real financial institution. No real banking services are provided.</p>
 </footer>
 
 </body>
