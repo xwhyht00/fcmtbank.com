@@ -1,85 +1,163 @@
 
-function readStorage(storage, key, fallback) {
-    try {
-        const value = JSON.parse(storage.getItem(key));
-        return value ?? fallback;
-    } catch {
-        return fallback;
-    }
-}
+document.addEventListener("DOMContentLoaded", function () {
 
-function formatCurrency(amount) {
-    return new Intl.NumberFormat("en-NG", {
-        style: "currency",
-        currency: "NGN"
-    }).format(Number(amount) || 0);
-}
+    const CUSTOMERS_KEY = "dbsDemoCustomers";
+    const SESSION_KEY = "dbsDemoSession";
 
-function updateBalance() {
-    // Get the currently logged-in customer
-    const session = readStorage(
-        sessionStorage,
-        "dbsDemoSession",
-        null
-    );
-
-    if (!session) {
-        window.location.href = "login.html";
-        return;
+    function readStorage(storage, key, fallback) {
+        try {
+            const value = JSON.parse(storage.getItem(key));
+            return value ?? fallback;
+        } catch (error) {
+            return fallback;
+        }
     }
 
-    // Get all registered customers
-    const customers = readStorage(
-        localStorage,
-        "dbsDemoCustomers",
-        []
-    );
-
-    // Find this customer's own account
-    const customer = customers.find(item =>
-        item.profile &&
-        item.profile.email === session.email &&
-        item.profile.accountNumber === session.accountNumber
-    );
-
-    if (!customer) {
-        sessionStorage.removeItem("dbsDemoSession");
-        window.location.href = "login.html";
-        return;
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat("en-NG", {
+            style: "currency",
+            currency: "NGN",
+            minimumFractionDigits: 2
+        }).format(Number(amount) || 0);
     }
 
-    const data = customer.bankData || {};
+    function getAmount(item) {
+        return Number(item?.amount) || 0;
+    }
 
-    const balance = Number(data.balance ?? 0);
+    function getType(item) {
+        return String(item?.type || "").toLowerCase();
+    }
 
-    document.getElementById("availableBalance").textContent =
-        formatCurrency(balance);
+    function updateBalance() {
 
-    const records = data.records || [];
-    const transactions = data.transactions || [];
+        // Get the current demo session.
+        const session = readStorage(
+            sessionStorage,
+            SESSION_KEY,
+            null
+        );
 
-    const deposits = records
-        .filter(item => item.type === "Deposit")
-        .reduce((total, item) => total + Number(item.amount || 0), 0);
+        if (!session) {
+            window.location.href = "login.html";
+            return;
+        }
 
-    const withdrawals = records
-        .filter(item => item.type === "Withdrawal")
-        .reduce((total, item) => total + Number(item.amount || 0), 0);
+        // Get registered demo customers.
+        const customers = readStorage(
+            localStorage,
+            CUSTOMERS_KEY,
+            []
+        );
 
-    const transfers = transactions
-        .filter(item => item.type === "Transfer")
-        .reduce((total, item) => total + Number(item.amount || 0), 0);
+        if (!Array.isArray(customers)) {
+            window.location.href = "login.html";
+            return;
+        }
 
-    document.getElementById("totalDeposits").textContent =
-        formatCurrency(deposits);
+        // Find the logged-in customer.
+        const customer = customers.find(function (item) {
+            if (!item.profile) return false;
 
-    document.getElementById("totalWithdrawals").textContent =
-        formatCurrency(withdrawals);
+            const emailMatches =
+                item.profile.email === session.email;
 
-    document.getElementById("totalTransfers").textContent =
-        formatCurrency(transfers);
-}
+            const accountMatches =
+                !session.accountNumber ||
+                item.accountNumber === session.accountNumber ||
+                item.profile.accountNumber === session.accountNumber;
 
-updateBalance();
+            return emailMatches && accountMatches;
+        });
 
-window.addEventListener("pageshow", updateBalance);
+        if (!customer) {
+            sessionStorage.removeItem(SESSION_KEY);
+            window.location.href = "login.html";
+            return;
+        }
+
+        // Read this customer's simulated banking data.
+        const bankData = customer.bankData || {};
+
+        const balance = Number(bankData.balance) || 0;
+
+        const records = Array.isArray(bankData.records)
+            ? bankData.records
+            : [];
+
+        const transactions = Array.isArray(bankData.transactions)
+            ? bankData.transactions
+            : [];
+
+        // Calculate demo deposits.
+        const deposits = records
+            .filter(item => getType(item) === "deposit")
+            .reduce((total, item) => total + getAmount(item), 0);
+
+        // Calculate demo withdrawals.
+        const withdrawals = records
+            .filter(item => getType(item) === "withdrawal")
+            .reduce((total, item) => total + getAmount(item), 0);
+
+        // Calculate demo transfers.
+        const transfers = transactions
+            .filter(item => getType(item) === "transfer")
+            .reduce((total, item) => total + getAmount(item), 0);
+
+        // Display the account balance.
+        const balanceElement =
+            document.getElementById("availableBalance");
+
+        if (balanceElement) {
+            balanceElement.textContent = formatCurrency(balance);
+        }
+
+        // Display the account number.
+        const accountNumberElement =
+            document.getElementById("accountNumber");
+
+        if (accountNumberElement) {
+            accountNumberElement.textContent =
+                customer.accountNumber ||
+                customer.profile.accountNumber ||
+                "Demo account";
+        }
+
+        // Display deposits.
+        const depositsElement =
+            document.getElementById("totalDeposits");
+
+        if (depositsElement) {
+            depositsElement.textContent = formatCurrency(deposits);
+        }
+
+        // Display withdrawals.
+        const withdrawalsElement =
+            document.getElementById("totalWithdrawals");
+
+        if (withdrawalsElement) {
+            withdrawalsElement.textContent = formatCurrency(withdrawals);
+        }
+
+        // Display transfers.
+        const transfersElement =
+            document.getElementById("totalTransfers");
+
+        if (transfersElement) {
+            transfersElement.textContent = formatCurrency(transfers);
+        }
+
+        // Update footer year.
+        const yearElement = document.getElementById("currentYear");
+
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
+    }
+
+    updateBalance();
+
+    // Refresh when the user returns to the page.
+    window.addEventListener("pageshow", updateBalance);
+
+});
